@@ -1,26 +1,51 @@
 #include <SFML/Graphics.hpp>
-using namespace sf;
+#include <SFML/Audio.hpp>
+#include "Interfaz.h"
+#include <iostream>
 
-int main(int argc, char *argv[]){
-	RenderWindow w(VideoMode(640,480),"Ejemplo de SFML");
-	Texture t;
-	Sprite s;
+int main() {
+	sf::RenderWindow ventana(sf::VideoMode(720, 540), "Tetris");
+	ventana.setFramerateLimit(60);
 	
-	t.loadFromFile("sfml.png");
-	s.setTexture(t);
-	s.setPosition(175, 130);
-	
-	while(w.isOpen()) {
-		Event e;
-		while(w.pollEvent(e)) {
-			if(e.type == Event::Closed)
-				w.close();	
-		}
-		
-		w.clear(Color(255,255,255,255));
-		w.draw(s);
-		w.display();
+	sf::Music musica;
+	bool musicaCargada = musica.openFromFile("audio/OTS_Tetris.ogg");
+	if (!musicaCargada) {
+		std::cout << "no se pudo cargar audio/OTS_Tetris.ogg\n";
+	} else {
+		musica.setLoop(true); 
+		musica.play();
 	}
+	
+	ContextoInterfaz ctx;
+	inicializarInterfaz(&ctx, &ventana);
+	
+	EstadoJuego estado = ESTADO_MENU;
+	
+	while (estado != ESTADO_SALIR) {
+		switch (estado) {
+		case ESTADO_MENU:
+			estado = pantallaMenu(&ctx);
+			break;
+			
+		case ESTADO_INGRESAR_NOMBRE:
+			estado = pantallaIngresarNombre(&ctx);
+			break;
+			
+		case ESTADO_TABLA_PUNTAJES:
+			estado = pantallaTablaPuntajes(&ctx);
+			break;
+			
+		case ESTADO_JUGANDO:
+			std::cout << "[main] Jugador: " << ctx.nombreJugador
+				<< " - entrando a JUGANDO (todavia no implementado).\n";
+			estado = ESTADO_SALIR;
+			break;
+			
+		default:
+			estado = ESTADO_SALIR;
+			break;
+		}
+	}
+	
 	return 0;
 }
-
