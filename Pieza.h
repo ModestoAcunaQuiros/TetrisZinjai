@@ -1,7 +1,6 @@
 #ifndef PIEZA_H
 #define PIEZA_H
 
-// Las 7 piezas
 enum TipoPieza {
 	PIEZA_I = 0,
 	PIEZA_O,

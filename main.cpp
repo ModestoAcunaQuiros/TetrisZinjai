@@ -1,6 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 #include "Interfaz.h"
+#include "Juego.h" 
 #include <iostream>
 
 int main() {
@@ -36,9 +37,7 @@ int main() {
 			break;
 			
 		case ESTADO_JUGANDO:
-			std::cout << "[main] Jugador: " << ctx.nombreJugador
-				<< " - entrando a JUGANDO (todavia no implementado).\n";
-			estado = ESTADO_SALIR;
+			estado = jugarPartida(&ctx);
 			break;
 			
 		default:

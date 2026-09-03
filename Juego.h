@@ -3,6 +3,6 @@
 
 #include "Interfaz.h"
 
-EstadoJuego jugarPartida(ContextoInterfaz cxt);
+EstadoJuego jugarPartida(ContextoInterfaz* cxt);
 
 #endif

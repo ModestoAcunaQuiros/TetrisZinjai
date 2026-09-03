@@ -3,7 +3,7 @@
 #include <ctime>
 
 
-void inicilizarColaPiezas(ColaPiezas* cola){
+void inicializarColaPiezas(ColaPiezas* cola){
 	cola->frente = nullptr;
 	cola->ultimo = nullptr;
 	cola->cantidad = 0;
