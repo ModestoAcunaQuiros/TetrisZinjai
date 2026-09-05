@@ -1,5 +1,10 @@
 #include "Juego.h"
+#include "ColaEventos.h"
+#include <SFML/Audio.hpp>
 #include <iostream>
+#include <cstdio>
+#include <string>
+#include <algorithm>
 
 // Revisa si la pieza "p" colisiona con el tablero o se sale de los bordes.
 static bool piezaColisiona(const Tablero* t, const Pieza* p) {
@@ -31,6 +36,39 @@ static void fijarPieza(Tablero* t, const Pieza* p) {
     }
 }
 
+// Efecto "pieza bomba": en vez de fijarse, despeja la zona que ocuparia la
+// pieza mas un anillo de una celda alrededor.
+static void detonarBomba(Tablero* t, const Pieza* p) {
+    const int* forma = obtenerFormaPieza(p->tipo, p->orientacion);
+    int minFila = ALTO_TABLERO, maxFila = -1;
+    int minCol = ANCHO_TABLERO, maxCol = -1;
+    for (int r = 0; r < 4; r++) {
+        for (int c = 0; c < 4; c++) {
+            if (forma[r * 4 + c]) {
+                int filaAbs = p->filaOrigen + r;
+                int colAbs = p->colOrigen + c;
+                if (filaAbs < minFila) minFila = filaAbs;
+                if (filaAbs > maxFila) maxFila = filaAbs;
+                if (colAbs < minCol) minCol = colAbs;
+                if (colAbs > maxCol) maxCol = colAbs;
+            }
+        }
+    }
+    // Expandir el area afectada en una celda y recortarla al tablero.
+    minFila = std::max(0, minFila - 1);
+    maxFila = std::min(ALTO_TABLERO - 1, maxFila + 1);
+    minCol = std::max(0, minCol - 1);
+    maxCol = std::min(ANCHO_TABLERO - 1, maxCol + 1);
+    for (int r = minFila; r <= maxFila; r++) {
+        NodoFila* fila = obtenerFila(t, r);
+        if (fila != nullptr) {
+            for (int c = minCol; c <= maxCol; c++) {
+                fila->celdas[c] = 0;
+            }
+        }
+    }
+}
+
 EstadoJuego jugarPartida(ContextoInterfaz* ctx) {
     Tablero tablero;
     inicializarTablero(&tablero);
@@ -52,12 +90,94 @@ EstadoJuego jugarPartida(ContextoInterfaz* ctx) {
     sf::Clock relojCaida;
     float intervaloCaida = 0.8f; // segundos entre caidas automaticas
 
+    // Sonido al completar lineas (se carga una sola vez por programa).
+    static sf::SoundBuffer bufferLinea;
+    static bool bufferLineaCargado = false;
+    if (!bufferLineaCargado) {
+        bufferLineaCargado = bufferLinea.loadFromFile("audio/lineaCompleta.ogg");
+        if (!bufferLineaCargado) {
+            std::cout << "[juego] Aviso: no se pudo cargar audio/lineaCompleta.ogg.\n";
+        }
+    }
+    sf::Sound sonidoLinea;
+    if (bufferLineaCargado) {
+        sonidoLinea.setBuffer(bufferLinea);
+    }
+
+    // La musica de fondo se pausa durante el parpadeo de lineas para que se
+    // oiga bien el efecto de linea completa; vuelve un segundo despues.
+    bool musicaPausadaPorLinea = false;
+    float momentoReanudarMusica = -1.f;
+    auto reanudarMusicaFondo = [&]() {
+        if (musicaPausadaPorLinea && ctx->musicaFondo != nullptr) {
+            ctx->musicaFondo->play();
+            musicaPausadaPorLinea = false;
+            momentoReanudarMusica = -1.f;
+        }
+    };
+
     // Estado de la animacion de filas completas (parpadeo antes de borrarlas).
     const float DURACION_FLASHEO = 0.32f;
     bool flasheandoFilas = false;
     int filasFlasheo[ALTO_TABLERO];
     int cantidadFilasFlasheo = 0;
     sf::Clock relojFlasheo;
+
+    // --- Animacion de la explosion de la bomba ---
+    const float DURACION_EXPLOSION = 0.5f;
+    bool explotandoBomba = false;
+    sf::Clock relojExplosion;
+
+    // --- Evento "pantalla invertida" (modo espejo durante 10 segundos) ---
+    float tiempoEspejoHasta = -1.f;
+
+    // Impulso visual para el ecualizador del fondo (se activa con un Tetris).
+    float impulsoFondo = 0.f;
+
+    // --- Eventos de partida programados por tiempo (ColaEventos) ---
+    ColaEventos colaEventos;
+    inicializarColaEventos(&colaEventos);
+
+    bool bombaPendiente = false;    // la proxima pieza que aparezca sera bomba
+    bool piezaEsBomba = false;      // la pieza activa actual es una bomba
+    float tiempoCongeladoHasta = -1.f; // controles congelados hasta este momento
+    float tiempoActual = 0.f;       // tiempo de partida (no avanza en pausa)
+    sf::Clock relojPartida;
+
+    std::string mensajeEvento;      // ultimo evento disparado (para avisar)
+    float tiempoMensaje = 0.f;
+
+    // Agenda inicial: cada 15 segundos ocurre un evento, rotando tipos.
+    const float inicioEventos = 15.f;
+    const float periodoEventos = 15.f;
+    for (int i = 0; i < 36; i++) {
+        Evento eventoNuevo;
+        eventoNuevo.momentoEvento = inicioEventos + i * periodoEventos;
+        switch (i % 4) {
+            case 0:  eventoNuevo.evento = aumentarVelocidad; break;
+            case 1:  eventoNuevo.evento = piezaBomba;        break;
+            case 2:  eventoNuevo.evento = congelarControl;   break;
+            default: eventoNuevo.evento = pantallaInvertida; break;
+        }
+        programarEvento(&colaEventos, eventoNuevo);
+    }
+
+    // Pone la proxima pieza en aparecer como bomba si hay una pendiente.
+    auto activarBombaSiCorresponde = [&]() {
+        if (bombaPendiente && !piezaEsBomba) {
+            piezaEsBomba = true;
+            bombaPendiente = false;
+        }
+    };
+
+    // Desencola la siguiente pieza y la prepara (activa bomba si hay).
+    // Devuelve true si la pieza nueva no entra en el tablero (game over).
+    auto tomarSiguientePieza = [&]() -> bool {
+        piezaActiva = desencolarPieza(&colaPiezas);
+        piezasSuficientes(&colaPiezas, 5);
+        activarBombaSiCorresponde();
+        return piezaColisiona(&tablero, &piezaActiva);
+    };
 
     // Dimensiones del diseno logico (igual que en configurarVistaJuego).
     const float DISENO_ANCHO = 720.f;
@@ -85,6 +205,7 @@ EstadoJuego jugarPartida(ContextoInterfaz* ctx) {
         while (ctx->ventana->pollEvent(evento)) {
             if (evento.type == sf::Event::Closed) {
                 ctx->ventana->close();
+                destruirColaDeEventos(&colaEventos);
                 return ESTADO_SALIR;
             }
 
@@ -103,6 +224,8 @@ EstadoJuego jugarPartida(ContextoInterfaz* ctx) {
                             relojCaida.restart();
                             if (flasheandoFilas) relojFlasheo.restart();
                         } else if (my >= cy + 30.f && my <= cy + 72.f) {
+                            reanudarMusicaFondo();
+                            destruirColaDeEventos(&colaEventos);
                             return ESTADO_MENU;
                         }
                     }
@@ -127,8 +250,9 @@ EstadoJuego jugarPartida(ContextoInterfaz* ctx) {
                     continue;
                 }
 
-                // En pausa o durante el parpadeo no se manejan piezas.
-                if (pausado || flasheandoFilas) {
+                // En pausa, parpadeo, explosion o congelados no se mueve.
+                if (pausado || flasheandoFilas || explotandoBomba ||
+                    tiempoActual < tiempoCongeladoHasta) {
                     continue;
                 }
 
@@ -156,19 +280,57 @@ EstadoJuego jugarPartida(ContextoInterfaz* ctx) {
                             pushHold(&hold, crearPieza(piezaActiva.tipo));
                             piezaActiva = desencolarPieza(&colaPiezas);
                             piezasSuficientes(&colaPiezas, 5);
+                            activarBombaSiCorresponde();
                         } else {
                             Pieza intercambio = popHold(&hold);
                             pushHold(&hold, crearPieza(piezaActiva.tipo));
                             piezaActiva = intercambio;
                         }
+                        // Al guardar la pieza, la bomba no viaja al hold.
+                        piezaEsBomba = false;
                         huboHoldEstaVez = true;
                     }
                 }
             }
         }
 
-        // Caida automatica por tiempo (solo si no hay pausa ni parpadeo).
-        if (!pausado && !flasheandoFilas &&
+        // Tiempo de partida (no avanza en pausa) y disparo de eventos.
+        float dtPartida = relojPartida.restart().asSeconds();
+        if (!pausado) {
+            tiempoActual += dtPartida;
+
+            if (tiempoMensaje > 0.f) {
+                tiempoMensaje -= dtPartida;
+                if (tiempoMensaje < 0.f) tiempoMensaje = 0.f;
+            }
+
+            while (!eventosVacio(&colaEventos) && eventolisto(&colaEventos, tiempoActual)) {
+                Evento ev = extraeEvento(&colaEventos);
+                switch (ev.evento) {
+                    case aumentarVelocidad:
+                        intervaloCaida = std::max(0.35f, intervaloCaida - 0.05f);
+                        mensajeEvento = "VELOCIDAD AUMENTADA";
+                        break;
+                    case piezaBomba:
+                        bombaPendiente = true;
+                        mensajeEvento = "PIEZA BOMBA EN CAMINO";
+                        break;
+                    case congelarControl:
+                        tiempoCongeladoHasta = tiempoActual + 4.f;
+                        mensajeEvento = "CONTROLES CONGELADOS";
+                        break;
+                    case pantallaInvertida:
+                        tiempoEspejoHasta = tiempoActual + 10.f;
+                        mensajeEvento = "PANTALLA INVERTIDA";
+                        break;
+                }
+                tiempoMensaje = 2.2f;
+            }
+        }
+
+        // Caida automatica por tiempo (solo si no hay pausa, parpadeo ni
+        // explosion en curso).
+        if (!pausado && !flasheandoFilas && !explotandoBomba &&
             relojCaida.getElapsedTime().asSeconds() >= intervaloCaida) {
             relojCaida.restart();
 
@@ -178,11 +340,18 @@ EstadoJuego jugarPartida(ContextoInterfaz* ctx) {
             if (!piezaColisiona(&tablero, &intento)) {
                 piezaActiva = intento;
             } else {
-                // No puede bajar mas: se fija en el tablero.
-                fijarPieza(&tablero, &piezaActiva);
+                // No puede bajar mas.
+                if (piezaEsBomba) {
+                    // Arranca la animacion de explosion; al terminar se limpia
+                    // el area y recien ahi aparece la siguiente pieza.
+                    explotandoBomba = true;
+                    piezaEsBomba = false;
+                    relojExplosion.restart();
+                } else {
+                    fijarPieza(&tablero, &piezaActiva);
 
-                int indicesCompletos[ALTO_TABLERO];
-                int cantidadCompletas = detectarFilasCompletas(&tablero, indicesCompletos);
+                    int indicesCompletos[ALTO_TABLERO];
+                    int cantidadCompletas = detectarFilasCompletas(&tablero, indicesCompletos);
                 if (cantidadCompletas > 0) {
                     // Las filas se eliminan tras una breve animacion.
                     flasheandoFilas = true;
@@ -191,13 +360,27 @@ EstadoJuego jugarPartida(ContextoInterfaz* ctx) {
                         filasFlasheo[k] = indicesCompletos[k];
                     }
                     relojFlasheo.restart();
-                } else {
-                    huboHoldEstaVez = false;
-                    piezaActiva = desencolarPieza(&colaPiezas);
-                    piezasSuficientes(&colaPiezas, 5);
 
-                    if (piezaColisiona(&tablero, &piezaActiva)) {
-                        return ESTADO_GAMEOVER; // la pieza nueva no tiene espacio
+                    // Efecto sonoro en el momento en que arranca la animacion
+                    // y pausa breve de la musica de fondo.
+                    if (bufferLineaCargado) {
+                        sonidoLinea.stop();
+                        sonidoLinea.play();
+                    }
+                    if (!musicaPausadaPorLinea && ctx->musicaFondo != nullptr &&
+                        ctx->musicaFondo->getStatus() == sf::SoundSource::Playing) {
+                        ctx->musicaFondo->pause();
+                        musicaPausadaPorLinea = true;
+                    }
+                    // La musica vuelve 1 segundo despues del arranque del
+                    // parpadeo (asi no pisa el efecto de linea completa).
+                    momentoReanudarMusica = tiempoActual + 2.1f;
+                } else {
+                        huboHoldEstaVez = false;
+                        if (tomarSiguientePieza()) {
+                            destruirColaDeEventos(&colaEventos);
+                            return ESTADO_GAMEOVER; // la pieza nueva no tiene espacio
+                        }
                     }
                 }
             }
@@ -212,31 +395,65 @@ EstadoJuego jugarPartida(ContextoInterfaz* ctx) {
             int ganados = cantidadFilasFlasheo < 5 ? puntosPorFilas[cantidadFilasFlasheo] : 800;
             puntaje += ganados;
 
+            // Al borrar filas el fondo "reacciona": maximo impulso con un
+            // Tetris (4 filas) y un empujon menor con filas sueltas.
+            float nuevoImpulso = (cantidadFilasFlasheo >= 4) ? 1.f : 0.45f;
+            if (nuevoImpulso > impulsoFondo) impulsoFondo = nuevoImpulso;
+
             flasheandoFilas = false;
             huboHoldEstaVez = false;
-            piezaActiva = desencolarPieza(&colaPiezas);
-            piezasSuficientes(&colaPiezas, 5);
-
-            if (piezaColisiona(&tablero, &piezaActiva)) {
+            if (tomarSiguientePieza()) {
+                reanudarMusicaFondo();
+                destruirColaDeEventos(&colaEventos);
                 return ESTADO_GAMEOVER;
             }
             relojCaida.restart();
+        }
+
+        // La musica de fondo vuelve un instante despues del parpadeo, para
+        // no tapar el efecto de linea completa.
+        if (!pausado && musicaPausadaPorLinea && !flasheandoFilas &&
+            momentoReanudarMusica >= 0.f &&
+            tiempoActual >= momentoReanudarMusica) {
+            reanudarMusicaFondo();
+        }
+
+        // Fin de la animacion de explosion: se limpia la zona de la bomba.
+        if (!pausado && explotandoBomba &&
+            relojExplosion.getElapsedTime().asSeconds() >= DURACION_EXPLOSION) {
+            detonarBomba(&tablero, &piezaActiva);
+            puntaje += 100;
+            explotandoBomba = false;
+            huboHoldEstaVez = false;
+            if (tomarSiguientePieza()) {
+                reanudarMusicaFondo();
+                destruirColaDeEventos(&colaEventos);
+                return ESTADO_GAMEOVER;
+            }
+            relojCaida.restart();
+        }
+
+        // Decaimiento suave del impulso del ecualizador.
+        if (impulsoFondo > 0.f) {
+            impulsoFondo = std::max(0.f, impulsoFondo - dtPartida * 1.4f);
         }
 
         // --- Dibujo ---
         ctx->ventana->clear(sf::Color(4, 6, 12));
 
         // Fondo (en pixeles reales) y luego vista escalable para la escena.
-        dibujarFondoEscenario(ctx);
+        dibujarFondoEscenario(ctx, impulsoFondo);
         ctx->ventana->setView(sf::View(sf::FloatRect(0.f, 0.f, anchoLogico, altoLogico)));
 
         const int cantidadSiguientes = 5;
         Pieza proximasPreview[cantidadSiguientes];
         proximasPiezas(&colaPiezas, proximasPreview, cantidadSiguientes);
 
-        // Durante el parpadeo la pieza activa ya quedo fijada: no se dibuja.
-        const Pieza* piezaParaDibujar = flasheandoFilas ? nullptr : &piezaActiva;
-        dibujarTablero(ctx, &tablero, piezaParaDibujar, xTablero, yTablero, ladoCelda);
+        // Durante el parpadeo o la explosion la pieza activa no se dibuja
+        // (la explosion tiene su propia animacion).
+        bool pantallaEspejo = (tiempoActual < tiempoEspejoHasta);
+        const Pieza* piezaParaDibujar = (flasheandoFilas || explotandoBomba) ? nullptr : &piezaActiva;
+        dibujarTablero(ctx, &tablero, piezaParaDibujar, xTablero, yTablero, ladoCelda, pantallaEspejo);
 
         // Parpadeo de las filas completas antes de eliminarlas.
         if (flasheandoFilas) {
@@ -250,6 +467,60 @@ EstadoJuego jugarPartida(ContextoInterfaz* ctx) {
                 resaltado.setPosition(xTablero, yTablero + filasFlasheo[k] * ladoCelda);
                 resaltado.setFillColor(colorParpadeo);
                 ctx->ventana->draw(resaltado);
+            }
+        }
+
+        // Animacion de la explosion de la bomba.
+        if (explotandoBomba) {
+            float progreso = std::min(1.f, relojExplosion.getElapsedTime().asSeconds() / DURACION_EXPLOSION);
+
+            const int* formaBomba = obtenerFormaPieza(piezaActiva.tipo, piezaActiva.orientacion);
+            int filaMin = ALTO_TABLERO, filaMax = -1;
+            int colMin = ANCHO_TABLERO, colMax = -1;
+            for (int r = 0; r < 4; r++) {
+                for (int c = 0; c < 4; c++) {
+                    if (formaBomba[r * 4 + c]) {
+                        int fa = piezaActiva.filaOrigen + r;
+                        int ca = piezaActiva.colOrigen + c;
+                        if (fa < filaMin) filaMin = fa;
+                        if (fa > filaMax) filaMax = fa;
+                        if (ca < colMin) colMin = ca;
+                        if (ca > colMax) colMax = ca;
+                    }
+                }
+            }
+            float centroCol = (colMin + colMax) * 0.5f;
+            float centroFila = (filaMin + filaMax) * 0.5f;
+            float colVisual = pantallaEspejo ? (ANCHO_TABLERO - 1 - centroCol) : centroCol;
+            float centroPx = xTablero + (colVisual + 0.5f) * ladoCelda;
+            float centroPy = yTablero + (centroFila + 0.5f) * ladoCelda;
+            float radioMax = ((filaMax - filaMin + colMax - colMin) * 0.5f + 2.2f) * ladoCelda;
+
+            if (progreso < 0.7f) {
+                // Destello que crece desde el centro de la bomba.
+                float radio = radioMax * (progreso / 0.7f);
+                sf::CircleShape destello(radio);
+                destello.setOrigin(radio, radio);
+                destello.setPosition(centroPx, centroPy);
+                destello.setFillColor(sf::Color(255, 240, 180, 150));
+                ctx->ventana->draw(destello);
+
+                sf::CircleShape anillo(radio);
+                anillo.setOrigin(radio, radio);
+                anillo.setPosition(centroPx, centroPy);
+                anillo.setOutlineThickness(3.f);
+                anillo.setOutlineColor(sf::Color(255, 110, 60, 200));
+                ctx->ventana->draw(anillo);
+            } else {
+                // Parpadeo blanco final antes de limpiar la zona.
+                bool encendido = (static_cast<int>(progreso * 22.f) % 2 == 0);
+                if (encendido) {
+                    sf::CircleShape flash(radioMax);
+                    flash.setOrigin(radioMax, radioMax);
+                    flash.setPosition(centroPx, centroPy);
+                    flash.setFillColor(sf::Color(255, 255, 255, 120));
+                    ctx->ventana->draw(flash);
+                }
             }
         }
 
@@ -282,6 +553,60 @@ EstadoJuego jugarPartida(ContextoInterfaz* ctx) {
             ctx->ventana->draw(barra2);
         }
 
+        // Aviso de estado de eventos: "toast" debajo del tablero.
+        if (!pausado && ctx->fuenteCargada) {
+            std::string textoBanner;
+            sf::Color colorBanner(220, 228, 245);
+            char restante[8];
+
+            if (tiempoActual < tiempoEspejoHasta) {
+                textoBanner = "PANTALLA INVERTIDA (";
+                snprintf(restante, sizeof(restante), "%.1f",
+                         tiempoEspejoHasta - tiempoActual);
+                textoBanner += restante;
+                textoBanner += "s)";
+                colorBanner = sf::Color(255, 130, 210);
+            } else if (tiempoActual < tiempoCongeladoHasta) {
+                textoBanner = "CONTROLES CONGELADOS (";
+                snprintf(restante, sizeof(restante), "%.1f",
+                         tiempoCongeladoHasta - tiempoActual);
+                textoBanner += restante;
+                textoBanner += "s)";
+                colorBanner = sf::Color(110, 225, 255);
+            } else if (bombaPendiente || piezaEsBomba) {
+                textoBanner = "BOMBA ACTIVA";
+                colorBanner = sf::Color(255, 90, 90);
+            } else if (tiempoMensaje > 0.f) {
+                textoBanner = mensajeEvento;
+            }
+
+            if (!textoBanner.empty()) {
+                sf::Text aviso(textoBanner, ctx->fuente, 13);
+                sf::FloatRect limitesAviso = aviso.getLocalBounds();
+
+                float anchoToast = limitesAviso.width + 26.f;
+                float altoToast = 22.f;
+                float cxToast = xTablero + anchoTablero * 0.5f;
+                float yToast = yTablero + ALTO_TABLERO * ladoCelda + 16.f;
+                float xToast = cxToast - anchoToast * 0.5f;
+
+                dibujarPanelChamfer(ctx, xToast, yToast, anchoToast, altoToast,
+                                    sf::Color(12, 17, 30, 235), colorBanner);
+
+                sf::RectangleShape acento(sf::Vector2f(4.f, altoToast - 6.f));
+                acento.setPosition(xToast + 3.f, yToast + 3.f);
+                acento.setFillColor(colorBanner);
+                ctx->ventana->draw(acento);
+
+                sf::Text etiqueta(textoBanner, ctx->fuente, 13);
+                etiqueta.setColor(colorBanner);
+                sf::FloatRect limites = etiqueta.getLocalBounds();
+                etiqueta.setPosition(xToast + 13.f,
+                                     yToast + (altoToast - limites.height) * 0.5f);
+                ctx->ventana->draw(etiqueta);
+            }
+        }
+
         // Menu de pausa.
         if (pausado) {
             float cx = xTablero + anchoTablero * 0.5f;
@@ -292,12 +617,8 @@ EstadoJuego jugarPartida(ContextoInterfaz* ctx) {
             velo.setFillColor(sf::Color(0, 0, 0, 150));
             ctx->ventana->draw(velo);
 
-            sf::RectangleShape panel(sf::Vector2f(320.f, 210.f));
-            panel.setPosition(cx - 160.f, cy - 105.f);
-            panel.setFillColor(sf::Color(10, 15, 28, 235));
-            panel.setOutlineThickness(2.f);
-            panel.setOutlineColor(sf::Color(80, 110, 160));
-            ctx->ventana->draw(panel);
+            dibujarPanelChamfer(ctx, cx - 160.f, cy - 105.f, 320.f, 210.f,
+                                sf::Color(10, 15, 28, 235), sf::Color(80, 110, 160));
 
             // Posicion actual del mouse para resaltar el boton bajo el cursor.
             sf::Vector2i posicionMouse = sf::Mouse::getPosition(*ctx->ventana);
@@ -350,5 +671,6 @@ EstadoJuego jugarPartida(ContextoInterfaz* ctx) {
         ctx->ventana->display();
     }
 
+    destruirColaDeEventos(&colaEventos);
     return ESTADO_SALIR;
 }

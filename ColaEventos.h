@@ -4,7 +4,8 @@
 enum TipoDeEventos{
 	aumentarVelocidad,
 	piezaBomba,
-	congelarControl
+	congelarControl,
+	pantallaInvertida
 };
 
 struct Evento{

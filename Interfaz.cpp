@@ -1,4 +1,5 @@
 #include "Interfaz.h"
+#include <SFML/Audio.hpp>
 #include <iostream>
 #include <cstring>
 #include <cstdio>
@@ -26,6 +27,7 @@ void inicializarInterfaz(ContextoInterfaz* ctx, sf::RenderWindow* ventana) {
 	}
 	
 	ctx->nombreJugador[0] = '\0';
+	ctx->musicaFondo = nullptr; // main.cpp lo conecta si hay musica
 }
 
 EstadoJuego pantallaMenu(ContextoInterfaz* ctx) {
@@ -90,20 +92,53 @@ EstadoJuego pantallaIngresarNombre(ContextoInterfaz* ctx) {
 	std::string nombreActual = "";
 	sf::Vector2u tamanoVentana = ctx->ventana->getSize();
 	
+	// Sonido al ingresar a la pantalla de nombre (se carga una sola vez).
+	static sf::SoundBuffer bufferIngresar;
+	static bool bufferIngresarCargado = false;
+	if (!bufferIngresarCargado) {
+		bufferIngresarCargado = bufferIngresar.loadFromFile("audio/ingresarNombre.ogg");
+		if (!bufferIngresarCargado) {
+			cout << "[interfaz] Aviso: no se pudo cargar audio/ingresarNombre.ogg.\n";
+		}
+	}
+	sf::Sound sonidoIngresar;
+	if (bufferIngresarCargado) {
+		sonidoIngresar.setBuffer(bufferIngresar);
+		sonidoIngresar.play();
+	}
+
+	// Pausa la musica de fondo para que se oiga bien el audio de esta
+	// pantalla; se reanuda al salir de ella.
+	bool pausarMusicaDeFondo = false;
+	if (ctx->musicaFondo != nullptr &&
+		ctx->musicaFondo->getStatus() == sf::SoundSource::Playing) {
+		ctx->musicaFondo->pause();
+		pausarMusicaDeFondo = true;
+	}
+	auto reanudarMusicaDeFondo = [&]() {
+		if (pausarMusicaDeFondo && ctx->musicaFondo != nullptr) {
+			ctx->musicaFondo->play();
+			pausarMusicaDeFondo = false;
+		}
+	};
+
 	while (ctx->ventana->isOpen()) {
 		sf::Event evento;
 		while (ctx->ventana->pollEvent(evento)) {
 			if (evento.type == sf::Event::Closed) {
 				ctx->ventana->close();
+				reanudarMusicaDeFondo();
 				return ESTADO_SALIR;
 			}
 			if (evento.type == sf::Event::KeyPressed) {
 				if (evento.key.code == sf::Keyboard::Escape) {
+					reanudarMusicaDeFondo();
 					return ESTADO_MENU;
 				}
 				if (evento.key.code == sf::Keyboard::Return && !nombreActual.empty()) {
 					strncpy(ctx->nombreJugador, nombreActual.c_str(), INTERFAZ_MAX_LONGITUD_NOMBRE - 1);
 					ctx->nombreJugador[INTERFAZ_MAX_LONGITUD_NOMBRE - 1] = '\0';
+					reanudarMusicaDeFondo();
 					return ESTADO_JUGANDO;
 				}
 				if (evento.key.code == sf::Keyboard::BackSpace && !nombreActual.empty()) {
@@ -147,6 +182,7 @@ EstadoJuego pantallaIngresarNombre(ContextoInterfaz* ctx) {
 		ctx->ventana->display();
 	}
 	
+	reanudarMusicaDeFondo();
 	return ESTADO_SALIR;
 }
 
@@ -300,63 +336,301 @@ void dibujarBloque(sf::RenderWindow* ventana, float x, float y, float lado, sf::
 	}
 }
 
-static void dibujarFondoPanel(ContextoInterfaz* ctx, float x, float y, float ancho, float alto) {
-	sf::RectangleShape panel(sf::Vector2f(ancho, alto));
-	panel.setPosition(x, y);
-	panel.setFillColor(sf::Color(16, 22, 38));
-	panel.setOutlineThickness(2.f);
-	panel.setOutlineColor(sf::Color(50, 72, 112));
-	ctx->ventana->draw(panel);
+// Pequeno generador pseudoaleatorio (determinista) para efectos visuales.
+static float azar01() {
+	static unsigned long long semilla = 88172645463325252ULL;
+	semilla = semilla * 6364136223846793005ULL + 1442695040888963407ULL;
+	return static_cast<float>((semilla >> 40) & 0xFFFF) / 65535.f;
 }
 
-// Fondo de la pantalla de juego con estetica retro: fondo plano oscuro,
-// scanlines de monitor y pixeles decorativos de los colores de las piezas.
-void dibujarFondoEscenario(ContextoInterfaz* ctx) {
+// Dibuja un rectangulo con las esquinas cortadas en diagonal (VertexArray).
+static void dibujarRectanguloChamfer(sf::RenderWindow* ventana, float x, float y,
+									 float ancho, float alto, float corte, sf::Color color) {
+	const int lados = 8;
+	sf::VertexArray forma(sf::PrimitiveType::TriangleFan, lados + 2);
+	float centroX = x + ancho * 0.5f;
+	float centroY = y + alto * 0.5f;
+
+	struct Punto { float px, py; };
+	Punto esquinas[lados] = {
+		{x + corte, y},               {x + ancho - corte, y},
+		{x + ancho, y + corte},       {x + ancho, y + alto - corte},
+		{x + ancho - corte, y + alto},{x + corte, y + alto},
+		{x, y + alto - corte},        {x, y + corte}
+	};
+
+	forma[0].position = sf::Vector2f(centroX, centroY);
+	forma[0].color = color;
+	for (int i = 0; i < lados; i++) {
+		forma[i + 1].position = sf::Vector2f(esquinas[i].px, esquinas[i].py);
+		forma[i + 1].color = color;
+	}
+	forma[lados + 1].position = sf::Vector2f(esquinas[0].px, esquinas[0].py);
+	forma[lados + 1].color = color;
+	ventana->draw(forma);
+}
+
+// Panel principal con esquinas biseladas (exterior = borde, interior = relleno).
+void dibujarPanelChamfer(ContextoInterfaz* ctx, float x, float y, float ancho, float alto,
+						 sf::Color relleno, sf::Color borde) {
+	float corte = std::min(12.f, std::min(ancho, alto) * 0.22f);
+	dibujarRectanguloChamfer(ctx->ventana, x - 3.f, y - 3.f, ancho + 6.f, alto + 6.f,
+							 corte + 4.f, borde);
+	dibujarRectanguloChamfer(ctx->ventana, x, y, ancho, alto, corte, relleno);
+}
+
+static void dibujarFondoPanel(ContextoInterfaz* ctx, float x, float y, float ancho, float alto) {
+	dibujarPanelChamfer(ctx, x, y, ancho, alto, sf::Color(16, 22, 38), sf::Color(50, 72, 112));
+}
+
+// Fondo de la pantalla de juego: cielo nocturno degradado, estrellas lentas,
+// nubes con parallax, silueta de ciudad con ventanas y columnas ecualizador.
+void dibujarFondoEscenario(ContextoInterfaz* ctx, float impulso) {
 	sf::Vector2u dim = ctx->ventana->getSize();
 	float ancho = static_cast<float>(dim.x);
 	float alto = static_cast<float>(dim.y);
 
-	sf::RectangleShape fondo(sf::Vector2f(ancho, alto));
-	fondo.setPosition(0.f, 0.f);
-	fondo.setFillColor(sf::Color(11, 14, 26));
-	ctx->ventana->draw(fondo);
+	// --- Cielo degradado (azul oscuro -> violeta -> tono calido) ---
+	{
+		sf::VertexArray cielo(sf::PrimitiveType::TriangleStrip, 8);
+		const float fracciones[4] = {0.f, 0.30f, 0.70f, 1.f};
+		sf::Color tonos[4];
+		tonos[0] = sf::Color(6, 9, 24);
+		tonos[1] = sf::Color(16, 14, 44);
+		tonos[2] = sf::Color(44, 26, 62);
+		tonos[3] = sf::Color(104, 58, 88);
+		for (int i = 0; i < 4; i++) {
+			float y = fracciones[i] * alto;
+			cielo[2 * i].position = sf::Vector2f(0.f, y);
+			cielo[2 * i + 1].position = sf::Vector2f(ancho, y);
+			cielo[2 * i].color = tonos[i];
+			cielo[2 * i + 1].color = tonos[i];
+		}
+		ctx->ventana->draw(cielo);
+	}
 
-	// Scanlines sutiles estilo CRT.
+	// Reloj y tiempo globales para todas las capas animadas.
+	static sf::Clock relojFondo;
+	static float tiempoFondo = 0.f;
+	float dt = relojFondo.restart().asSeconds();
+	if (dt > 0.05f) dt = 0.05f;
+	tiempoFondo += dt;
+
+	// --- Estrellas lejanas (capa profunda, se mueven muy lento) ---
+	const int CANTIDAD_ESTRELLAS = 90;
+	struct Estrella { float x, y, vel, tam, fase; };
+	static Estrella estrellas[CANTIDAD_ESTRELLAS];
+	static bool estrellasListas = false;
+	if (!estrellasListas) {
+		for (int i = 0; i < CANTIDAD_ESTRELLAS; i++) {
+			estrellas[i].x = azar01();
+			estrellas[i].y = azar01();
+			estrellas[i].vel = 0.004f + azar01() * 0.012f; // muy lento (parallax lejano)
+			estrellas[i].tam = 0.6f + azar01() * 1.2f;
+			estrellas[i].fase = azar01() * 6.2831f;
+		}
+		estrellasListas = true;
+	}
+	float tamEscalaEstrella = std::max(1.f, ancho * 0.003f);
+	for (int i = 0; i < CANTIDAD_ESTRELLAS; i++) {
+		estrellas[i].y -= estrellas[i].vel * dt;
+		if (estrellas[i].y < 0.f) {
+			estrellas[i].y = 1.02f;
+			estrellas[i].x = azar01();
+			estrellas[i].vel = 0.004f + azar01() * 0.012f;
+		}
+		float brillo = 0.55f + 0.45f * sinf(tiempoFondo * 2.f + estrellas[i].fase);
+		float tamPx = estrellas[i].tam * tamEscalaEstrella;
+		sf::RectangleShape puntito(sf::Vector2f(tamPx, tamPx));
+		puntito.setPosition(estrellas[i].x * ancho, estrellas[i].y * alto);
+		puntito.setFillColor(sf::Color(170, 205, 255,
+									  static_cast<sf::Uint8>(30 + 85 * brillo)));
+		ctx->ventana->draw(puntito);
+	}
+
+	// --- Nubes (capa mas cercana; al borrar lineas se aceleran) ---
+	const int CANTIDAD_NUBES = 7;
+	struct Nube { float x, y, vel, escala; };
+	static Nube nubes[CANTIDAD_NUBES];
+	static bool nubesListas = false;
+	if (!nubesListas) {
+		for (int i = 0; i < CANTIDAD_NUBES; i++) {
+			nubes[i].x = azar01() * 1.3f - 0.15f;
+			nubes[i].y = 0.08f + azar01() * 0.65f;
+			nubes[i].vel = 0.02f + azar01() * 0.03f; // mas rapido que las estrellas
+			nubes[i].escala = 0.5f + azar01() * 0.9f;
+		}
+		nubesListas = true;
+	}
+	float aceleracionNubes = 1.f + impulso * 4.f;
+	float radioNube = std::max(8.f, ancho * 0.035f);
+	for (int i = 0; i < CANTIDAD_NUBES; i++) {
+		nubes[i].x -= nubes[i].vel * aceleracionNubes * dt;
+		if (nubes[i].x < -0.35f) {
+			nubes[i].x = 1.35f;
+			nubes[i].y = 0.08f + azar01() * 0.65f;
+			nubes[i].vel = 0.02f + azar01() * 0.03f;
+		}
+		sf::Color colorNube = sf::Color(150, 165, 210, 22);
+		sf::CircleShape gota;
+		const float radio = radioNube * nubes[i].escala;
+		float cx = nubes[i].x * ancho;
+		float cy = nubes[i].y * alto;
+		gota.setRadius(radio);
+		gota.setOrigin(radio, radio);
+		gota.setFillColor(colorNube);
+		// Tres circulos solapados para dar forma de nube suave.
+		gota.setPosition(cx - radio * 0.6f, cy + radio * 0.1f);
+		ctx->ventana->draw(gota);
+		gota.setPosition(cx, cy - radio * 0.25f);
+		ctx->ventana->draw(gota);
+		gota.setPosition(cx + radio * 0.6f, cy + radio * 0.15f);
+		ctx->ventana->draw(gota);
+	}
+
+	// --- Silueta de ciudad nocturna con ventanas iluminadas ---
+	const int MAX_EDIFICIOS = 42;
+	struct Edificio { float x0, x1, hFrac; };
+	static Edificio edificios[MAX_EDIFICIOS];
+	static int cantidadEdificios = 0;
+	static bool ciudadLista = false;
+	if (!ciudadLista) {
+		float cursor = 0.f;
+		cantidadEdificios = 0;
+		while (cursor < 1.f && cantidadEdificios < MAX_EDIFICIOS) {
+			Edificio& e = edificios[cantidadEdificios];
+			float anchoEdif = 0.05f + azar01() * 0.10f;
+			if (cursor + anchoEdif > 1.f) anchoEdif = 1.f - cursor;
+			e.x0 = cursor;
+			e.x1 = cursor + anchoEdif;
+			// Unos pocos edificios altos tipo torre.
+			bool esTorre = (azar01() < 0.22f);
+			e.hFrac = esTorre ? (0.26f + azar01() * 0.16f)
+							  : (0.10f + azar01() * 0.14f);
+			cursor += anchoEdif + 0.006f;
+			cantidadEdificios++;
+		}
+		ciudadLista = true;
+	}
+	// Se regenera la ciudad si cambia mucho el tamano de la ventana (los datos
+	// estan en fracciones, asi que solo se redibujan a escala).
+	{
+		sf::Color colorEdificio(4, 5, 12);
+		sf::Color colorSombra(8, 10, 20);
+		float winVentana = std::max(2.f, ancho * 0.0042f);
+		float winAlto = winVentana * 1.4f;
+		float gapX = winVentana * 2.1f;
+		float gapY = winAlto * 1.9f;
+		for (int b = 0; b < cantidadEdificios; b++) {
+			float px0 = edificios[b].x0 * ancho;
+			float px1 = edificios[b].x1 * ancho;
+			float pyBase = alto;
+			float pyArriba = alto * (1.f - edificios[b].hFrac);
+			float bw = px1 - px0;
+
+			// Cuerpo del edificio (silueta casi negra).
+			sf::RectangleShape cuerpo(sf::Vector2f(bw, pyBase - pyArriba));
+			cuerpo.setPosition(px0, pyArriba);
+			cuerpo.setFillColor(colorEdificio);
+			ctx->ventana->draw(cuerpo);
+
+			// Pequeno retoque de lado iluminado (luna desde la derecha).
+			sf::RectangleShape lado(sf::Vector2f(std::max(1.f, bw * 0.04f), pyBase - pyArriba));
+			lado.setPosition(px1 - std::max(1.f, bw * 0.04f), pyArriba);
+			lado.setFillColor(colorSombra);
+			ctx->ventana->draw(lado);
+
+			// Antena en algunas torres.
+			if (pyArriba < alto * 0.40f) {
+				sf::RectangleShape antena(sf::Vector2f(1.5f, alto * 0.03f));
+				antena.setPosition(px0 + bw * 0.5f, pyArriba - alto * 0.03f);
+				antena.setFillColor(colorEdificio);
+				ctx->ventana->draw(antena);
+			}
+
+			// Ventanas iluminadas (patron deterministico).
+			int columnas = static_cast<int>((bw - winVentana) / (winVentana + gapX)) + 1;
+			if (columnas > 6) columnas = 6;
+			float winXIni = px0 + (bw - (columnas * (winVentana + gapX) - gapX)) * 0.5f;
+			float winYIni = pyArriba + gapY * 0.6f;
+			int filaVentana = 0;
+			for (float wy = winYIni; wy < pyBase - gapY; wy += gapY, filaVentana++) {
+				for (int col = 0; col < columnas; col++) {
+					float wx = winXIni + col * (winVentana + gapX);
+					// Celda determinista: "enciende" ~35% de las ventanas.
+					unsigned int semilla = static_cast<unsigned int>(b * 73856093u) ^
+										   static_cast<unsigned int>(filaVentana * 19349663u) ^
+										   static_cast<unsigned int>((col + 1) * 83492791u);
+					semilla = semilla * 2654435761u + 97u;
+					bool encendida = ((semilla >> 13) & 0xFFu) < 92;
+					if (!encendida) continue;
+					bool tonoCeleste = ((semilla >> 21) & 0xFFu) < 22;
+					sf::Color colorVentana = tonoCeleste
+						? sf::Color(150, 200, 255, 170)
+						: sf::Color(255, 205, 130, 190);
+					sf::RectangleShape ventana(sf::Vector2f(winVentana, winAlto));
+					ventana.setPosition(wx, wy);
+					ventana.setFillColor(colorVentana);
+					ctx->ventana->draw(ventana);
+				}
+			}
+		}
+	}
+
+	// --- Scanlines sutiles sobre todo el fondo ---
 	for (float y = 0.f; y < alto; y += 5.f) {
 		sf::RectangleShape scanline(sf::Vector2f(ancho, 1.f));
 		scanline.setPosition(0.f, y);
-		scanline.setFillColor(sf::Color(0, 0, 0, 28));
+		scanline.setFillColor(sf::Color(0, 0, 0, 20));
 		ctx->ventana->draw(scanline);
 	}
 
-	// Columnas de pixeles con los 7 colores del juego en los costados.
+	// --- Columnas laterales tipo ecualizador ---
 	const float cajita = 8.f;
 	const float paso = 16.f;
-	sf::Color colorActual;
-	int indice = 0;
-	for (float y = alto * 0.10f; y < alto * 0.90f; y += paso) {
-		TipoPieza tipo = static_cast<TipoPieza>(indice % CANTIDAD_TIPOS_PIEZA);
-		colorActual = colorPieza(tipo);
-		colorActual.a = 180;
-		indice++;
+	float yInicio = alto * 0.10f;
+	float yFin = alto * 0.90f;
+	float te = tiempoFondo;
+	int indiceColor = 0;
+	for (float y = yInicio; y < yFin; y += paso) {
+		float rel = (y - yInicio) / (yFin - yInicio); // 0 arriba ... 1 abajo
+		TipoPieza tipo = static_cast<TipoPieza>(indiceColor % CANTIDAD_TIPOS_PIEZA);
+		sf::Color colorBase = colorPieza(tipo);
+		indiceColor++;
 
+		float boost = std::min(1.f, impulso) * 0.7f;
+		float ondaIzq = 0.5f + 0.5f * sinf(te * 6.f - rel * 10.f);
+		float ondaDer = 0.5f + 0.5f * sinf(te * 6.f + rel * 10.f + 2.0f);
+		float brilloIzq = std::min(1.f, ondaIzq + boost);
+		float brilloDer = std::min(1.f, ondaDer + boost);
+
+		sf::Color cIzq = colorBase;
+		cIzq.a = static_cast<sf::Uint8>(40 + 190 * brilloIzq);
 		sf::RectangleShape lateralIzq(sf::Vector2f(cajita, cajita));
 		lateralIzq.setPosition(10.f, y);
-		lateralIzq.setFillColor(colorActual);
+		lateralIzq.setFillColor(cIzq);
 		ctx->ventana->draw(lateralIzq);
 
+		sf::Color cDer = colorBase;
+		cDer.a = static_cast<sf::Uint8>(40 + 190 * brilloDer);
 		sf::RectangleShape lateralDer(sf::Vector2f(cajita, cajita));
 		lateralDer.setPosition(ancho - 10.f - cajita, y);
-		lateralDer.setFillColor(colorActual);
+		lateralDer.setFillColor(cDer);
 		ctx->ventana->draw(lateralDer);
 	}
 }
 
-void dibujarTablero(ContextoInterfaz* ctx, const Tablero* tablero, const Pieza* piezaActual, float origenEnX, float origenEnY, float celda){
+void dibujarTablero(ContextoInterfaz* ctx, const Tablero* tablero, const Pieza* piezaActual, float origenEnX, float origenEnY, float celda, bool espejo){
 	float anchoTab = ANCHO_TABLERO * celda;
 	float altoTab = ALTO_TABLERO * celda;
 	const float bisel = 12.f;
 	const float ribete = 5.f;
+
+	// Convierte una columna logica a la posicion visual segun el modo espejo.
+	auto columnaVisual = [&](int col) -> float {
+		int colFinal = espejo ? (ANCHO_TABLERO - 1 - col) : col;
+		return origenEnX + colFinal * celda;
+	};
 
 	// Sombra pixel (bloque negro solido, sin degradados).
 	sf::RectangleShape sombra(sf::Vector2f(anchoTab + bisel * 2.f + 8.f, altoTab + bisel * 2.f + 8.f));
@@ -409,7 +683,7 @@ void dibujarTablero(ContextoInterfaz* ctx, const Tablero* tablero, const Pieza* 
 		for (int col = 0; col < ANCHO_TABLERO; col++) {
 			if (fila->celdas[col] != 0) {
 				TipoPieza tipo = static_cast<TipoPieza>(fila->celdas[col] - 1);
-				dibujarBloque(ctx->ventana, origenEnX + col * celda, origenEnY + indice * celda, celda, colorPieza(tipo));
+				dibujarBloque(ctx->ventana, columnaVisual(col), origenEnY + indice * celda, celda, colorPieza(tipo));
 			}
 		}
 		fila = fila->siguiente;
@@ -431,7 +705,7 @@ void dibujarTablero(ContextoInterfaz* ctx, const Tablero* tablero, const Pieza* 
 						if (filaAbs >= 0 && filaAbs < ALTO_TABLERO &&
 							colAbs >= 0 && colAbs < ANCHO_TABLERO) {
 							sf::RectangleShape celdaFantasma(sf::Vector2f(celda, celda));
-							celdaFantasma.setPosition(origenEnX + colAbs * celda, origenEnY + filaAbs * celda);
+							celdaFantasma.setPosition(columnaVisual(colAbs), origenEnY + filaAbs * celda);
 							celdaFantasma.setFillColor(sf::Color(255, 255, 255, 14));
 							celdaFantasma.setOutlineThickness(1.f);
 							celdaFantasma.setOutlineColor(borde);
@@ -454,7 +728,7 @@ void dibujarTablero(ContextoInterfaz* ctx, const Tablero* tablero, const Pieza* 
 					int colAbs = piezaActual->colOrigen + c;
 					if (filaAbs >= 0 && filaAbs < ALTO_TABLERO &&
 						colAbs >= 0 && colAbs < ANCHO_TABLERO) {
-						dibujarBloque(ctx->ventana, origenEnX + colAbs * celda, origenEnY + filaAbs * celda, celda, colorActual);
+						dibujarBloque(ctx->ventana, columnaVisual(colAbs), origenEnY + filaAbs * celda, celda, colorActual);
 					}
 				}
 			}

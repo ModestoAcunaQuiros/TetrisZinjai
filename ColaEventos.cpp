@@ -15,13 +15,14 @@ void destruirColaDeEventos(ColaEventos* cola){
 	cola->cantidad = 0;
 }
 bool eventosVacio(ColaEventos* cola){
-	return cola->cantidad = 0;
+	return cola->cantidad == 0;
 }
 void programarEvento(ColaEventos* cola, Evento evento){
 	NodoEvento* nuevo = new NodoEvento;
 	nuevo->dato = evento;
 	if(cola->frente == nullptr || evento.momentoEvento < cola->frente->dato.momentoEvento){
 		nuevo->siguiente = cola->frente;
+		cola->frente = nuevo;
 		cola->cantidad++;
 		return;
 	}

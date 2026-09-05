@@ -8,17 +8,23 @@ int main() {
 	sf::RenderWindow ventana(sf::VideoMode(720, 540), "Tetris");
 	ventana.setFramerateLimit(60);
 	
-	sf::Music musica;
-	bool musicaCargada = musica.openFromFile("audio/OTS_Tetris.ogg");
+	// La musica se precarga entera en memoria (sf::Sound en vez de sf::Music):
+	// evita el streaming en un hilo propio, que en algunos equipos hacia
+	// crashear el programa a los pocos segundos de empezar a sonar.
+	sf::SoundBuffer bufferMusica;
+	sf::Sound musica;
+	bool musicaCargada = bufferMusica.loadFromFile("audio/OTS_Tetris.ogg");
 	if (!musicaCargada) {
 		std::cout << "no se pudo cargar audio/OTS_Tetris.ogg\n";
 	} else {
+		musica.setBuffer(bufferMusica);
 		musica.setLoop(true); 
 		musica.play();
 	}
 	
 	ContextoInterfaz ctx;
 	inicializarInterfaz(&ctx, &ventana);
+	ctx.musicaFondo = musicaCargada ? &musica : nullptr; // para pausarla en ciertas pantallas
 	
 	EstadoJuego estado = ESTADO_MENU;
 	
