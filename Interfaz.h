@@ -7,6 +7,8 @@
 #include "Pieza.h"
 #include "ColaPieza.h"
 #include "PilaHold.h"
+#include "Ordenamiento.h"
+#include "Replay.h"
 
 namespace sf {
 	class Sound; // solo puntero; los metodos se usan donde hay Audio.hpp
@@ -37,13 +39,27 @@ struct ContextoInterfaz {
 	sf::Sound* musicaFondo; // nullptr = no hay musica de fondo
 	
 	char nombreJugador[INTERFAZ_MAX_LONGITUD_NOMBRE];
+
+	// Algoritmo con el que se ordena la tabla de puntajes (se puede
+	// cambiar desde la pantalla de mejores puntajes).
+	AlgoritmoOrdenamiento algoritmoOrdenamiento;
+
+	// Puntaje de la ultima partida, para que la pantalla de fin de juego
+	// pueda guardarlo en la tabla.
+	int puntajeUltimaPartida;
+
+	// Replay de la ultima partida (lista doblemente enlazada). Se reserva
+	// al empezar a jugar y se libera al volver al menu.
+	ListaReplay* replay;
 };
 
 void inicializarInterfaz(ContextoInterfaz* ctx, sf::RenderWindow* ventana);
 
 EstadoJuego pantallaMenu(ContextoInterfaz* ctx);
 EstadoJuego pantallaIngresarNombre(ContextoInterfaz* ctx);
-EstadoJuego pantallaTablaPuntajes(ContextoInterfaz* ctx); // placeholder por ahora
+EstadoJuego pantallaTablaPuntajes(ContextoInterfaz* ctx);
+EstadoJuego pantallaGameOver(ContextoInterfaz* ctx);
+EstadoJuego pantallaReplay(ContextoInterfaz* ctx);
 
 sf::Color colorPieza(TipoPieza pieza);
 void dibujarFondoEscenario(ContextoInterfaz* ctx, float impulso = 0.f);

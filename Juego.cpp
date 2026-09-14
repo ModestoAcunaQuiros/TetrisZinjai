@@ -78,14 +78,41 @@ EstadoJuego jugarPartida(ContextoInterfaz* ctx) {
     piezasSuficientes(&colaPiezas, 6);
 
     PilaHold hold;
-    inicializarPilaHold(&hold);
+    inicializarPilaHold(&hold, 1); // pila propia de capacidad 1
 
     Pieza piezaActiva = desencolarPieza(&colaPiezas);
     piezasSuficientes(&colaPiezas, 5);
 
+    // --- Replay: lista doblemente enlazada propia con toda la partida ---
+    // Se libera la partida anterior si quedo guardada, y se arranca una nueva.
+    if (ctx->replay != nullptr) {
+        destruirReplay(ctx->replay);
+        delete ctx->replay;
+        ctx->replay = nullptr;
+    }
+    ctx->replay = new ListaReplay;
+    EstadoReplay estadoInicial;
+    capturarEstado(&tablero, &piezaActiva, 0, &estadoInicial);
+    inicializarReplay(ctx->replay, &estadoInicial);
+
+    auto liberarReplay = [&]() {
+        if (ctx->replay != nullptr) {
+            destruirReplay(ctx->replay);
+            delete ctx->replay;
+            ctx->replay = nullptr;
+        }
+    };
+
     bool huboHoldEstaVez = false;
     int puntaje = 0;
     bool pausado = false;
+
+    // Guarda una instantanea completa del estado tras un movimiento relevante.
+    auto registrar = [&](TipoMovimiento tipo) {
+        EstadoReplay instantanea;
+        capturarEstado(&tablero, &piezaActiva, puntaje, &instantanea);
+        registrarMovimiento(ctx->replay, tipo, &instantanea);
+    };
 
     sf::Clock relojCaida;
     float intervaloCaida = 0.8f; // segundos entre caidas automaticas
@@ -186,6 +213,14 @@ EstadoJuego jugarPartida(ContextoInterfaz* ctx) {
     const float anchoTablero = ANCHO_TABLERO * ladoCelda;
     const float yTablero = 70.f;
 
+    // Cierra la partida liberando las estructuras propias. En game over se
+    // conserva el replay (lo usa la pantalla de reproduccion).
+    auto terminar = [&](bool conservarReplay) {
+        destruirPilaHold(&hold);
+        destruirColaDeEventos(&colaEventos);
+        if (!conservarReplay) liberarReplay();
+    };
+
     while (ctx->ventana->isOpen()) {
         // Vista por defecto (pixeles reales) para el fondo de cada frame.
         ctx->ventana->setView(ctx->ventana->getDefaultView());
@@ -205,7 +240,7 @@ EstadoJuego jugarPartida(ContextoInterfaz* ctx) {
         while (ctx->ventana->pollEvent(evento)) {
             if (evento.type == sf::Event::Closed) {
                 ctx->ventana->close();
-                destruirColaDeEventos(&colaEventos);
+                terminar(false);
                 return ESTADO_SALIR;
             }
 
@@ -225,7 +260,7 @@ EstadoJuego jugarPartida(ContextoInterfaz* ctx) {
                             if (flasheandoFilas) relojFlasheo.restart();
                         } else if (my >= cy + 30.f && my <= cy + 72.f) {
                             reanudarMusicaFondo();
-                            destruirColaDeEventos(&colaEventos);
+                            terminar(false);
                             return ESTADO_MENU;
                         }
                     }
@@ -260,19 +295,19 @@ EstadoJuego jugarPartida(ContextoInterfaz* ctx) {
 
                 if (evento.key.code == sf::Keyboard::Left) {
                     intento.colOrigen--;
-                    if (!piezaColisiona(&tablero, &intento)) piezaActiva = intento;
+                    if (!piezaColisiona(&tablero, &intento)) { piezaActiva = intento; registrar(MOV_IZQUIERDA); }
 
                 } else if (evento.key.code == sf::Keyboard::Right) {
                     intento.colOrigen++;
-                    if (!piezaColisiona(&tablero, &intento)) piezaActiva = intento;
+                    if (!piezaColisiona(&tablero, &intento)) { piezaActiva = intento; registrar(MOV_DERECHA); }
 
                 } else if (evento.key.code == sf::Keyboard::Up) {
                     intento.orientacion = (intento.orientacion + 1) % 4;
-                    if (!piezaColisiona(&tablero, &intento)) piezaActiva = intento; // sin wall kick
+                    if (!piezaColisiona(&tablero, &intento)) { piezaActiva = intento; registrar(MOV_ROTAR); } // sin wall kick
 
                 } else if (evento.key.code == sf::Keyboard::Down) {
                     intento.filaOrigen++;
-                    if (!piezaColisiona(&tablero, &intento)) piezaActiva = intento;
+                    if (!piezaColisiona(&tablero, &intento)) { piezaActiva = intento; registrar(MOV_BAJAR); }
 
                 } else if (evento.key.code == sf::Keyboard::C) {
                     if (!huboHoldEstaVez) {
@@ -289,6 +324,20 @@ EstadoJuego jugarPartida(ContextoInterfaz* ctx) {
                         // Al guardar la pieza, la bomba no viaja al hold.
                         piezaEsBomba = false;
                         huboHoldEstaVez = true;
+                    }
+                } else if (evento.key.code == sf::Keyboard::Z) {
+                    // Deshacer: restaura el estado anterior guardado en la lista.
+                    EstadoReplay destino;
+                    if (deshacerMovimiento(ctx->replay, &destino)) {
+                        aplicarEstado(&tablero, &piezaActiva, &puntaje, &destino);
+                        relojCaida.restart();
+                    }
+                } else if (evento.key.code == sf::Keyboard::Y) {
+                    // Rehacer: vuelve a aplicar el siguiente estado guardado.
+                    EstadoReplay destino;
+                    if (rehacerMovimiento(ctx->replay, &destino)) {
+                        aplicarEstado(&tablero, &piezaActiva, &puntaje, &destino);
+                        relojCaida.restart();
                     }
                 }
             }
@@ -339,6 +388,7 @@ EstadoJuego jugarPartida(ContextoInterfaz* ctx) {
 
             if (!piezaColisiona(&tablero, &intento)) {
                 piezaActiva = intento;
+                registrar(MOV_BAJAR);
             } else {
                 // No puede bajar mas.
                 if (piezaEsBomba) {
@@ -377,8 +427,11 @@ EstadoJuego jugarPartida(ContextoInterfaz* ctx) {
                     momentoReanudarMusica = tiempoActual + 2.1f;
                 } else {
                         huboHoldEstaVez = false;
-                        if (tomarSiguientePieza()) {
-                            destruirColaDeEventos(&colaEventos);
+                        bool finDePartida = tomarSiguientePieza();
+                        registrar(MOV_COLOCAR);
+                        if (finDePartida) {
+                            ctx->puntajeUltimaPartida = puntaje;
+                            terminar(true);
                             return ESTADO_GAMEOVER; // la pieza nueva no tiene espacio
                         }
                     }
@@ -402,9 +455,12 @@ EstadoJuego jugarPartida(ContextoInterfaz* ctx) {
 
             flasheandoFilas = false;
             huboHoldEstaVez = false;
-            if (tomarSiguientePieza()) {
+            bool finDePartida = tomarSiguientePieza();
+            registrar(MOV_COLOCAR);
+            if (finDePartida) {
+                ctx->puntajeUltimaPartida = puntaje;
                 reanudarMusicaFondo();
-                destruirColaDeEventos(&colaEventos);
+                terminar(true);
                 return ESTADO_GAMEOVER;
             }
             relojCaida.restart();
@@ -425,9 +481,12 @@ EstadoJuego jugarPartida(ContextoInterfaz* ctx) {
             puntaje += 100;
             explotandoBomba = false;
             huboHoldEstaVez = false;
-            if (tomarSiguientePieza()) {
+            bool finDePartida = tomarSiguientePieza();
+            registrar(MOV_COLOCAR);
+            if (finDePartida) {
+                ctx->puntajeUltimaPartida = puntaje;
                 reanudarMusicaFondo();
-                destruirColaDeEventos(&colaEventos);
+                terminar(true);
                 return ESTADO_GAMEOVER;
             }
             relojCaida.restart();
@@ -671,6 +730,6 @@ EstadoJuego jugarPartida(ContextoInterfaz* ctx) {
         ctx->ventana->display();
     }
 
-    destruirColaDeEventos(&colaEventos);
+    terminar(false);
     return ESTADO_SALIR;
 }

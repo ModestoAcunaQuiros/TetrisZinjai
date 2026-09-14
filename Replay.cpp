@@ -1,6 +1,6 @@
 #include "Replay.h"
 
-void inicializarReplay(ListaReplay* lista, const EstadoJuego* estadoInicial) {
+void inicializarReplay(ListaReplay* lista, const EstadoReplay* estadoInicial) {
 	lista->primero = nullptr;
 	lista->ultimo = nullptr;
 	lista->actual = nullptr; // arrancamos parados en el estado inicial
@@ -44,7 +44,7 @@ static void descartarNodosDespuesDe(ListaReplay* lista, NodoMovimiento* desde) {
 	}
 }
 
-void registrarMovimiento(ListaReplay* lista, TipoMovimiento tipo, const EstadoJuego* nuevoEstado) {
+void registrarMovimiento(ListaReplay* lista, TipoMovimiento tipo, const EstadoReplay* nuevoEstado) {
 	// Si "actual" no es el ultimo nodo, hay una rama de redo vieja: se descarta.
 	if (lista->actual != lista->ultimo) {
 		descartarNodosDespuesDe(lista, lista->actual);
@@ -66,7 +66,7 @@ void registrarMovimiento(ListaReplay* lista, TipoMovimiento tipo, const EstadoJu
 	lista->cantidad++;
 }
 
-bool deshacerMovimiento(ListaReplay* lista, EstadoJuego* destino) {
+bool deshacerMovimiento(ListaReplay* lista, EstadoReplay* destino) {
 	if (lista->actual == nullptr) {
 		return false; // ya estamos en el estado inicial, no hay nada mas atras
 	}
@@ -77,7 +77,7 @@ bool deshacerMovimiento(ListaReplay* lista, EstadoJuego* destino) {
 	return true;
 }
 
-bool rehacerMovimiento(ListaReplay* lista, EstadoJuego* destino) {
+bool rehacerMovimiento(ListaReplay* lista, EstadoReplay* destino) {
 	NodoMovimiento* siguienteNodo = (lista->actual == nullptr) ? lista->primero : lista->actual->siguiente;
 	if (siguienteNodo == nullptr) {
 		return false; // ya estamos en el ultimo movimiento, no hay mas adelante
@@ -90,4 +90,37 @@ bool rehacerMovimiento(ListaReplay* lista, EstadoJuego* destino) {
 
 void iniciarReproduccion(ListaReplay* lista) {
 	lista->actual = nullptr; // el bucle de reproduccion usa rehacerMovimiento desde aca
+}
+
+void capturarEstado(const Tablero* t, const Pieza* p, int puntaje, EstadoReplay* destino) {
+	NodoFila* fila = t->primeraFila;
+	int i = 0;
+	while (fila != nullptr && i < ALTO_TABLERO) {
+		for (int c = 0; c < ANCHO_TABLERO; c++) {
+			destino->celdas[i][c] = fila->celdas[c];
+		}
+		fila = fila->siguiente;
+		i++;
+	}
+	for (; i < ALTO_TABLERO; i++) {
+		for (int c = 0; c < ANCHO_TABLERO; c++) {
+			destino->celdas[i][c] = 0;
+		}
+	}
+	destino->piezaActiva = *p;
+	destino->puntaje = puntaje;
+}
+
+void aplicarEstado(Tablero* t, Pieza* p, int* puntaje, const EstadoReplay* origen) {
+	NodoFila* fila = t->primeraFila;
+	int i = 0;
+	while (fila != nullptr && i < ALTO_TABLERO) {
+		for (int c = 0; c < ANCHO_TABLERO; c++) {
+			fila->celdas[c] = origen->celdas[i][c];
+		}
+		fila = fila->siguiente;
+		i++;
+	}
+	*p = origen->piezaActiva;
+	*puntaje = origen->puntaje;
 }

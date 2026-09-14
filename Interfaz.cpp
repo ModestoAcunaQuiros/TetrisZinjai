@@ -4,6 +4,7 @@
 #include <cstring>
 #include <cstdio>
 #include <cmath>
+#include <ctime>
 #include <algorithm>
 using namespace std;
 
@@ -28,6 +29,18 @@ void inicializarInterfaz(ContextoInterfaz* ctx, sf::RenderWindow* ventana) {
 	
 	ctx->nombreJugador[0] = '\0';
 	ctx->musicaFondo = nullptr; // main.cpp lo conecta si hay musica
+	ctx->algoritmoOrdenamiento = ORDEN_INSERCION;
+	ctx->puntajeUltimaPartida = 0;
+	ctx->replay = nullptr;
+}
+
+// Libera la lista de replay de la ultima partida (si existe).
+static void liberarReplay(ContextoInterfaz* ctx) {
+	if (ctx->replay != nullptr) {
+		destruirReplay(ctx->replay);
+		delete ctx->replay;
+		ctx->replay = nullptr;
+	}
 }
 
 EstadoJuego pantallaMenu(ContextoInterfaz* ctx) {
@@ -188,7 +201,20 @@ EstadoJuego pantallaIngresarNombre(ContextoInterfaz* ctx) {
 
 EstadoJuego pantallaTablaPuntajes(ContextoInterfaz* ctx) {
 	sf::Vector2u tamanoVentana = ctx->ventana->getSize();
-	
+
+	// La tabla se carga y se ordena CADA VEZ que se muestra la pantalla.
+	RegistroPuntaje registros[MAX_PUNTAJES];
+	int cantidad = cargarPuntajes(registros, MAX_PUNTAJES);
+
+	double milisegundosOrden = 0.0;
+	auto reordenar = [&]() {
+		std::clock_t inicio = std::clock();
+		ordenarPuntajes(registros, cantidad, ctx->algoritmoOrdenamiento);
+		std::clock_t fin = std::clock();
+		milisegundosOrden = 1000.0 * (fin - inicio) / CLOCKS_PER_SEC;
+	};
+	reordenar();
+
 	while (ctx->ventana->isOpen()) {
 		sf::Event evento;
 		while (ctx->ventana->pollEvent(evento)) {
@@ -200,34 +226,291 @@ EstadoJuego pantallaTablaPuntajes(ContextoInterfaz* ctx) {
 				if (evento.key.code == sf::Keyboard::Escape || evento.key.code == sf::Keyboard::Return) {
 					return ESTADO_MENU;
 				}
+				if (evento.key.code == sf::Keyboard::Num1) {
+					ctx->algoritmoOrdenamiento = ORDEN_INSERCION;
+					reordenar();
+				}
+				if (evento.key.code == sf::Keyboard::Num2) {
+					ctx->algoritmoOrdenamiento = ORDEN_QUICKSORT;
+					reordenar();
+				}
 			}
 		}
-		
+
 		ctx->ventana->clear(sf::Color(20, 20, 30));
-		
+
 		if (ctx->fuenteCargada) {
-			sf::Text titulo("MEJORES PUNTAJES", ctx->fuente, 32);
+			sf::Text titulo("MEJORES PUNTAJES", ctx->fuente, 30);
 			titulo.setColor(sf::Color::White);
 			sf::FloatRect limites = titulo.getLocalBounds();
-			titulo.setPosition(tamanoVentana.x / 2.f - limites.width / 2.f, 50.f);
+			titulo.setPosition(tamanoVentana.x / 2.f - limites.width / 2.f, 24.f);
 			ctx->ventana->draw(titulo);
-			
-			sf::Text aviso("Modulo de puntajes aun no implementado.", ctx->fuente, 20);
-			aviso.setColor(sf::Color(180, 180, 180));
-			sf::FloatRect limitesAviso = aviso.getLocalBounds();
-			aviso.setPosition(tamanoVentana.x / 2.f - limitesAviso.width / 2.f, 150.f);
-			ctx->ventana->draw(aviso);
-			
-			sf::Text ayuda("Enter o Esc para volver al menu", ctx->fuente, 16);
+
+			if (cantidad == 0) {
+				sf::Text aviso("Todavia no hay puntajes guardados.", ctx->fuente, 20);
+				aviso.setColor(sf::Color(180, 180, 180));
+				sf::FloatRect laviso = aviso.getLocalBounds();
+				aviso.setPosition(tamanoVentana.x / 2.f - laviso.width / 2.f, 220.f);
+				ctx->ventana->draw(aviso);
+			} else {
+				for (int i = 0; i < cantidad; i++) {
+					char posicion[8];
+					snprintf(posicion, sizeof(posicion), "%d.", i + 1);
+					sf::Text tPos(posicion, ctx->fuente, 18);
+					tPos.setColor(i == 0 ? sf::Color(255, 213, 0) : sf::Color(150, 170, 195));
+					tPos.setPosition(120.f, 100.f + i * 32.f);
+					ctx->ventana->draw(tPos);
+
+					sf::Text tNombre(registros[i].nombre, ctx->fuente, 18);
+					tNombre.setColor(i == 0 ? sf::Color(255, 213, 0) : sf::Color::White);
+					tNombre.setPosition(160.f, 100.f + i * 32.f);
+					ctx->ventana->draw(tNombre);
+
+					char valor[16];
+					snprintf(valor, sizeof(valor), "%d", registros[i].puntaje);
+					sf::Text tValor(valor, ctx->fuente, 18);
+					tValor.setColor(i == 0 ? sf::Color(255, 213, 0) : sf::Color(200, 215, 240));
+					sf::FloatRect lv = tValor.getLocalBounds();
+					tValor.setPosition(600.f - lv.width, 100.f + i * 32.f);
+					ctx->ventana->draw(tValor);
+				}
+			}
+
+			char info[120];
+			snprintf(info, sizeof(info), "Ordenado con: %s   (%.3f ms)",
+					 nombreAlgoritmo(ctx->algoritmoOrdenamiento), milisegundosOrden);
+			sf::Text tInfo(info, ctx->fuente, 15);
+			tInfo.setColor(sf::Color(160, 200, 160));
+			tInfo.setPosition(120.f, 442.f);
+			ctx->ventana->draw(tInfo);
+
+			sf::Text ayuda("[1] Insercion   [2] Quicksort   [Enter/Esc] Volver",
+						   ctx->fuente, 14);
 			ayuda.setColor(sf::Color(150, 150, 150));
-			sf::FloatRect limitesAyuda = ayuda.getLocalBounds();
-			ayuda.setPosition(tamanoVentana.x / 2.f - limitesAyuda.width / 2.f, 520.f);
+			sf::FloatRect layuda = ayuda.getLocalBounds();
+			ayuda.setPosition(tamanoVentana.x / 2.f - layuda.width / 2.f, 508.f);
 			ctx->ventana->draw(ayuda);
 		}
-		
+
 		ctx->ventana->display();
 	}
-	
+
+	return ESTADO_SALIR;
+}
+
+EstadoJuego pantallaGameOver(ContextoInterfaz* ctx) {
+	sf::Vector2u tamanoVentana = ctx->ventana->getSize();
+
+	// Carga la tabla, inserta el puntaje si califica y la guarda ordenada.
+	RegistroPuntaje registros[MAX_PUNTAJES];
+	int cantidad = cargarPuntajes(registros, MAX_PUNTAJES);
+
+	const char* nombre = (ctx->nombreJugador[0] != '\0') ? ctx->nombreJugador : "Jugador";
+	bool califico = (ctx->puntajeUltimaPartida > 0) &&
+					calificaEnTop(registros, cantidad, ctx->puntajeUltimaPartida);
+	if (califico) {
+		cantidad = agregarPuntaje(registros, cantidad, nombre, ctx->puntajeUltimaPartida);
+		ordenarPuntajes(registros, cantidad, ctx->algoritmoOrdenamiento);
+		guardarPuntajes(registros, cantidad);
+	}
+
+	while (ctx->ventana->isOpen()) {
+		sf::Event evento;
+		while (ctx->ventana->pollEvent(evento)) {
+			if (evento.type == sf::Event::Closed) {
+				ctx->ventana->close();
+				liberarReplay(ctx);
+				return ESTADO_SALIR;
+			}
+			if (evento.type == sf::Event::KeyPressed) {
+				if (evento.key.code == sf::Keyboard::Return ||
+					evento.key.code == sf::Keyboard::Escape) {
+					liberarReplay(ctx);
+					return ESTADO_MENU;
+				}
+				if (evento.key.code == sf::Keyboard::T) {
+					liberarReplay(ctx);
+					return ESTADO_TABLA_PUNTAJES;
+				}
+				if (evento.key.code == sf::Keyboard::R) {
+					EstadoJuego resultadoReplay = pantallaReplay(ctx);
+					if (resultadoReplay == ESTADO_SALIR) {
+						liberarReplay(ctx);
+						return ESTADO_SALIR;
+					}
+					// Al terminar el replay se vuelve a esta pantalla.
+				}
+			}
+		}
+
+		ctx->ventana->clear(sf::Color(16, 12, 24));
+
+		if (ctx->fuenteCargada) {
+			sf::Text titulo("GAME OVER", ctx->fuente, 48);
+			titulo.setColor(sf::Color(255, 80, 100));
+			sf::FloatRect lt = titulo.getLocalBounds();
+			titulo.setPosition(tamanoVentana.x / 2.f - lt.width / 2.f, 110.f);
+			ctx->ventana->draw(titulo);
+
+			char linea[80];
+			snprintf(linea, sizeof(linea), "Jugador: %s", nombre);
+			sf::Text tJugador(linea, ctx->fuente, 22);
+			tJugador.setColor(sf::Color(200, 215, 240));
+			sf::FloatRect lj = tJugador.getLocalBounds();
+			tJugador.setPosition(tamanoVentana.x / 2.f - lj.width / 2.f, 210.f);
+			ctx->ventana->draw(tJugador);
+
+			snprintf(linea, sizeof(linea), "Puntaje: %d", ctx->puntajeUltimaPartida);
+			sf::Text tPuntaje(linea, ctx->fuente, 30);
+			tPuntaje.setColor(sf::Color::White);
+			sf::FloatRect lp = tPuntaje.getLocalBounds();
+			tPuntaje.setPosition(tamanoVentana.x / 2.f - lp.width / 2.f, 250.f);
+			ctx->ventana->draw(tPuntaje);
+
+			const char* mensaje = califico
+				? "Entraste a la tabla de mejores puntajes!"
+				: "No alcanzaste el top 10. Intenta de nuevo!";
+			sf::Text tMensaje(mensaje, ctx->fuente, 18);
+			tMensaje.setColor(califico ? sf::Color(120, 230, 150) : sf::Color(180, 180, 190));
+			sf::FloatRect lm = tMensaje.getLocalBounds();
+			tMensaje.setPosition(tamanoVentana.x / 2.f - lm.width / 2.f, 310.f);
+			ctx->ventana->draw(tMensaje);
+
+			sf::Text ayuda("[R] Reproducir partida    [T] Ver tabla    [Enter/Esc] Volver al menu",
+						   ctx->fuente, 16);
+			ayuda.setColor(sf::Color(150, 150, 150));
+			sf::FloatRect la = ayuda.getLocalBounds();
+			ayuda.setPosition(tamanoVentana.x / 2.f - la.width / 2.f, 420.f);
+			ctx->ventana->draw(ayuda);
+		}
+
+		ctx->ventana->display();
+	}
+
+	liberarReplay(ctx);
+	return ESTADO_SALIR;
+}
+
+EstadoJuego pantallaReplay(ContextoInterfaz* ctx) {
+	if (ctx->replay == nullptr) {
+		return ESTADO_MENU; // no hay partida que reproducir
+	}
+	ListaReplay* replay = ctx->replay;
+
+	Tablero tablero;
+	inicializarTablero(&tablero);
+	Pieza pieza;
+	int puntaje = 0;
+
+	// Arrancamos en el estado inicial de la partida.
+	iniciarReproduccion(replay);
+	aplicarEstado(&tablero, &pieza, &puntaje, &replay->estadoInicial);
+
+	const float DISENO_ANCHO = 720.f;
+	const float DISENO_ALTO = 540.f;
+	const float ladoCelda = 20.f;
+	const float anchoTablero = ANCHO_TABLERO * ladoCelda;
+	const float yTablero = 70.f;
+
+	bool autoReproducir = false;
+	sf::Clock relojAuto;
+	const float intervaloAuto = 0.30f;
+
+	while (ctx->ventana->isOpen()) {
+		sf::Vector2u tamVentana = ctx->ventana->getSize();
+		float escala = std::min(static_cast<float>(tamVentana.x) / DISENO_ANCHO,
+								static_cast<float>(tamVentana.y) / DISENO_ALTO);
+		if (escala < 1.f) escala = 1.f;
+		float anchoLogico = static_cast<float>(tamVentana.x) / escala;
+		float altoLogico = static_cast<float>(tamVentana.y) / escala;
+		float xTablero = (anchoLogico - anchoTablero) * 0.5f;
+
+		sf::Event evento;
+		while (ctx->ventana->pollEvent(evento)) {
+			if (evento.type == sf::Event::Closed) {
+				ctx->ventana->close();
+				return ESTADO_SALIR;
+			}
+			if (evento.type == sf::Event::KeyPressed) {
+				if (evento.key.code == sf::Keyboard::Escape) {
+					return ESTADO_MENU;
+				}
+				if (evento.key.code == sf::Keyboard::Right ||
+					evento.key.code == sf::Keyboard::Space) {
+					EstadoReplay destino;
+					if (rehacerMovimiento(replay, &destino)) {
+						aplicarEstado(&tablero, &pieza, &puntaje, &destino);
+					}
+					autoReproducir = false;
+				}
+				if (evento.key.code == sf::Keyboard::Left) {
+					EstadoReplay destino;
+					if (deshacerMovimiento(replay, &destino)) {
+						aplicarEstado(&tablero, &pieza, &puntaje, &destino);
+					}
+					autoReproducir = false;
+				}
+				if (evento.key.code == sf::Keyboard::P) {
+					autoReproducir = !autoReproducir;
+					relojAuto.restart();
+				}
+			}
+		}
+
+		// Reproduccion automatica: avanza sola un paso cada intervaloAuto.
+		if (autoReproducir && relojAuto.getElapsedTime().asSeconds() >= intervaloAuto) {
+			relojAuto.restart();
+			EstadoReplay destino;
+			if (rehacerMovimiento(replay, &destino)) {
+				aplicarEstado(&tablero, &pieza, &puntaje, &destino);
+			} else {
+				autoReproducir = false;
+			}
+		}
+
+		ctx->ventana->clear(sf::Color(8, 10, 18));
+		dibujarFondoEscenario(ctx);
+		ctx->ventana->setView(sf::View(sf::FloatRect(0.f, 0.f, anchoLogico, altoLogico)));
+
+		dibujarTablero(ctx, &tablero, &pieza, xTablero, yTablero, ladoCelda, false);
+		dibujarPanelPuntaje(ctx, puntaje, xTablero - 145.f, yTablero);
+
+		// Cuenta el paso actual recorriendo la lista hasta "actual".
+		int pasoActual = 0;
+		for (NodoMovimiento* n = replay->primero; n != nullptr; n = n->siguiente) {
+			pasoActual++;
+			if (n == replay->actual) break;
+		}
+
+		if (ctx->fuenteCargada) {
+			sf::Text titulo("REPLAY", ctx->fuente, 26);
+			titulo.setColor(sf::Color(255, 213, 0));
+			titulo.setPosition(xTablero + anchoTablero + 30.f, yTablero);
+			ctx->ventana->draw(titulo);
+
+			char paso[48];
+			snprintf(paso, sizeof(paso), "Paso %d / %d", pasoActual, replay->cantidad);
+			sf::Text tPaso(paso, ctx->fuente, 16);
+			tPaso.setColor(sf::Color(200, 215, 240));
+			tPaso.setPosition(xTablero + anchoTablero + 30.f, yTablero + 40.f);
+			ctx->ventana->draw(tPaso);
+
+			const char* estadoAuto = autoReproducir ? "Auto: ON" : "Auto: OFF";
+			sf::Text tAuto(estadoAuto, ctx->fuente, 15);
+			tAuto.setColor(autoReproducir ? sf::Color(120, 230, 150) : sf::Color(170, 170, 180));
+			tAuto.setPosition(xTablero + anchoTablero + 30.f, yTablero + 68.f);
+			ctx->ventana->draw(tAuto);
+
+			sf::Text ayuda("[<-] Atras   [->] Avanzar   [P] Auto   [Esc] Menu",
+						   ctx->fuente, 13);
+			ayuda.setColor(sf::Color(150, 150, 150));
+			ayuda.setPosition(xTablero + anchoTablero + 30.f, yTablero + 110.f);
+			ctx->ventana->draw(ayuda);
+		}
+
+		ctx->ventana->display();
+	}
+
 	return ESTADO_SALIR;
 }
 
@@ -774,8 +1057,9 @@ void dibujarPanelHold(ContextoInterfaz* ctx, const PilaHold* hold, float x, floa
 
 	}
 	if(!pilaHoldVacia(hold)){
-		const int* forma = obtenerFormaPieza(hold->tope.tipo, 0);
-		sf::Color color = colorPieza(hold->tope.tipo);
+		Pieza piezaTope = topeHold(hold);
+		const int* forma = obtenerFormaPieza(piezaTope.tipo, 0);
+		sf::Color color = colorPieza(piezaTope.tipo);
 		float celdaMini = 12.f;
 		float anchoMini = 4.f * celdaMini;
 		float xInicio = x + (90.f - anchoMini) * 0.5f;

@@ -1,26 +1,53 @@
 #include "PilaHold.h"
 
-void inicializarPilaHold(PilaHold* pila) {
-	pila->hayPieza = false;
-	// pila->tope queda con valores basura hasta el primer push,
-	// pero no se lee mientras hayPieza sea false, asi que no importa.
+void inicializarPilaHold(PilaHold* pila, int capacidad) {
+	pila->tope = nullptr;
+	pila->cantidad = 0;
+	pila->capacidad = capacidad;
+}
+
+void destruirPilaHold(PilaHold* pila) {
+	NodoPila* actual = pila->tope;
+	while (actual != nullptr) {
+		NodoPila* siguiente = actual->siguiente;
+		delete actual;
+		actual = siguiente;
+	}
+	pila->tope = nullptr;
+	pila->cantidad = 0;
 }
 
 bool pilaHoldVacia(const PilaHold* pila) {
-	return !pila->hayPieza;
+	return pila->tope == nullptr;
+}
+
+bool pilaHoldLlena(const PilaHold* pila) {
+	return pila->cantidad >= pila->capacidad;
 }
 
 bool pushHold(PilaHold* pila, Pieza p) {
-	if (pila->hayPieza) {
-		return false;
+	if (pilaHoldLlena(pila)) {
+		return false; // no hay espacio en la pila
 	}
-	pila->tope = p;
-	pila->hayPieza = true;
+	NodoPila* nuevo = new NodoPila;
+	nuevo->dato = p;
+	nuevo->siguiente = pila->tope;
+	pila->tope = nuevo;
+	pila->cantidad++;
 	return true;
 }
 
 Pieza popHold(PilaHold* pila) {
 	// Se asume que el llamador ya verifico pilaHoldVacia() == false.
-	pila->hayPieza = false;
-	return pila->tope;
+	NodoPila* antiguo = pila->tope;
+	Pieza resultado = antiguo->dato;
+	pila->tope = antiguo->siguiente;
+	delete antiguo;
+	pila->cantidad--;
+	return resultado;
+}
+
+Pieza topeHold(const PilaHold* pila) {
+	// Se asume que el llamador ya verifico pilaHoldVacia() == false.
+	return pila->tope->dato;
 }

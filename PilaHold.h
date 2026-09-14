@@ -3,24 +3,37 @@
 
 #include "Pieza.h"
 
-// Pila propia de capacidad 1. NO usar std::stack.
-// Aunque la capacidad sea 1, se implementa con la logica real de
-// pila (tope, push, pop) para respetar el objetivo de aprendizaje.
-struct PilaHold {
-	Pieza tope;
-	bool hayPieza; // false = pila vacia
+// Pila propia (LIFO) implementada con nodos enlazados. NO usar std::stack.
+// Para la casilla de espera (hold) se usa con capacidad 1, pero la
+// estructura es una pila real (tope, push, pop, tope sin desapilar).
+struct NodoPila {
+	Pieza dato;
+	NodoPila* siguiente;
 };
 
-void inicializarPilaHold(PilaHold* pila);
-bool pilaHoldVacia(const PilaHold* pila);
+struct PilaHold {
+	NodoPila* tope;  // nullptr = pila vacia
+	int cantidad;    // cuantos elementos hay apilados
+	int capacidad;   // el hold usa 1
+};
 
-// Intenta guardar una pieza en el hold. Devuelve false si ya habia una
-// (en ese caso, el llamador debe decidir la regla: por ejemplo, no dejar
-// usar hold de nuevo hasta que la pieza actual se coloque).
+// Inicializa la pila con la capacidad indicada (el hold usa 1).
+void inicializarPilaHold(PilaHold* pila, int capacidad);
+
+// Libera todos los nodos de la pila.
+void destruirPilaHold(PilaHold* pila);
+
+bool pilaHoldVacia(const PilaHold* pila);
+bool pilaHoldLlena(const PilaHold* pila);
+
+// Apila una pieza (LIFO). Devuelve false si la pila esta llena.
 bool pushHold(PilaHold* pila, Pieza p);
 
-// Saca la pieza guardada y deja el hold vacio. Asume que pilaHoldVacia()
-// es false (revisar antes de llamar).
+// Desapila y devuelve la pieza del tope. Asume que no esta vacia.
 Pieza popHold(PilaHold* pila);
+
+// Devuelve la pieza del tope sin desapilarla (para dibujarla).
+// Asume que no esta vacia.
+Pieza topeHold(const PilaHold* pila);
 
 #endif

@@ -3,8 +3,12 @@
 #include "Interfaz.h"
 #include "Juego.h" 
 #include <iostream>
+#include <cstdlib>
+#include <ctime>
 
 int main() {
+	srand(static_cast<unsigned>(time(nullptr))); // bolsa de piezas distinta cada partida
+
 	sf::RenderWindow ventana(sf::VideoMode(720, 540), "Tetris");
 	ventana.setFramerateLimit(60);
 	
@@ -44,6 +48,10 @@ int main() {
 			
 		case ESTADO_JUGANDO:
 			estado = jugarPartida(&ctx);
+			break;
+			
+		case ESTADO_GAMEOVER:
+			estado = pantallaGameOver(&ctx);
 			break;
 			
 		default:
