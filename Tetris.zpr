@@ -15,7 +15,7 @@ tab_width=4
 tab_use_spaces=0
 explorer_path=.
 inherits_from=
-current_source=Juego.cpp
+current_source=Tablero.h
 path_char=\
 [source]
 path=main.cpp
@@ -27,7 +27,7 @@ cursor=0:0
 open=true
 [source]
 path=Juego.cpp
-cursor=0:0
+cursor=19:13
 open=true
 [source]
 path=ColaPieza.cpp
@@ -59,7 +59,7 @@ cursor=0:0
 open=true
 [source]
 path=Ordenamiento.cpp
-cursor=26:78
+cursor=29:7
 open=true
 [header]
 path=ColaEventos.h
@@ -75,7 +75,7 @@ cursor=16:0
 open=true
 [header]
 path=Juego.h
-cursor=0:0
+cursor=8:0
 open=true
 [header]
 path=Pieza.h
@@ -91,7 +91,7 @@ cursor=0:0
 open=true
 [header]
 path=Tablero.h
-cursor=0:0
+cursor=22:64
 open=true
 [header]
 path=Puntajes.h

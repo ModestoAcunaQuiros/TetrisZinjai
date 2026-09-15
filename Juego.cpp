@@ -83,8 +83,7 @@ EstadoJuego jugarPartida(ContextoInterfaz* ctx) {
     Pieza piezaActiva = desencolarPieza(&colaPiezas);
     piezasSuficientes(&colaPiezas, 5);
 
-    // --- Replay: lista doblemente enlazada propia con toda la partida ---
-    // Se libera la partida anterior si quedo guardada, y se arranca una nueva.
+    // Replay de la partida
     if (ctx->replay != nullptr) {
         destruirReplay(ctx->replay);
         delete ctx->replay;
@@ -107,7 +106,6 @@ EstadoJuego jugarPartida(ContextoInterfaz* ctx) {
     int puntaje = 0;
     bool pausado = false;
 
-    // Guarda una instantanea completa del estado tras un movimiento relevante.
     auto registrar = [&](TipoMovimiento tipo) {
         EstadoReplay instantanea;
         capturarEstado(&tablero, &piezaActiva, puntaje, &instantanea);
@@ -213,8 +211,7 @@ EstadoJuego jugarPartida(ContextoInterfaz* ctx) {
     const float anchoTablero = ANCHO_TABLERO * ladoCelda;
     const float yTablero = 70.f;
 
-    // Cierra la partida liberando las estructuras propias. En game over se
-    // conserva el replay (lo usa la pantalla de reproduccion).
+    // En game over se conserva el replay para poder reproducirlo.
     auto terminar = [&](bool conservarReplay) {
         destruirPilaHold(&hold);
         destruirColaDeEventos(&colaEventos);
@@ -307,7 +304,11 @@ EstadoJuego jugarPartida(ContextoInterfaz* ctx) {
 
                 } else if (evento.key.code == sf::Keyboard::Down) {
                     intento.filaOrigen++;
-                    if (!piezaColisiona(&tablero, &intento)) { piezaActiva = intento; registrar(MOV_BAJAR); }
+                    if (!piezaColisiona(&tablero, &intento)) {
+                        piezaActiva = intento;
+                        registrar(MOV_BAJAR);
+                        relojCaida.restart();
+                    }
 
                 } else if (evento.key.code == sf::Keyboard::C) {
                     if (!huboHoldEstaVez) {
@@ -324,16 +325,21 @@ EstadoJuego jugarPartida(ContextoInterfaz* ctx) {
                         // Al guardar la pieza, la bomba no viaja al hold.
                         piezaEsBomba = false;
                         huboHoldEstaVez = true;
+
+                        // Si la pieza nueva no cabe, termina la partida.
+                        if (piezaColisiona(&tablero, &piezaActiva)) {
+                            ctx->puntajeUltimaPartida = puntaje;
+                            terminar(true);
+                            return ESTADO_GAMEOVER;
+                        }
                     }
                 } else if (evento.key.code == sf::Keyboard::Z) {
-                    // Deshacer: restaura el estado anterior guardado en la lista.
                     EstadoReplay destino;
                     if (deshacerMovimiento(ctx->replay, &destino)) {
                         aplicarEstado(&tablero, &piezaActiva, &puntaje, &destino);
                         relojCaida.restart();
                     }
                 } else if (evento.key.code == sf::Keyboard::Y) {
-                    // Rehacer: vuelve a aplicar el siguiente estado guardado.
                     EstadoReplay destino;
                     if (rehacerMovimiento(ctx->replay, &destino)) {
                         aplicarEstado(&tablero, &piezaActiva, &puntaje, &destino);
@@ -512,7 +518,21 @@ EstadoJuego jugarPartida(ContextoInterfaz* ctx) {
         // (la explosion tiene su propia animacion).
         bool pantallaEspejo = (tiempoActual < tiempoEspejoHasta);
         const Pieza* piezaParaDibujar = (flasheandoFilas || explotandoBomba) ? nullptr : &piezaActiva;
-        dibujarTablero(ctx, &tablero, piezaParaDibujar, xTablero, yTablero, ladoCelda, pantallaEspejo);
+
+        // Interpola la caida de la pieza activa (0..1 celda).
+        float desplazamientoCaida = 0.f;
+        if (piezaParaDibujar != nullptr && !pausado) {
+            Pieza abajo = piezaActiva;
+            abajo.filaOrigen++;
+            if (!piezaColisiona(&tablero, &abajo)) {
+                float progreso = relojCaida.getElapsedTime().asSeconds() / intervaloCaida;
+                if (progreso < 0.f) progreso = 0.f;
+                if (progreso > 1.f) progreso = 1.f;
+                desplazamientoCaida = progreso * ladoCelda;
+            }
+        }
+
+        dibujarTablero(ctx, &tablero, piezaParaDibujar, xTablero, yTablero, ladoCelda, pantallaEspejo, desplazamientoCaida);
 
         // Parpadeo de las filas completas antes de eliminarlas.
         if (flasheandoFilas) {

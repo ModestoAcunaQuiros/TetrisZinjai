@@ -27,7 +27,7 @@ bool pilaHoldLlena(const PilaHold* pila) {
 
 bool pushHold(PilaHold* pila, Pieza p) {
 	if (pilaHoldLlena(pila)) {
-		return false; // no hay espacio en la pila
+		return false;
 	}
 	NodoPila* nuevo = new NodoPila;
 	nuevo->dato = p;
@@ -38,7 +38,6 @@ bool pushHold(PilaHold* pila, Pieza p) {
 }
 
 Pieza popHold(PilaHold* pila) {
-	// Se asume que el llamador ya verifico pilaHoldVacia() == false.
 	NodoPila* antiguo = pila->tope;
 	Pieza resultado = antiguo->dato;
 	pila->tope = antiguo->siguiente;
@@ -48,6 +47,5 @@ Pieza popHold(PilaHold* pila) {
 }
 
 Pieza topeHold(const PilaHold* pila) {
-	// Se asume que el llamador ya verifico pilaHoldVacia() == false.
 	return pila->tope->dato;
 }

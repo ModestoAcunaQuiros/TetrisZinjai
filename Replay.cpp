@@ -3,7 +3,7 @@
 void inicializarReplay(ListaReplay* lista, const EstadoReplay* estadoInicial) {
 	lista->primero = nullptr;
 	lista->ultimo = nullptr;
-	lista->actual = nullptr; // arrancamos parados en el estado inicial
+	lista->actual = nullptr;
 	lista->estadoInicial = *estadoInicial;
 	lista->cantidad = 0;
 }
@@ -21,20 +21,15 @@ void destruirReplay(ListaReplay* lista) {
 	lista->cantidad = 0;
 }
 
-// Elimina todos los nodos DESPUES de "desde" (sin incluirlo). Se usa
-// cuando el jugador deshizo movimientos y luego hizo uno nuevo: se
-// descarta la "rama" vieja de redo, igual que un editor de texto.
+// Borra los nodos posteriores a "desde" (sin incluirlo).
 static void descartarNodosDespuesDe(ListaReplay* lista, NodoMovimiento* desde) {
-	NodoMovimiento* primerADescartar = (desde == nullptr) ? lista->primero : desde->siguiente;
-	
-	NodoMovimiento* actual = primerADescartar;
+	NodoMovimiento* actual = (desde == nullptr) ? lista->primero : desde->siguiente;
 	while (actual != nullptr) {
 		NodoMovimiento* siguiente = actual->siguiente;
 		delete actual;
 		lista->cantidad--;
 		actual = siguiente;
 	}
-	
 	if (desde == nullptr) {
 		lista->primero = nullptr;
 		lista->ultimo = nullptr;
@@ -45,17 +40,16 @@ static void descartarNodosDespuesDe(ListaReplay* lista, NodoMovimiento* desde) {
 }
 
 void registrarMovimiento(ListaReplay* lista, TipoMovimiento tipo, const EstadoReplay* nuevoEstado) {
-	// Si "actual" no es el ultimo nodo, hay una rama de redo vieja: se descarta.
 	if (lista->actual != lista->ultimo) {
 		descartarNodosDespuesDe(lista, lista->actual);
 	}
-	
+
 	NodoMovimiento* nuevo = new NodoMovimiento;
 	nuevo->tipo = tipo;
 	nuevo->estado = *nuevoEstado;
 	nuevo->anterior = lista->ultimo;
 	nuevo->siguiente = nullptr;
-	
+
 	if (lista->ultimo == nullptr) {
 		lista->primero = nuevo;
 	} else {
@@ -68,9 +62,8 @@ void registrarMovimiento(ListaReplay* lista, TipoMovimiento tipo, const EstadoRe
 
 bool deshacerMovimiento(ListaReplay* lista, EstadoReplay* destino) {
 	if (lista->actual == nullptr) {
-		return false; // ya estamos en el estado inicial, no hay nada mas atras
+		return false;
 	}
-	
 	NodoMovimiento* nodoAnterior = lista->actual->anterior;
 	*destino = (nodoAnterior != nullptr) ? nodoAnterior->estado : lista->estadoInicial;
 	lista->actual = nodoAnterior;
@@ -80,16 +73,15 @@ bool deshacerMovimiento(ListaReplay* lista, EstadoReplay* destino) {
 bool rehacerMovimiento(ListaReplay* lista, EstadoReplay* destino) {
 	NodoMovimiento* siguienteNodo = (lista->actual == nullptr) ? lista->primero : lista->actual->siguiente;
 	if (siguienteNodo == nullptr) {
-		return false; // ya estamos en el ultimo movimiento, no hay mas adelante
+		return false;
 	}
-	
 	*destino = siguienteNodo->estado;
 	lista->actual = siguienteNodo;
 	return true;
 }
 
 void iniciarReproduccion(ListaReplay* lista) {
-	lista->actual = nullptr; // el bucle de reproduccion usa rehacerMovimiento desde aca
+	lista->actual = nullptr;
 }
 
 void capturarEstado(const Tablero* t, const Pieza* p, int puntaje, EstadoReplay* destino) {

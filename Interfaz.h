@@ -40,16 +40,8 @@ struct ContextoInterfaz {
 	
 	char nombreJugador[INTERFAZ_MAX_LONGITUD_NOMBRE];
 
-	// Algoritmo con el que se ordena la tabla de puntajes (se puede
-	// cambiar desde la pantalla de mejores puntajes).
 	AlgoritmoOrdenamiento algoritmoOrdenamiento;
-
-	// Puntaje de la ultima partida, para que la pantalla de fin de juego
-	// pueda guardarlo en la tabla.
 	int puntajeUltimaPartida;
-
-	// Replay de la ultima partida (lista doblemente enlazada). Se reserva
-	// al empezar a jugar y se libera al volver al menu.
 	ListaReplay* replay;
 };
 
@@ -66,7 +58,7 @@ void dibujarFondoEscenario(ContextoInterfaz* ctx, float impulso = 0.f);
 void dibujarPanelChamfer(ContextoInterfaz* ctx, float x, float y, float ancho, float alto,
                          sf::Color relleno, sf::Color borde);
 void dibujarBloque(sf::RenderWindow* ventana, float x, float y, float lado, sf::Color color);
-void dibujarTablero(ContextoInterfaz* ctx, const Tablero* tablero, const Pieza* piezaActiva,float origenX, float origenY, float celda, bool espejo = false);
+void dibujarTablero(ContextoInterfaz* ctx, const Tablero* tablero, const Pieza* piezaActiva,float origenX, float origenY, float celda, bool espejo = false, float desplazamientoPiezaY = 0.f);
 void dibujarPanelSiguientes(ContextoInterfaz* ctx, const Pieza* proximas, int cantidad, float x, float y);
 void dibujarPanelHold(ContextoInterfaz* ctx, const PilaHold* hold, float x, float y);
 void dibujarPanelPuntaje(ContextoInterfaz* ctx, int puntaje, float x, float y);

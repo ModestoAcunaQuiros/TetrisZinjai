@@ -7,14 +7,12 @@
 #include <ctime>
 
 int main() {
-	srand(static_cast<unsigned>(time(nullptr))); // bolsa de piezas distinta cada partida
+	srand(static_cast<unsigned>(time(nullptr)));
 
 	sf::RenderWindow ventana(sf::VideoMode(720, 540), "Tetris");
 	ventana.setFramerateLimit(60);
 	
-	// La musica se precarga entera en memoria (sf::Sound en vez de sf::Music):
-	// evita el streaming en un hilo propio, que en algunos equipos hacia
-	// crashear el programa a los pocos segundos de empezar a sonar.
+	// Musica completa en memoria (sf::Sound en vez de sf::Music).
 	sf::SoundBuffer bufferMusica;
 	sf::Sound musica;
 	bool musicaCargada = bufferMusica.loadFromFile("audio/OTS_Tetris.ogg");
@@ -28,7 +26,7 @@ int main() {
 	
 	ContextoInterfaz ctx;
 	inicializarInterfaz(&ctx, &ventana);
-	ctx.musicaFondo = musicaCargada ? &musica : nullptr; // para pausarla en ciertas pantallas
+	ctx.musicaFondo = musicaCargada ? &musica : nullptr;
 	
 	EstadoJuego estado = ESTADO_MENU;
 	

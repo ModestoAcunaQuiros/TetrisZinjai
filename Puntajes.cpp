@@ -7,10 +7,9 @@ int cargarPuntajes(RegistroPuntaje* destino, int maximo) {
 	std::ifstream archivo(ARCHIVO_PUNTAJES);
 	int cantidad = 0;
 	if (!archivo.is_open()) {
-		return 0; // todavia no hay tabla guardada
+		return 0;
 	}
-	// Formato por linea: nombre puntaje (separados por espacio).
-	// Se limita el ancho leido para no desbordar el arreglo del nombre.
+	// Cada linea: nombre puntaje
 	while (cantidad < maximo &&
 		   (archivo >> std::setw(MAX_LONGITUD_NOMBRE_PUNTAJE) >> destino[cantidad].nombre
 					>> destino[cantidad].puntaje)) {
@@ -33,7 +32,7 @@ bool guardarPuntajes(const RegistroPuntaje* registros, int cantidad) {
 
 bool calificaEnTop(const RegistroPuntaje* registros, int cantidad, int puntaje) {
 	if (cantidad < MAX_PUNTAJES) {
-		return true; // aun hay espacio en la tabla
+		return true;
 	}
 	int menor = registros[0].puntaje;
 	for (int i = 1; i < cantidad; i++) {
@@ -57,7 +56,7 @@ int agregarPuntaje(RegistroPuntaje* registros, int cantidad,
 		return cantidad + 1;
 	}
 
-	// Tabla llena: se busca el menor y se reemplaza si el nuevo es mayor.
+	// Tabla llena: reemplaza al de menor puntaje si el nuevo es mayor.
 	int menorIndice = 0;
 	for (int i = 1; i < cantidad; i++) {
 		if (registros[i].puntaje < registros[menorIndice].puntaje) {
@@ -65,7 +64,7 @@ int agregarPuntaje(RegistroPuntaje* registros, int cantidad,
 		}
 	}
 	if (puntaje <= registros[menorIndice].puntaje) {
-		return cantidad; // no califica, no se toca la tabla
+		return cantidad;
 	}
 	copiarNombre(registros[menorIndice].nombre, nombre);
 	registros[menorIndice].puntaje = puntaje;
