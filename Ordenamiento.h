@@ -15,11 +15,15 @@ void ordenarPuntajes(RegistroPuntaje* registros, int cantidad,
 
 const char* nombreAlgoritmo(AlgoritmoOrdenamiento algoritmo);
 
-// Mide el tiempo de cada algoritmo para N registros aleatorios.
+// Mide el tiempo de cada algoritmo para N registros aleatorios. Como el reloj
+// del sistema es poco preciso, cada algoritmo se repite varias veces y se
+// promedia; "repeticiones" dice cuantas se usaron en cada caso.
 struct ResultadoTiempo {
 	int cantidad;
 	double msInsercion;
 	double msQuicksort;
+	int repeticionesInsercion;
+	int repeticionesQuicksort;
 };
 
 ResultadoTiempo medirTiempos(int cantidad);

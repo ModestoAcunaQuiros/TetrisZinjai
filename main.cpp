@@ -12,7 +12,7 @@ int main() {
 	sf::RenderWindow ventana(sf::VideoMode(720, 540), "Tetris");
 	ventana.setFramerateLimit(60);
 	
-	// Musica completa en memoria (sf::Sound en vez de sf::Music).
+	// Musica
 	sf::SoundBuffer bufferMusica;
 	sf::Sound musica;
 	bool musicaCargada = bufferMusica.loadFromFile("audio/OTS_Tetris.ogg");
@@ -28,10 +28,14 @@ int main() {
 	inicializarInterfaz(&ctx, &ventana);
 	ctx.musicaFondo = musicaCargada ? &musica : nullptr;
 	
-	EstadoJuego estado = ESTADO_MENU;
+	EstadoJuego estado = ESTADO_INTRO;
 	
 	while (estado != ESTADO_SALIR) {
 		switch (estado) {
+		case ESTADO_INTRO:
+			estado = pantallaIntro(&ctx);
+			break;
+
 		case ESTADO_MENU:
 			estado = pantallaMenu(&ctx);
 			break;

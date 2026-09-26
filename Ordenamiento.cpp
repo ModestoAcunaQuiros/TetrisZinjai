@@ -59,11 +59,54 @@ const char* nombreAlgoritmo(AlgoritmoOrdenamiento algoritmo) {
 	return "Insercion O(n^2)";
 }
 
+// Cuantas repeticiones hacen falta para que el reloj del sistema (que tiene
+// granularidad de ~1 ms) alcance a medir algo. Se busca unos 20 ms por corrida.
+static int repeticionesSuficientes(RegistroPuntaje* original, RegistroPuntaje* copia,
+								   int cantidad, bool usarInsercion) {
+	const int MAX_REPETICIONES = 64;
+	int repeticiones = 1;
+	while (repeticiones < MAX_REPETICIONES) {
+		std::clock_t inicio = std::clock();
+		for (int r = 0; r < repeticiones; r++) {
+			for (int i = 0; i < cantidad; i++) copia[i] = original[i];
+			if (usarInsercion) {
+				ordenarInsercion(copia, cantidad);
+			} else {
+				quickSortRecursivo(copia, 0, cantidad - 1);
+			}
+		}
+		std::clock_t fin = std::clock();
+		double ms = 1000.0 * (fin - inicio) / CLOCKS_PER_SEC;
+		if (ms >= 20.0) {
+			return repeticiones;
+		}
+		repeticiones *= 2;
+	}
+	return repeticiones;
+}
+
+static double cronometrar(RegistroPuntaje* original, RegistroPuntaje* copia,
+						  int cantidad, bool usarInsercion, int repeticiones) {
+	std::clock_t inicio = std::clock();
+	for (int r = 0; r < repeticiones; r++) {
+		for (int i = 0; i < cantidad; i++) copia[i] = original[i];
+		if (usarInsercion) {
+			ordenarInsercion(copia, cantidad);
+		} else {
+			quickSortRecursivo(copia, 0, cantidad - 1);
+		}
+	}
+	std::clock_t fin = std::clock();
+	return 1000.0 * (fin - inicio) / CLOCKS_PER_SEC / repeticiones;
+}
+
 ResultadoTiempo medirTiempos(int cantidad) {
 	ResultadoTiempo resultado;
 	resultado.cantidad = cantidad;
 	resultado.msInsercion = 0.0;
 	resultado.msQuicksort = 0.0;
+	resultado.repeticionesInsercion = 0;
+	resultado.repeticionesQuicksort = 0;
 	if (cantidad <= 0) {
 		return resultado;
 	}
@@ -76,17 +119,12 @@ ResultadoTiempo medirTiempos(int cantidad) {
 		original[i].nombre[1] = '\0';
 	}
 
-	for (int i = 0; i < cantidad; i++) copia[i] = original[i];
-	std::clock_t inicio = std::clock();
-	ordenarInsercion(copia, cantidad);
-	std::clock_t fin = std::clock();
-	resultado.msInsercion = 1000.0 * (fin - inicio) / CLOCKS_PER_SEC;
+	// Quicksort primero: es el rapido, necesita mas repeticiones para medirse.
+	resultado.repeticionesQuicksort = repeticionesSuficientes(original, copia, cantidad, false);
+	resultado.msQuicksort = cronometrar(original, copia, cantidad, false, resultado.repeticionesQuicksort);
 
-	for (int i = 0; i < cantidad; i++) copia[i] = original[i];
-	inicio = std::clock();
-	quickSortRecursivo(copia, 0, cantidad - 1);
-	fin = std::clock();
-	resultado.msQuicksort = 1000.0 * (fin - inicio) / CLOCKS_PER_SEC;
+	resultado.repeticionesInsercion = repeticionesSuficientes(original, copia, cantidad, true);
+	resultado.msInsercion = cronometrar(original, copia, cantidad, true, resultado.repeticionesInsercion);
 
 	delete[] original;
 	delete[] copia;

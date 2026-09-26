@@ -13,12 +13,12 @@ void inicializarInterfaz(ContextoInterfaz* ctx, sf::RenderWindow* ventana) {
 	
 	ctx->fuenteCargada = ctx->fuente.loadFromFile("data/deer-diary.ttf");
 	if (!ctx->fuenteCargada) {
-		cout << "[interfaz] Aviso: no se pudo cargar data/fuente.ttf.\n";
+		cout << "[interfaz] Aviso: no se pudo cargar data/deer-diary.ttf.\n";
 	}
 	ctx->texturaMenuCargada = ctx->texturaMenu.loadFromFile("data/Menu1.png");
 	
 	if (!ctx->texturaMenuCargada) {
-		cout << "[interfaz] Aviso: no se pudo cargar data/menu_fondo.png.\n";
+		cout << "[interfaz] Aviso: no se pudo cargar data/Menu1.png; se usara el menu simple.\n";
 	} else {
 		ctx->texturaMenu.setSmooth(false);
 		// Ajustamos la ventana al tamano REAL de la imagen, para que no
@@ -42,17 +42,108 @@ static void liberarReplay(ContextoInterfaz* ctx) {
 	}
 }
 
+void dibujarFundidoEntrada(ContextoInterfaz* ctx, const sf::Clock& reloj, float duracion) {
+	float t = reloj.getElapsedTime().asSeconds();
+	if (t >= duracion) {
+		return;
+	}
+	float alfa = 255.f * (1.f - t / duracion);
+	ctx->ventana->setView(ctx->ventana->getDefaultView());
+	sf::RectangleShape velo(sf::Vector2f(static_cast<float>(ctx->ventana->getSize().x),
+										 static_cast<float>(ctx->ventana->getSize().y)));
+	velo.setFillColor(sf::Color(0, 0, 0, static_cast<sf::Uint8>(alfa)));
+	ctx->ventana->draw(velo);
+}
+
+// Intro animada: las letras de "TETRIS" caen y aparece el subtitulo.
+EstadoJuego pantallaIntro(ContextoInterfaz* ctx) {
+	sf::Clock reloj;
+	const float duracion = 3.6f;
+	const char* letras = "TETRIS";
+	const sf::Color colores[6] = {
+		sf::Color(0, 226, 255), sf::Color(255, 213, 0), sf::Color(176, 64, 255),
+		sf::Color(0, 230, 118), sf::Color(255, 61, 82), sf::Color(30, 120, 255)
+	};
+
+	while (ctx->ventana->isOpen()) {
+		sf::Event evento;
+		while (ctx->ventana->pollEvent(evento)) {
+			if (evento.type == sf::Event::Closed) {
+				ctx->ventana->close();
+				return ESTADO_SALIR;
+			}
+			if (evento.type == sf::Event::KeyPressed ||
+				evento.type == sf::Event::MouseButtonPressed) {
+				return ESTADO_MENU;
+			}
+		}
+
+		float t = reloj.getElapsedTime().asSeconds();
+		if (t >= duracion) {
+			return ESTADO_MENU;
+		}
+
+		ctx->ventana->setView(ctx->ventana->getDefaultView());
+		ctx->ventana->clear(sf::Color(4, 6, 12));
+		dibujarFondoEscenario(ctx);
+
+		sf::Vector2u tam = ctx->ventana->getSize();
+		if (ctx->fuenteCargada) {
+			float centroX = tam.x * 0.5f;
+			float baseY = tam.y * 0.38f;
+			const float anchoLetra = 58.f;
+			float inicioX = centroX - (anchoLetra * 6.f) * 0.5f;
+
+			for (int i = 0; i < 6; i++) {
+				float p = (t - i * 0.12f) / 0.55f;
+				if (p < 0.f) p = 0.f;
+				if (p > 1.f) p = 1.f;
+				float ease = 1.f - (1.f - p) * (1.f - p);
+
+				sf::Text letra(std::string(1, letras[i]), ctx->fuente, 72);
+				letra.setColor(colores[i]);
+				sf::FloatRect lb = letra.getLocalBounds();
+				float destinoX = inicioX + i * anchoLetra + (anchoLetra - lb.width) * 0.5f;
+				letra.setPosition(destinoX, -80.f + (baseY + 80.f) * ease);
+				ctx->ventana->draw(letra);
+			}
+
+			if (t > 1.6f) {
+				float parpadeo = 0.5f + 0.5f * sinf(t * 5.f);
+				sf::Text saltar("Presione una tecla para continuar", ctx->fuente, 14);
+				saltar.setColor(sf::Color(170, 180, 200,
+										  static_cast<sf::Uint8>(80 + 120 * parpadeo)));
+				sf::FloatRect lsal = saltar.getLocalBounds();
+				saltar.setPosition(centroX - lsal.width * 0.5f, tam.y - 70.f);
+				ctx->ventana->draw(saltar);
+			}
+		}
+
+		ctx->ventana->display();
+	}
+
+	return ESTADO_SALIR;
+}
+
 EstadoJuego pantallaMenu(ContextoInterfaz* ctx) {
 	sf::Sprite fondo;
 	if (ctx->texturaMenuCargada) {
 		fondo.setTexture(ctx->texturaMenu);
 	}
-	
-	sf::Vector2u tam = ctx->texturaMenu.getSize();
-	
-	// Zonas de click sobre la imagen, en fracciones de su tamano.
+
+	// Con la imagen cargada las zonas de click se calculan como fracciones de
+	// su tamano, para que sirvan aunque la ventana se redimensione. Sin ella
+	// se usan botones dibujados, con zonas fijas sobre la ventana.
+	sf::Vector2u tam = ctx->texturaMenuCargada
+					  ? ctx->texturaMenu.getSize()
+					  : ctx->ventana->getSize();
 	sf::FloatRect zonaJugar(tam.x * 0.2717f, tam.y * 0.4512f, tam.x * 0.3983f, tam.y * 0.1553f);
 	sf::FloatRect zonaHistorico(tam.x * 0.2717f, tam.y * 0.6583f, tam.x * 0.3983f, tam.y * 0.1479f);
+	if (!ctx->texturaMenuCargada) {
+		zonaJugar = sf::FloatRect(tam.x * 0.30f, tam.y * 0.38f, tam.x * 0.40f, 64.f);
+		zonaHistorico = sf::FloatRect(tam.x * 0.30f, tam.y * 0.38f + 84.f, tam.x * 0.40f, 64.f);
+	}
+	sf::Clock relojEntrada;
 	
 	while (ctx->ventana->isOpen()) {
 		sf::Event evento;
@@ -91,7 +182,37 @@ EstadoJuego pantallaMenu(ContextoInterfaz* ctx) {
 		ctx->ventana->clear(sf::Color::Black);
 		if (ctx->texturaMenuCargada) {
 			ctx->ventana->draw(fondo);
+		} else {
+			dibujarFondoEscenario(ctx);
+			if (ctx->fuenteCargada) {
+				sf::Text titulo("TETRIS", ctx->fuente, 54);
+				titulo.setColor(sf::Color(0, 226, 255));
+				sf::FloatRect lt = titulo.getLocalBounds();
+				titulo.setPosition(tam.x * 0.5f - lt.width * 0.5f, 110.f);
+				ctx->ventana->draw(titulo);
+
+				const char* textos[2] = {"JUGAR", "HISTORICO"};
+				const sf::FloatRect zonas[2] = {zonaJugar, zonaHistorico};
+				for (int i = 0; i < 2; i++) {
+					dibujarPanelChamfer(ctx, zonas[i].left, zonas[i].top,
+										zonas[i].width, zonas[i].height,
+										sf::Color(18, 26, 48), sf::Color(80, 110, 170));
+					sf::Text etiqueta(textos[i], ctx->fuente, 24);
+					etiqueta.setColor(sf::Color::White);
+					sf::FloatRect le = etiqueta.getLocalBounds();
+					etiqueta.setPosition(zonas[i].left + (zonas[i].width - le.width) * 0.5f,
+										 zonas[i].top + (zonas[i].height - le.height) * 0.5f);
+					ctx->ventana->draw(etiqueta);
+				}
+
+				sf::Text aviso("No se encontro data/Menu1.png", ctx->fuente, 14);
+				aviso.setColor(sf::Color(150, 150, 165));
+				sf::FloatRect la = aviso.getLocalBounds();
+				aviso.setPosition(tam.x * 0.5f - la.width * 0.5f, tam.y - 70.f);
+				ctx->ventana->draw(aviso);
+			}
 		}
+		dibujarFundidoEntrada(ctx, relojEntrada);
 		ctx->ventana->display();
 	}
 	
@@ -101,6 +222,7 @@ EstadoJuego pantallaMenu(ContextoInterfaz* ctx) {
 EstadoJuego pantallaIngresarNombre(ContextoInterfaz* ctx) {
 	std::string nombreActual = "";
 	sf::Vector2u tamanoVentana = ctx->ventana->getSize();
+	sf::Clock relojEntrada;
 	
 	// Sonido de esta pantalla (se carga una sola vez).
 	static sf::SoundBuffer bufferIngresar;
@@ -188,6 +310,7 @@ EstadoJuego pantallaIngresarNombre(ContextoInterfaz* ctx) {
 			ctx->ventana->draw(ayuda);
 		}
 		
+		dibujarFundidoEntrada(ctx, relojEntrada);
 		ctx->ventana->display();
 	}
 	
@@ -197,6 +320,7 @@ EstadoJuego pantallaIngresarNombre(ContextoInterfaz* ctx) {
 
 EstadoJuego pantallaTablaPuntajes(ContextoInterfaz* ctx) {
 	sf::Vector2u tamanoVentana = ctx->ventana->getSize();
+	sf::Clock relojEntrada;
 
 	RegistroPuntaje registros[MAX_PUNTAJES];
 	int cantidad = cargarPuntajes(registros, MAX_PUNTAJES);
@@ -209,6 +333,14 @@ EstadoJuego pantallaTablaPuntajes(ContextoInterfaz* ctx) {
 		milisegundosOrden = 1000.0 * (fin - inicio) / CLOCKS_PER_SEC;
 	};
 	reordenar();
+
+	// Comparacion de los dos algoritmos sobre registros aleatorios. Se corre
+	// al entrar a la pantalla y se puede repetir con [3].
+	const int CANTIDAD_BENCHMARK = 2000;
+	ResultadoTiempo benchmark = medirTiempos(CANTIDAD_BENCHMARK);
+	auto repetirBenchmark = [&]() {
+		benchmark = medirTiempos(CANTIDAD_BENCHMARK);
+	};
 
 	while (ctx->ventana->isOpen()) {
 		sf::Event evento;
@@ -228,6 +360,9 @@ EstadoJuego pantallaTablaPuntajes(ContextoInterfaz* ctx) {
 				if (evento.key.code == sf::Keyboard::Num2) {
 					ctx->algoritmoOrdenamiento = ORDEN_QUICKSORT;
 					reordenar();
+				}
+				if (evento.key.code == sf::Keyboard::Num3) {
+					repetirBenchmark();
 				}
 			}
 		}
@@ -253,12 +388,12 @@ EstadoJuego pantallaTablaPuntajes(ContextoInterfaz* ctx) {
 					snprintf(posicion, sizeof(posicion), "%d.", i + 1);
 					sf::Text tPos(posicion, ctx->fuente, 18);
 					tPos.setColor(i == 0 ? sf::Color(255, 213, 0) : sf::Color(150, 170, 195));
-					tPos.setPosition(120.f, 100.f + i * 32.f);
+					tPos.setPosition(120.f, 92.f + i * 28.f);
 					ctx->ventana->draw(tPos);
 
 					sf::Text tNombre(registros[i].nombre, ctx->fuente, 18);
 					tNombre.setColor(i == 0 ? sf::Color(255, 213, 0) : sf::Color::White);
-					tNombre.setPosition(160.f, 100.f + i * 32.f);
+					tNombre.setPosition(160.f, 92.f + i * 28.f);
 					ctx->ventana->draw(tNombre);
 
 					char valor[16];
@@ -266,7 +401,7 @@ EstadoJuego pantallaTablaPuntajes(ContextoInterfaz* ctx) {
 					sf::Text tValor(valor, ctx->fuente, 18);
 					tValor.setColor(i == 0 ? sf::Color(255, 213, 0) : sf::Color(200, 215, 240));
 					sf::FloatRect lv = tValor.getLocalBounds();
-					tValor.setPosition(600.f - lv.width, 100.f + i * 32.f);
+					tValor.setPosition(600.f - lv.width, 92.f + i * 28.f);
 					ctx->ventana->draw(tValor);
 				}
 			}
@@ -276,17 +411,53 @@ EstadoJuego pantallaTablaPuntajes(ContextoInterfaz* ctx) {
 					 nombreAlgoritmo(ctx->algoritmoOrdenamiento), milisegundosOrden);
 			sf::Text tInfo(info, ctx->fuente, 15);
 			tInfo.setColor(sf::Color(160, 200, 160));
-			tInfo.setPosition(120.f, 442.f);
+			tInfo.setPosition(120.f, 372.f);
 			ctx->ventana->draw(tInfo);
 
-			sf::Text ayuda("[1] Insercion   [2] Quicksort   [Enter/Esc] Volver",
+			// Comparativa Insercion vs Quicksort sobre los mismos datos.
+			sf::Text tComparativa("Comparacion de algoritmos", ctx->fuente, 14);
+			tComparativa.setColor(sf::Color(150, 170, 195));
+			tComparativa.setPosition(120.f, 400.f);
+			ctx->ventana->draw(tComparativa);
+
+			char detalle[160];
+			snprintf(detalle, sizeof(detalle), "%d registros aleatorios  -  Insercion: %.3f ms  |  Quicksort: %.3f ms",
+					 benchmark.cantidad, benchmark.msInsercion, benchmark.msQuicksort);
+			sf::Text tDetalle(detalle, ctx->fuente, 13);
+			tDetalle.setColor(sf::Color(200, 215, 240));
+			tDetalle.setPosition(120.f, 422.f);
+			ctx->ventana->draw(tDetalle);
+
+			// Cuantas veces mas rapido resulto el quicksort en esta corrida.
+			if (benchmark.msQuicksort > 0.0) {
+				float veces = benchmark.msInsercion / benchmark.msQuicksort;
+				char resumen[80];
+				snprintf(resumen, sizeof(resumen), "Quicksort fue %.1fx mas rapido", veces);
+				sf::Text tResumen(resumen, ctx->fuente, 13);
+				tResumen.setColor(sf::Color(120, 230, 150));
+				tResumen.setPosition(120.f, 442.f);
+				ctx->ventana->draw(tResumen);
+			}
+
+			// El reloj del sistema es impreciso, asi que cada algoritmo se promedio
+			// sobre varias corridas; se dice cuantas para que el dato sea auditable.
+			char nota[120];
+			snprintf(nota, sizeof(nota), "promedio de %d corridas (insercion) y %d corridas (quicksort)",
+					 benchmark.repeticionesInsercion, benchmark.repeticionesQuicksort);
+			sf::Text tNota(nota, ctx->fuente, 12);
+			tNota.setColor(sf::Color(130, 145, 170));
+			tNota.setPosition(120.f, 462.f);
+			ctx->ventana->draw(tNota);
+
+			sf::Text ayuda("[1] Insercion   [2] Quicksort   [3] Repetir comparacion   [Enter/Esc] Volver",
 						   ctx->fuente, 14);
 			ayuda.setColor(sf::Color(150, 150, 150));
 			sf::FloatRect layuda = ayuda.getLocalBounds();
-			ayuda.setPosition(tamanoVentana.x / 2.f - layuda.width / 2.f, 508.f);
+			ayuda.setPosition(tamanoVentana.x / 2.f - layuda.width / 2.f, 495.f);
 			ctx->ventana->draw(ayuda);
 		}
 
+		dibujarFundidoEntrada(ctx, relojEntrada);
 		ctx->ventana->display();
 	}
 
@@ -295,6 +466,7 @@ EstadoJuego pantallaTablaPuntajes(ContextoInterfaz* ctx) {
 
 EstadoJuego pantallaGameOver(ContextoInterfaz* ctx) {
 	sf::Vector2u tamanoVentana = ctx->ventana->getSize();
+	sf::Clock relojEntrada;
 
 	// Sonido de fin de partida (se carga una sola vez).
 	static sf::SoundBuffer bufferGameOver;
@@ -366,6 +538,11 @@ EstadoJuego pantallaGameOver(ContextoInterfaz* ctx) {
 						liberarReplay(ctx);
 						return ESTADO_SALIR;
 					}
+					// Al volver de ver el replay se repite el audio de fin de partida.
+					if (bufferGameOverCargado) {
+						sf::Sound sonidoVuelta(bufferGameOver);
+						sonidoVuelta.play();
+					}
 				}
 			}
 		}
@@ -411,6 +588,7 @@ EstadoJuego pantallaGameOver(ContextoInterfaz* ctx) {
 			ctx->ventana->draw(ayuda);
 		}
 
+		dibujarFundidoEntrada(ctx, relojEntrada);
 		ctx->ventana->display();
 	}
 
@@ -441,6 +619,7 @@ EstadoJuego pantallaReplay(ContextoInterfaz* ctx) {
 
 	bool autoReproducir = false;
 	sf::Clock relojAuto;
+	sf::Clock relojEntrada;
 	const float intervaloAuto = 0.30f;
 
 	while (ctx->ventana->isOpen()) {
@@ -533,6 +712,7 @@ EstadoJuego pantallaReplay(ContextoInterfaz* ctx) {
 			ctx->ventana->draw(ayuda);
 		}
 
+		dibujarFundidoEntrada(ctx, relojEntrada);
 		ctx->ventana->display();
 	}
 
@@ -1038,7 +1218,7 @@ void dibujarTablero(ContextoInterfaz* ctx, const Tablero* tablero, const Pieza* 
 	}
 }
 
-void dibujarPanelSiguientes(ContextoInterfaz* ctx, const Pieza* proxima, int cantidad, float x, float y){
+void dibujarPanelSiguientes(ContextoInterfaz* ctx, const Pieza* proxima, int cantidad, float x, float y, bool proximaEsBomba){
 	float anchoPanel = 110.f;
 	float altoPanel = 36.f * cantidad + 30.f;
 	
@@ -1050,10 +1230,21 @@ void dibujarPanelSiguientes(ContextoInterfaz* ctx, const Pieza* proxima, int can
 		etiqueta.setPosition(x + 8.f, y + 6.f);
 		ctx->ventana->draw(etiqueta);
 	}
+	// Si hay una bomba pendiente, la primera de la fila es la que detona.
+	if (proximaEsBomba && cantidad > 0) {
+		sf::CircleShape marca(4.f);
+		marca.setOrigin(4.f, 4.f);
+		marca.setPosition(x + anchoPanel - 12.f, y + 11.f);
+		marca.setFillColor(sf::Color(255, 70, 70));
+		ctx->ventana->draw(marca);
+	}
 	float celdaMini = 10.f;
 	for(int i = 0; i < cantidad; i++){
 		const int* forma = obtenerFormaPieza(proxima[i].tipo, 0);
 		sf::Color color = colorPieza(proxima[i].tipo);
+		if (proximaEsBomba && i == 0) {
+			color = sf::Color(255, 70, 70);
+		}
 		float baseY = y + 26.f + i * 36.f;
 		for(int j = 0; j < 4; j++){
 			for(int k = 0; k < 4; k++){
@@ -1064,8 +1255,8 @@ void dibujarPanelSiguientes(ContextoInterfaz* ctx, const Pieza* proxima, int can
 		}
 	}
 }
-	
-void dibujarPanelHold(ContextoInterfaz* ctx, const PilaHold* hold, float x, float y){
+
+void dibujarPanelHold(ContextoInterfaz* ctx, const PilaHold* hold, float x, float y, bool esBomba){
 	dibujarFondoPanel(ctx, x, y, 90.f, 70.f);
 	
 	if(ctx->fuenteCargada){
@@ -1074,11 +1265,18 @@ void dibujarPanelHold(ContextoInterfaz* ctx, const PilaHold* hold, float x, floa
 		etiqueta.setPosition(x + 8.f, y + 6.f);
 		ctx->ventana->draw(etiqueta);
 
+		// La pieza guardada puede ser una bomba: se avisa en el panel.
+		if (esBomba && !pilaHoldVacia(hold)) {
+			sf::Text marca("BOMBA", ctx->fuente, 10);
+			marca.setColor(sf::Color(255, 80, 80));
+			marca.setPosition(x + 46.f, y + 7.f);
+			ctx->ventana->draw(marca);
+		}
 	}
 	if(!pilaHoldVacia(hold)){
 		Pieza piezaTope = topeHold(hold);
 		const int* forma = obtenerFormaPieza(piezaTope.tipo, 0);
-		sf::Color color = colorPieza(piezaTope.tipo);
+		sf::Color color = esBomba ? sf::Color(255, 70, 70) : colorPieza(piezaTope.tipo);
 		float celdaMini = 12.f;
 		float anchoMini = 4.f * celdaMini;
 		float xInicio = x + (90.f - anchoMini) * 0.5f;

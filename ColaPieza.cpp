@@ -36,8 +36,14 @@ void encolarPieza(ColaPiezas* cola, Pieza pieza){
 	cola->cantidad++;
 }
 	
+// Saca la pieza del frente. El juego siempre mantiene la cola con elementos
+// (piezasSuficientes), asi que el caso vacio solo es una red de seguridad:
+// se devuelve una pieza neutra en vez de leer un nullptr.
 Pieza desencolarPieza(ColaPiezas* cola){
 	NodoPieza* aux = cola->frente;
+	if(aux == nullptr){
+		return crearPieza(PIEZA_I);
+	}
 	Pieza resultado = aux->dato;
 	
 	cola->frente = aux->siguiente;

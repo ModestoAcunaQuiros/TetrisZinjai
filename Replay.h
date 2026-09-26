@@ -9,14 +9,34 @@ enum TipoMovimiento {
 	MOV_DERECHA,
 	MOV_ROTAR,
 	MOV_BAJAR,
-	MOV_COLOCAR
+	MOV_COLOCAR,
+	MOV_HOLD
 };
+
+const int REPLAY_MAX_COLA = 32;
 
 // Foto del estado del juego en un momento dado.
 struct EstadoReplay {
 	int celdas[ALTO_TABLERO][ANCHO_TABLERO];
 	Pieza piezaActiva;
 	int puntaje;
+
+	// Estado de las estructuras propias, para deshacer/rehacer fielmente.
+	Pieza cola[REPLAY_MAX_COLA];
+	int cantidadCola;
+	Pieza hold;
+	bool holdVacia;
+	bool holdEsBomba;
+	bool piezaEsBomba;
+	bool huboHoldEstaVez; // el hold ya se uso con esta pieza
+
+	// Estado que dependia del reloj. Los dos ultimos se guardan como
+	// "tiempo restante" y no como instante absoluto, para que al restaurar
+	// no haya que rebobinar el reloj de la partida.
+	bool bombaPendiente;
+	float intervaloCaida;
+	float congeladoRestante;
+	float espejoRestante;
 };
 
 struct NodoMovimiento {

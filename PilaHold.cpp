@@ -37,8 +37,14 @@ bool pushHold(PilaHold* pila, Pieza p) {
 	return true;
 }
 
+// Igual que en la cola, el juego llama a estas dos solo con la pila con
+// elementos; si llegara vacia se devuelve una pieza neutra en vez de
+// desreferenciar nullptr.
 Pieza popHold(PilaHold* pila) {
 	NodoPila* antiguo = pila->tope;
+	if (antiguo == nullptr) {
+		return crearPieza(PIEZA_I);
+	}
 	Pieza resultado = antiguo->dato;
 	pila->tope = antiguo->siguiente;
 	delete antiguo;
@@ -47,5 +53,8 @@ Pieza popHold(PilaHold* pila) {
 }
 
 Pieza topeHold(const PilaHold* pila) {
+	if (pila->tope == nullptr) {
+		return crearPieza(PIEZA_I);
+	}
 	return pila->tope->dato;
 }

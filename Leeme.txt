@@ -1,6 +1,16 @@
-Este es un proyecto base para trabajar con la biblioteca SFML (http://www.sfml-dev.org).
+TETRIS - EIF207 Estructuras de Datos (Proyecto I)
+=================================================
 
-La documentacion de SFML se encuentra en el directorio MinGW/SFML-2.1/doc de ZinjaI (se puede acceder directamente mendiante el último ícono de la barra de herramientas).
+La documentacion completa del proyecto (requisitos, compilacion, controles,
+modulos y estructura de datos) esta en README.md.
 
-En la distribucion para Windows el enlazado de la biblioteca SFML se realiza de forma estatica, para realizarlo contra la version dinamica debe quitar el "-s" al final del nombre de cada libreria en las opciones de enlazado, y la macro "SFML_STATIC" de las opciones de compilación. En este caso tambien sera necesario colocar las dlls que estan en el directorio MinGW/SFML-2.1/bin en un lugar donde el ejecutable pueda encontrarlas (por ejemplo, en la carpeta del proyecto si el ejecutable la utiliza como directorio de trabajo).
+Resumen rapido:
+  - Abrir Tetris.zpr en ZinjaI.
+  - Configuracion Debug_Win32.
+  - Compilar y ejecutar.
+  - El ejecutable debe correr con esta carpeta como directorio de trabajo,
+    para encontrar las carpetas data/ y audio/.
 
+Nota: este archivo antes traia la plantilla original de ZinjaI, que describia
+una version antigua de SFML (2.1) y las opciones de enlazado dinamico. Esa
+informacion ya no aplica: el proyecto usa SFML 2.4.2 con enlazado estatico.
