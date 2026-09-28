@@ -15,7 +15,7 @@ tab_width=4
 tab_use_spaces=0
 explorer_path=.
 inherits_from=
-current_source=Juego.cpp
+current_source=Tablero.cpp
 path_char=\
 [source]
 path=main.cpp
@@ -27,7 +27,7 @@ cursor=0:0
 open=true
 [source]
 path=Juego.cpp
-cursor=39:46
+cursor=51:53
 open=true
 [source]
 path=ColaPieza.cpp
@@ -59,11 +59,11 @@ cursor=0:0
 open=true
 [source]
 path=Ordenamiento.cpp
-cursor=29:7
+cursor=9:19
 open=true
 [header]
 path=ColaEventos.h
-cursor=0:0
+cursor=13:2
 open=true
 [header]
 path=ColaPieza.h
@@ -103,7 +103,7 @@ cursor=16:0
 open=true
 [other]
 path=Leeme.txt
-cursor=4:447
+cursor=15:15
 open=true
 [config]
 name=Debug_Win32
