@@ -1,0 +1,2868 @@
+﻿commit c3223c0232e36185e4c27a358dc68e1102a5b106
+Author: ModestoAcunaQuiros <minor.acuna.quiros@est.una.ac.cr>
+Date:   2026-09-27
+
+    archivos de instalacion
+
+ Guia_instalacion_Tetris.pdf | 125 ++++++++++++++++++++++++++++++++++++++++++++
+ README_instalacion.md       |  50 ++++++++++++++++++
+ 2 files changed, 175 insertions(+)
+
+commit 4d834bd7b2105164a311d750f2cdb5e74b870965
+Author: ModestoAcunaQuiros <minor.acuna.quiros@est.una.ac.cr>
+Date:   2026-09-27
+
+    Informes
+
+ INFORME.md                | 510 ++++++++++++++++------------------------------
+ INFORME.txt               | 189 +++++++++++++++++
+ Informe del proyecto.docx | Bin 0 -> 12614 bytes
+ Informe del proyecto.pdf  | Bin 0 -> 97181 bytes
+ Tetris.zpr                |  10 +-
+ 5 files changed, 373 insertions(+), 336 deletions(-)
+
+commit 29093acbdbbbbcd621c374549468f33953b2de15
+Author: ModestoAcunaQuiros <minor.acuna.quiros@est.una.ac.cr>
+Date:   2026-09-25
+
+    Modificacion
+
+ ColaEventos.cpp            |   8 ++
+ ColaPieza.cpp              |   6 +
+ Debug_Win32/ColaEventos.o  | Bin 3977 -> 4047 bytes
+ Debug_Win32/ColaPieza.o    | Bin 8272 -> 8338 bytes
+ Debug_Win32/Interfaz.o     | Bin 445363 -> 463641 bytes
+ Debug_Win32/Juego.o        | Bin 407150 -> 415627 bytes
+ Debug_Win32/Ordenamiento.o | Bin 9249 -> 10546 bytes
+ Debug_Win32/PilaHold.o     | Bin 4055 -> 4207 bytes
+ Debug_Win32/Replay.o       | Bin 7051 -> 7405 bytes
+ Debug_Win32/Tetris.exe     | Bin 204697 -> 3192321 bytes
+ Debug_Win32/main.o         | Bin 261190 -> 261622 bytes
+ INFORME.md                 | 331 +++++++++++++++++++++++++++++++++++++++++++++
+ Interfaz.cpp               | 230 ++++++++++++++++++++++++++++---
+ Interfaz.h                 |  15 +-
+ Juego.cpp                  | 221 +++++++++++++++++++++++-------
+ Leeme.txt                  |  16 ++-
+ Ordenamiento.cpp           |  58 ++++++--
+ Ordenamiento.h             |   6 +-
+ PilaHold.cpp               |   9 ++
+ README.md                  | 107 +++++++++++++++
+ Replay.h                   |  22 ++-
+ STL.cpp                    |  18 ---
+ Tetris.zpr                 |  12 +-
+ data/puntajes.txt          |   2 +-
+ main.cpp                   |   8 +-
+ 25 files changed, 959 insertions(+), 110 deletions(-)
+
+commit 3e9bb7aa126dd4d1da2e33e28334987152627554
+Author: ModestoAcunaQuiros <minor.acuna.quiros@est.una.ac.cr>
+Date:   2026-09-14
+
+    Feat: Se agrego musica para el gameover
+
+ Debug_Win32/Interfaz.o     | Bin 445317 -> 445363 bytes
+ Debug_Win32/Juego.o        | Bin 406513 -> 407150 bytes
+ Debug_Win32/Ordenamiento.o | Bin 9249 -> 9249 bytes
+ Debug_Win32/PilaHold.o     | Bin 4055 -> 4055 bytes
+ Debug_Win32/Puntajes.o     | Bin 22476 -> 22476 bytes
+ Debug_Win32/Replay.o       | Bin 7091 -> 7051 bytes
+ Debug_Win32/Tetris.exe     | Bin 3167705 -> 204697 bytes
+ Debug_Win32/main.o         | Bin 261194 -> 261190 bytes
+ GameOver.ogg               | Bin 0 -> 567057 bytes
+ Interfaz.cpp               | 127 ++++++++++++++++++++++++++-------------------
+ Interfaz.h                 |  10 +---
+ Juego.cpp                  |  38 ++++++++++----
+ Ordenamiento.cpp           |  17 +-----
+ Ordenamiento.h             |  11 ++--
+ PilaHold.cpp               |   4 +-
+ PilaHold.h                 |  20 ++-----
+ Puntajes.cpp               |  11 ++--
+ Puntajes.h                 |  17 +-----
+ Replay.cpp                 |  24 +++------
+ Replay.h                   |  30 +++--------
+ Tetris.zpr                 |  10 ++--
+ audio/GameOver.ogg         | Bin 0 -> 567057 bytes
+ main.cpp                   |   8 ++-
+ 23 files changed, 143 insertions(+), 184 deletions(-)
+
+commit 4bc06b90d446a42ba5d01fab7626e9f7c1015c20
+Author: ModestoAcunaQuiros <minor.acuna.quiros@est.una.ac.cr>
+Date:   2026-09-13
+
+    Feat: puntaje, ordenamiento, replay
+
+ Debug_Win32/Interfaz.o     | Bin 425374 -> 445317 bytes
+ Debug_Win32/Juego.o        | Bin 401420 -> 406513 bytes
+ Debug_Win32/Ordenamiento.o | Bin 0 -> 9249 bytes
+ Debug_Win32/PilaHold.o     | Bin 2693 -> 4055 bytes
+ Debug_Win32/Puntajes.o     | Bin 0 -> 22476 bytes
+ Debug_Win32/Replay.o       | Bin 5672 -> 7091 bytes
+ Debug_Win32/Tetris.exe     | Bin 3116273 -> 3167705 bytes
+ Debug_Win32/main.o         | Bin 259773 -> 261194 bytes
+ Interfaz.cpp               | 322 ++++++++++++++++++++++++++++++++++++++++++---
+ Interfaz.h                 |  18 ++-
+ Juego.cpp                  |  87 ++++++++++--
+ Ordenamiento.cpp           | 107 +++++++++++++++
+ Ordenamiento.h             |  30 +++++
+ PilaHold.cpp               |  49 +++++--
+ PilaHold.h                 |  35 +++--
+ Puntajes.cpp               |  73 ++++++++++
+ Puntajes.h                 |  36 +++++
+ Replay.cpp                 |  41 +++++-
+ Replay.h                   |  21 ++-
+ Tetris.zpr                 |  24 +++-
+ data/puntajes.txt          |  10 ++
+ main.cpp                   |   8 ++
+ 22 files changed, 790 insertions(+), 71 deletions(-)
+
+commit a3d80a93dfc6968c501c82d66709fde19d1d6d00
+Author: ModestoAcunaQuiros <minor.acuna.quiros@est.una.ac.cr>
+Date:   2026-09-04
+
+    Feat and Fix: Nueva interfaz, bugs arreglados, nuevos eventos
+
+ ColaEventos.cpp           |   3 +-
+ ColaEventos.h             |   3 +-
+ Debug/ColaEventos.o       | Bin 3957 -> 3977 bytes
+ Debug/Interfaz.o          | Bin 372079 -> 432413 bytes
+ Debug/Juego.o             | Bin 343986 -> 406095 bytes
+ Debug/Tetris.exe          | Bin 2980434 -> 3084221 bytes
+ Debug/main.o              | Bin 222104 -> 222144 bytes
+ Debug_Win32/ColaEventos.o | Bin 0 -> 3977 bytes
+ Debug_Win32/ColaPieza.o   | Bin 8267 -> 8272 bytes
+ Debug_Win32/Interfaz.o    | Bin 341186 -> 425374 bytes
+ Debug_Win32/Juego.o       | Bin 0 -> 401420 bytes
+ Debug_Win32/Pieza.o       | Bin 4318 -> 4318 bytes
+ Debug_Win32/PilaHold.o    | Bin 0 -> 2693 bytes
+ Debug_Win32/Replay.o      | Bin 0 -> 5672 bytes
+ Debug_Win32/Tablero.o     | Bin 0 -> 5635 bytes
+ Debug_Win32/Tetris.exe    | Bin 2652297 -> 3116273 bytes
+ Debug_Win32/main.o        | Bin 221016 -> 259773 bytes
+ Interfaz.cpp              | 334 ++++++++++++++++++++++++++++++++++++----
+ Interfaz.h                |  12 +-
+ Juego.cpp                 | 376 ++++++++++++++++++++++++++++++++++++++++++----
+ Leeme.txt                 |   6 +
+ Tet9234.tmp               |  45 ++++++
+ Tetris.zpr                | 166 ++++++++++++++------
+ audio/ingresarNombre.ogg  | Bin 0 -> 1012566 bytes
+ audio/lineaCompleta.ogg   | Bin 0 -> 31914 bytes
+ ingresarNombre.ogg        | Bin 0 -> 1012566 bytes
+ lineaCompleta.ogg         | Bin 0 -> 31914 bytes
+ main.cpp                  |  10 +-
+ 28 files changed, 847 insertions(+), 108 deletions(-)
+
+commit a0a1dd9bb85b192391ab562a6517821c71992ad2
+Author: ModestoAcunaQuiros <minor.acuna.quiros@est.una.ac.cr>
+Date:   2026-09-02
+
+    Feat: tablero, jugabilidad
+
+ ColaPieza.cpp                                      |    2 +-
+ Debug/ColaEventos.o                                |  Bin 0 -> 3957 bytes
+ Debug/ColaPieza.o                                  |  Bin 0 -> 8272 bytes
+ Debug/Interfaz.o                                   |  Bin 0 -> 372079 bytes
+ Debug/Juego.o                                      |  Bin 0 -> 343986 bytes
+ Debug/Pieza.o                                      |  Bin 0 -> 4318 bytes
+ Debug/PilaHold.o                                   |  Bin 0 -> 2693 bytes
+ Debug/Replay.o                                     |  Bin 0 -> 5672 bytes
+ Debug/Tablero.o                                    |  Bin 0 -> 5635 bytes
+ Debug/Tetris.exe                                   |  Bin 0 -> 2980434 bytes
+ Debug/main.o                                       |  Bin 0 -> 222104 bytes
+ Debug/openal32.dll                                 |  Bin 0 -> 630784 bytes
+ Debug/sfml-audio-2.dll                             |  Bin 0 -> 1595654 bytes
+ Debug/sfml-graphics-2.dll                          |  Bin 0 -> 1204696 bytes
+ Debug/sfml-system-2.dll                            |  Bin 0 -> 115155 bytes
+ Debug/sfml-window-2.dll                            |  Bin 0 -> 242635 bytes
+ Debug_Win32/ColaPieza.o                            |  Bin 0 -> 8267 bytes
+ Debug_Win32/Interfaz.o                             |  Bin 0 -> 341186 bytes
+ Debug_Win32/Pieza.o                                |  Bin 0 -> 4318 bytes
+ Debug_Win32/Tetris.exe                             |  Bin 2131981 -> 2652297 bytes
+ Debug_Win32/main.o                                 |  Bin 230003 -> 221016 bytes
+ Debug_Win32/openal32.dll                           |  Bin 0 -> 630784 bytes
+ Debug_Win32/sfml-audio-2.dll                       |  Bin 0 -> 1595654 bytes
+ Debug_Win32/sfml-graphics-2.dll                    |  Bin 0 -> 1204696 bytes
+ Debug_Win32/sfml-system-2.dll                      |  Bin 0 -> 115155 bytes
+ Debug_Win32/sfml-window-2.dll                      |  Bin 0 -> 242635 bytes
+ Interfaz.cpp                                       |  355 +-
+ Interfaz.h                                         |   13 +
+ Juego.cpp                                          |  353 ++
+ Juego.h                                            |    2 +-
+ Leeme.txt                                          |    6 -
+ Menu.png                                           |  Bin 0 -> 1382890 bytes
+ OTS_Tetris.ogg                                     |  Bin 0 -> 688032 bytes
+ Pieza.h                                            |    1 -
+ Replay.cpp                                         |   93 +
+ Replay.h                                           |   60 +
+ SFML-3.1.0/bin/sfml-audio-3.dll                    |  Bin 2403035 -> 0 bytes
+ SFML-3.1.0/bin/sfml-audio-d-3.dll                  |  Bin 12200600 -> 0 bytes
+ SFML-3.1.0/bin/sfml-graphics-3.dll                 |  Bin 3530448 -> 0 bytes
+ SFML-3.1.0/bin/sfml-graphics-d-3.dll               |  Bin 31173923 -> 0 bytes
+ SFML-3.1.0/bin/sfml-network-3.dll                  |  Bin 1615034 -> 0 bytes
+ SFML-3.1.0/bin/sfml-network-d-3.dll                |  Bin 23276402 -> 0 bytes
+ SFML-3.1.0/bin/sfml-system-3.dll                   |  Bin 1398895 -> 0 bytes
+ SFML-3.1.0/bin/sfml-system-d-3.dll                 |  Bin 7592845 -> 0 bytes
+ SFML-3.1.0/bin/sfml-window-3.dll                   |  Bin 353484 -> 0 bytes
+ SFML-3.1.0/bin/sfml-window-d-3.dll                 |  Bin 6966799 -> 0 bytes
+ SFML-3.1.0/changelog.md                            | 1287 -----
+ SFML-3.1.0/doc/Angle_8hpp.html                     |  133 -
+ SFML-3.1.0/doc/Angle_8hpp_source.html              |  258 -
+ SFML-3.1.0/doc/AudioResource_8hpp.html             |  125 -
+ SFML-3.1.0/doc/AudioResource_8hpp_source.html      |  173 -
+ SFML-3.1.0/doc/Audio_2Export_8hpp.html             |  135 -
+ SFML-3.1.0/doc/Audio_2Export_8hpp_source.html      |  148 -
+ SFML-3.1.0/doc/Audio_8hpp.html                     |  125 -
+ SFML-3.1.0/doc/Audio_8hpp_source.html              |  168 -
+ SFML-3.1.0/doc/BlendMode_8hpp.html                 |  140 -
+ SFML-3.1.0/doc/BlendMode_8hpp_source.html          |  235 -
+ SFML-3.1.0/doc/CircleShape_8hpp.html               |  127 -
+ SFML-3.1.0/doc/CircleShape_8hpp_source.html        |  187 -
+ SFML-3.1.0/doc/Clipboard_8hpp.html                 |  128 -
+ SFML-3.1.0/doc/Clipboard_8hpp_source.html          |  160 -
+ SFML-3.1.0/doc/Clock_8hpp.html                     |  127 -
+ SFML-3.1.0/doc/Clock_8hpp_source.html              |  202 -
+ SFML-3.1.0/doc/Color_8hpp.html                     |  125 -
+ SFML-3.1.0/doc/Color_8hpp_source.html              |  219 -
+ SFML-3.1.0/doc/Config_8hpp.html                    |  236 -
+ SFML-3.1.0/doc/Config_8hpp_source.html             |  261 -
+ SFML-3.1.0/doc/ContextSettings_8hpp.html           |  125 -
+ SFML-3.1.0/doc/ContextSettings_8hpp_source.html    |  180 -
+ SFML-3.1.0/doc/Context_8hpp.html                   |  134 -
+ SFML-3.1.0/doc/Context_8hpp_source.html            |  218 -
+ SFML-3.1.0/doc/ConvexShape_8hpp.html               |  127 -
+ SFML-3.1.0/doc/ConvexShape_8hpp_source.html        |  179 -
+ SFML-3.1.0/doc/CoordinateType_8hpp.html            |  125 -
+ SFML-3.1.0/doc/CoordinateType_8hpp_source.html     |  149 -
+ SFML-3.1.0/doc/Cursor_8hpp.html                    |  128 -
+ SFML-3.1.0/doc/Cursor_8hpp_source.html             |  228 -
+ SFML-3.1.0/doc/Dns_8hpp.html                       |  150 -
+ SFML-3.1.0/doc/Dns_8hpp_source.html                |  220 -
+ SFML-3.1.0/doc/Drawable_8hpp.html                  |  124 -
+ SFML-3.1.0/doc/Drawable_8hpp_source.html           |  167 -
+ SFML-3.1.0/doc/Err_8hpp.html                       |  125 -
+ SFML-3.1.0/doc/Err_8hpp_source.html                |  150 -
+ SFML-3.1.0/doc/Event_8hpp.html                     |  177 -
+ SFML-3.1.0/doc/Event_8hpp_source.html              |  487 --
+ SFML-3.1.0/doc/Exception_8hpp.html                 |  125 -
+ SFML-3.1.0/doc/Exception_8hpp_source.html          |  153 -
+ SFML-3.1.0/doc/FileInputStream_8hpp.html           |  130 -
+ SFML-3.1.0/doc/FileInputStream_8hpp_source.html    |  218 -
+ SFML-3.1.0/doc/Font_8hpp.html                      |  138 -
+ SFML-3.1.0/doc/Font_8hpp_source.html               |  317 --
+ SFML-3.1.0/doc/Ftp_8hpp.html                       |  135 -
+ SFML-3.1.0/doc/Ftp_8hpp_source.html                |  380 --
+ SFML-3.1.0/doc/GlResource_8hpp.html                |  127 -
+ SFML-3.1.0/doc/GlResource_8hpp_source.html         |  184 -
+ SFML-3.1.0/doc/Glsl_8hpp.html                      |  149 -
+ SFML-3.1.0/doc/Glsl_8hpp_source.html               |  216 -
+ SFML-3.1.0/doc/Glyph_8hpp.html                     |  125 -
+ SFML-3.1.0/doc/Glyph_8hpp_source.html              |  167 -
+ SFML-3.1.0/doc/GpuPreference_8hpp.html             |  149 -
+ SFML-3.1.0/doc/GpuPreference_8hpp_source.html      |  151 -
+ SFML-3.1.0/doc/Graphics_2Export_8hpp.html          |  135 -
+ SFML-3.1.0/doc/Graphics_2Export_8hpp_source.html   |  148 -
+ SFML-3.1.0/doc/Graphics_8hpp.html                  |  138 -
+ SFML-3.1.0/doc/Graphics_8hpp_source.html           |  194 -
+ SFML-3.1.0/doc/Http_8hpp.html                      |  136 -
+ SFML-3.1.0/doc/Http_8hpp_source.html               |  331 --
+ SFML-3.1.0/doc/Image_8hpp.html                     |  133 -
+ SFML-3.1.0/doc/Image_8hpp_source.html              |  242 -
+ SFML-3.1.0/doc/InputSoundFile_8hpp.html            |  130 -
+ SFML-3.1.0/doc/InputSoundFile_8hpp_source.html     |  242 -
+ SFML-3.1.0/doc/InputStream_8hpp.html               |  127 -
+ SFML-3.1.0/doc/InputStream_8hpp_source.html        |  174 -
+ SFML-3.1.0/doc/IpAddress_8hpp.html                 |  152 -
+ SFML-3.1.0/doc/IpAddress_8hpp_source.html          |  275 -
+ SFML-3.1.0/doc/Joystick_8hpp.html                  |  172 -
+ SFML-3.1.0/doc/Joystick_8hpp_source.html           |  215 -
+ SFML-3.1.0/doc/Keyboard_8hpp.html                  |  471 --
+ SFML-3.1.0/doc/Keyboard_8hpp_source.html           |  602 --
+ SFML-3.1.0/doc/Listener_8hpp.html                  |  156 -
+ SFML-3.1.0/doc/Listener_8hpp_source.html           |  202 -
+ SFML-3.1.0/doc/Main_8hpp.html                      |  111 -
+ SFML-3.1.0/doc/Main_8hpp_source.html               |  145 -
+ SFML-3.1.0/doc/MemoryInputStream_8hpp.html         |  128 -
+ SFML-3.1.0/doc/MemoryInputStream_8hpp_source.html  |  182 -
+ SFML-3.1.0/doc/Mouse_8hpp.html                     |  159 -
+ SFML-3.1.0/doc/Mouse_8hpp_source.html              |  203 -
+ SFML-3.1.0/doc/Music_8hpp.html                     |  132 -
+ SFML-3.1.0/doc/Music_8hpp_source.html              |  243 -
+ SFML-3.1.0/doc/NativeActivity_8hpp.html            |  124 -
+ SFML-3.1.0/doc/NativeActivity_8hpp_source.html     |  154 -
+ SFML-3.1.0/doc/Network_2Export_8hpp.html           |  135 -
+ SFML-3.1.0/doc/Network_2Export_8hpp_source.html    |  148 -
+ SFML-3.1.0/doc/Network_8hpp.html                   |  123 -
+ SFML-3.1.0/doc/Network_8hpp_source.html            |  164 -
+ SFML-3.1.0/doc/OpenGL_8hpp.html                    |  111 -
+ SFML-3.1.0/doc/OpenGL_8hpp_source.html             |  179 -
+ SFML-3.1.0/doc/OutputSoundFile_8hpp.html           |  130 -
+ SFML-3.1.0/doc/OutputSoundFile_8hpp_source.html    |  187 -
+ SFML-3.1.0/doc/Packet_8hpp.html                    |  128 -
+ SFML-3.1.0/doc/Packet_8hpp_source.html             |  282 -
+ SFML-3.1.0/doc/PlaybackDevice_8hpp.html            |  167 -
+ SFML-3.1.0/doc/PlaybackDevice_8hpp_source.html     |  201 -
+ SFML-3.1.0/doc/PrimitiveType_8hpp.html             |  132 -
+ SFML-3.1.0/doc/PrimitiveType_8hpp_source.html      |  156 -
+ SFML-3.1.0/doc/Rect_8hpp.html                      |  132 -
+ SFML-3.1.0/doc/Rect_8hpp_source.html               |  195 -
+ SFML-3.1.0/doc/RectangleShape_8hpp.html            |  127 -
+ SFML-3.1.0/doc/RectangleShape_8hpp_source.html     |  183 -
+ SFML-3.1.0/doc/RenderStates_8hpp.html              |  128 -
+ SFML-3.1.0/doc/RenderStates_8hpp_source.html       |  215 -
+ SFML-3.1.0/doc/RenderTarget_8hpp.html              |  137 -
+ SFML-3.1.0/doc/RenderTarget_8hpp_source.html       |  329 --
+ SFML-3.1.0/doc/RenderTexture_8hpp.html             |  129 -
+ SFML-3.1.0/doc/RenderTexture_8hpp_source.html      |  234 -
+ SFML-3.1.0/doc/RenderWindow_8hpp.html              |  132 -
+ SFML-3.1.0/doc/RenderWindow_8hpp_source.html       |  225 -
+ SFML-3.1.0/doc/Sensor_8hpp.html                    |  152 -
+ SFML-3.1.0/doc/Sensor_8hpp_source.html             |  181 -
+ SFML-3.1.0/doc/Sftp_8hpp.html                      |  148 -
+ SFML-3.1.0/doc/Sftp_8hpp_source.html               |  501 --
+ SFML-3.1.0/doc/Shader_8hpp.html                    |  133 -
+ SFML-3.1.0/doc/Shader_8hpp_source.html             |  386 --
+ SFML-3.1.0/doc/Shape_8hpp.html                     |  133 -
+ SFML-3.1.0/doc/Shape_8hpp_source.html              |  264 -
+ SFML-3.1.0/doc/Sleep_8hpp.html                     |  124 -
+ SFML-3.1.0/doc/Sleep_8hpp_source.html              |  149 -
+ SFML-3.1.0/doc/SocketHandle_8hpp.html              |  123 -
+ SFML-3.1.0/doc/SocketHandle_8hpp_source.html       |  158 -
+ SFML-3.1.0/doc/SocketSelector_8hpp.html            |  128 -
+ SFML-3.1.0/doc/SocketSelector_8hpp_source.html     |  218 -
+ SFML-3.1.0/doc/Socket_8hpp.html                    |  126 -
+ SFML-3.1.0/doc/Socket_8hpp_source.html             |  230 -
+ SFML-3.1.0/doc/SoundBufferRecorder_8hpp.html       |  129 -
+ .../doc/SoundBufferRecorder_8hpp_source.html       |  185 -
+ SFML-3.1.0/doc/SoundBuffer_8hpp.html               |  131 -
+ SFML-3.1.0/doc/SoundBuffer_8hpp_source.html        |  260 -
+ SFML-3.1.0/doc/SoundChannel_8hpp.html              |  149 -
+ SFML-3.1.0/doc/SoundChannel_8hpp_source.html       |  184 -
+ SFML-3.1.0/doc/SoundFileFactory_8hpp.html          |  129 -
+ SFML-3.1.0/doc/SoundFileFactory_8hpp_source.html   |  218 -
+ SFML-3.1.0/doc/SoundFileReader_8hpp.html           |  130 -
+ SFML-3.1.0/doc/SoundFileReader_8hpp_source.html    |  190 -
+ SFML-3.1.0/doc/SoundFileWriter_8hpp.html           |  128 -
+ SFML-3.1.0/doc/SoundFileWriter_8hpp_source.html    |  172 -
+ SFML-3.1.0/doc/SoundRecorder_8hpp.html             |  130 -
+ SFML-3.1.0/doc/SoundRecorder_8hpp_source.html      |  215 -
+ SFML-3.1.0/doc/SoundSource_8hpp.html               |  130 -
+ SFML-3.1.0/doc/SoundSource_8hpp_source.html        |  322 --
+ SFML-3.1.0/doc/SoundStream_8hpp.html               |  134 -
+ SFML-3.1.0/doc/SoundStream_8hpp_source.html        |  248 -
+ SFML-3.1.0/doc/Sound_8hpp.html                     |  127 -
+ SFML-3.1.0/doc/Sound_8hpp_source.html              |  228 -
+ SFML-3.1.0/doc/Sprite_8hpp.html                    |  130 -
+ SFML-3.1.0/doc/Sprite_8hpp_source.html             |  223 -
+ SFML-3.1.0/doc/StencilMode_8hpp.html               |  154 -
+ SFML-3.1.0/doc/StencilMode_8hpp_source.html        |  233 -
+ SFML-3.1.0/doc/String_8hpp.html                    |  140 -
+ SFML-3.1.0/doc/String_8hpp_source.html             |  394 --
+ SFML-3.1.0/doc/SuspendAwareClock_8hpp.html         |  125 -
+ SFML-3.1.0/doc/SuspendAwareClock_8hpp_source.html  |  167 -
+ SFML-3.1.0/doc/System_2Export_8hpp.html            |  135 -
+ SFML-3.1.0/doc/System_2Export_8hpp_source.html     |  148 -
+ SFML-3.1.0/doc/System_8hpp.html                    |  126 -
+ SFML-3.1.0/doc/System_8hpp_source.html             |  170 -
+ SFML-3.1.0/doc/TcpListener_8hpp.html               |  126 -
+ SFML-3.1.0/doc/TcpListener_8hpp_source.html        |  179 -
+ SFML-3.1.0/doc/TcpSocket_8hpp.html                 |  134 -
+ SFML-3.1.0/doc/TcpSocket_8hpp_source.html          |  278 -
+ SFML-3.1.0/doc/Text_8hpp.html                      |  140 -
+ SFML-3.1.0/doc/Text_8hpp_source.html               |  412 --
+ SFML-3.1.0/doc/Texture_8hpp.html                   |  137 -
+ SFML-3.1.0/doc/Texture_8hpp_source.html            |  317 --
+ SFML-3.1.0/doc/Time_8hpp.html                      |  126 -
+ SFML-3.1.0/doc/Time_8hpp_source.html               |  265 -
+ SFML-3.1.0/doc/TimeoutWithPredicate_8hpp.html      |  126 -
+ .../doc/TimeoutWithPredicate_8hpp_source.html      |  175 -
+ SFML-3.1.0/doc/Touch_8hpp.html                     |  131 -
+ SFML-3.1.0/doc/Touch_8hpp_source.html              |  173 -
+ SFML-3.1.0/doc/Transform_8hpp.html                 |  128 -
+ SFML-3.1.0/doc/Transform_8hpp_source.html          |  231 -
+ SFML-3.1.0/doc/Transformable_8hpp.html             |  126 -
+ SFML-3.1.0/doc/Transformable_8hpp_source.html      |  216 -
+ SFML-3.1.0/doc/UdpSocket_8hpp.html                 |  129 -
+ SFML-3.1.0/doc/UdpSocket_8hpp_source.html          |  205 -
+ SFML-3.1.0/doc/Utf_8hpp.html                       |  141 -
+ SFML-3.1.0/doc/Utf_8hpp_source.html                |  373 --
+ SFML-3.1.0/doc/Vector2_8hpp.html                   |  135 -
+ SFML-3.1.0/doc/Vector2_8hpp_source.html            |  270 -
+ SFML-3.1.0/doc/Vector3_8hpp.html                   |  134 -
+ SFML-3.1.0/doc/Vector3_8hpp_source.html            |  248 -
+ SFML-3.1.0/doc/Version_8hpp.html                   |  131 -
+ SFML-3.1.0/doc/Version_8hpp_source.html            |  166 -
+ SFML-3.1.0/doc/VertexArray_8hpp.html               |  131 -
+ SFML-3.1.0/doc/VertexArray_8hpp_source.html        |  228 -
+ SFML-3.1.0/doc/VertexBuffer_8hpp.html              |  135 -
+ SFML-3.1.0/doc/VertexBuffer_8hpp_source.html       |  256 -
+ SFML-3.1.0/doc/Vertex_8hpp.html                    |  125 -
+ SFML-3.1.0/doc/Vertex_8hpp_source.html             |  164 -
+ SFML-3.1.0/doc/VideoMode_8hpp.html                 |  126 -
+ SFML-3.1.0/doc/VideoMode_8hpp_source.html          |  196 -
+ SFML-3.1.0/doc/View_8hpp.html                      |  128 -
+ SFML-3.1.0/doc/View_8hpp_source.html               |  232 -
+ SFML-3.1.0/doc/Vulkan_8hpp.html                    |  172 -
+ SFML-3.1.0/doc/Vulkan_8hpp_source.html             |  187 -
+ SFML-3.1.0/doc/WindowBase_8hpp.html                |  133 -
+ SFML-3.1.0/doc/WindowBase_8hpp_source.html         |  318 --
+ SFML-3.1.0/doc/WindowEnums_8hpp.html               |  136 -
+ SFML-3.1.0/doc/WindowEnums_8hpp_source.html        |  171 -
+ SFML-3.1.0/doc/WindowHandle_8hpp.html              |  124 -
+ SFML-3.1.0/doc/WindowHandle_8hpp_source.html       |  182 -
+ SFML-3.1.0/doc/Window_2Export_8hpp.html            |  135 -
+ SFML-3.1.0/doc/Window_2Export_8hpp_source.html     |  148 -
+ SFML-3.1.0/doc/Window_2Window_8hpp.html            |  132 -
+ SFML-3.1.0/doc/Window_2Window_8hpp_source.html     |  254 -
+ SFML-3.1.0/doc/Window_8hpp.html                    |  125 -
+ SFML-3.1.0/doc/Window_8hpp_source.html             |  168 -
+ SFML-3.1.0/doc/annotated.html                      |  237 -
+ SFML-3.1.0/doc/classes.html                        |  172 -
+ SFML-3.1.0/doc/classsf_1_1Angle-members.html       |  144 -
+ SFML-3.1.0/doc/classsf_1_1Angle.html               | 1373 -----
+ .../doc/classsf_1_1AudioResource-members.html      |  118 -
+ SFML-3.1.0/doc/classsf_1_1AudioResource.html       |  293 -
+ SFML-3.1.0/doc/classsf_1_1AudioResource.png        |  Bin 1239 -> 0 bytes
+ SFML-3.1.0/doc/classsf_1_1CircleShape-members.html |  151 -
+ SFML-3.1.0/doc/classsf_1_1CircleShape.html         | 1363 -----
+ SFML-3.1.0/doc/classsf_1_1CircleShape.png          |  Bin 1033 -> 0 bytes
+ SFML-3.1.0/doc/classsf_1_1Clock-members.html       |  119 -
+ SFML-3.1.0/doc/classsf_1_1Clock.html               |  300 -
+ SFML-3.1.0/doc/classsf_1_1Color-members.html       |  138 -
+ SFML-3.1.0/doc/classsf_1_1Color.html               |  994 ----
+ SFML-3.1.0/doc/classsf_1_1Context-members.html     |  126 -
+ SFML-3.1.0/doc/classsf_1_1Context.html             |  554 --
+ SFML-3.1.0/doc/classsf_1_1Context.png              |  Bin 482 -> 0 bytes
+ SFML-3.1.0/doc/classsf_1_1ConvexShape-members.html |  150 -
+ SFML-3.1.0/doc/classsf_1_1ConvexShape.html         | 1339 -----
+ SFML-3.1.0/doc/classsf_1_1ConvexShape.png          |  Bin 1042 -> 0 bytes
+ SFML-3.1.0/doc/classsf_1_1Cursor-members.html      |  124 -
+ SFML-3.1.0/doc/classsf_1_1Cursor.html              |  652 ---
+ SFML-3.1.0/doc/classsf_1_1Drawable-members.html    |  116 -
+ SFML-3.1.0/doc/classsf_1_1Drawable.html            |  291 -
+ SFML-3.1.0/doc/classsf_1_1Drawable.png             |  Bin 2213 -> 0 bytes
+ SFML-3.1.0/doc/classsf_1_1Event-members.html       |  120 -
+ SFML-3.1.0/doc/classsf_1_1Event.html               |  451 --
+ SFML-3.1.0/doc/classsf_1_1Exception.html           |  128 -
+ SFML-3.1.0/doc/classsf_1_1Exception.png            |  Bin 528 -> 0 bytes
+ .../doc/classsf_1_1FileInputStream-members.html    |  126 -
+ SFML-3.1.0/doc/classsf_1_1FileInputStream.html     |  542 --
+ SFML-3.1.0/doc/classsf_1_1FileInputStream.png      |  Bin 585 -> 0 bytes
+ SFML-3.1.0/doc/classsf_1_1Font-members.html        |  135 -
+ SFML-3.1.0/doc/classsf_1_1Font.html                | 1052 ----
+ SFML-3.1.0/doc/classsf_1_1Ftp-members.html         |  135 -
+ SFML-3.1.0/doc/classsf_1_1Ftp.html                 | 1024 ----
+ ...lasssf_1_1Ftp_1_1DirectoryResponse-members.html |  120 -
+ .../doc/classsf_1_1Ftp_1_1DirectoryResponse.html   |  464 --
+ .../doc/classsf_1_1Ftp_1_1DirectoryResponse.png    |  Bin 700 -> 0 bytes
+ .../classsf_1_1Ftp_1_1ListingResponse-members.html |  120 -
+ .../doc/classsf_1_1Ftp_1_1ListingResponse.html     |  469 --
+ .../doc/classsf_1_1Ftp_1_1ListingResponse.png      |  Bin 677 -> 0 bytes
+ .../doc/classsf_1_1Ftp_1_1Response-members.html    |  118 -
+ SFML-3.1.0/doc/classsf_1_1Ftp_1_1Response.html     |  449 --
+ SFML-3.1.0/doc/classsf_1_1Ftp_1_1Response.png      |  Bin 1010 -> 0 bytes
+ SFML-3.1.0/doc/classsf_1_1GlResource-members.html  |  116 -
+ SFML-3.1.0/doc/classsf_1_1GlResource.html          |  256 -
+ SFML-3.1.0/doc/classsf_1_1GlResource.png           |  Bin 1789 -> 0 bytes
+ ...GlResource_1_1TransientContextLock-members.html |  117 -
+ ...sssf_1_1GlResource_1_1TransientContextLock.html |  231 -
+ SFML-3.1.0/doc/classsf_1_1Http-members.html        |  119 -
+ SFML-3.1.0/doc/classsf_1_1Http.html                |  403 --
+ .../doc/classsf_1_1Http_1_1Request-members.html    |  121 -
+ SFML-3.1.0/doc/classsf_1_1Http_1_1Request.html     |  403 --
+ .../doc/classsf_1_1Http_1_1Response-members.html   |  120 -
+ SFML-3.1.0/doc/classsf_1_1Http_1_1Response.html    |  437 --
+ SFML-3.1.0/doc/classsf_1_1Image-members.html       |  134 -
+ SFML-3.1.0/doc/classsf_1_1Image.html               |  914 ---
+ .../doc/classsf_1_1InputSoundFile-members.html     |  131 -
+ SFML-3.1.0/doc/classsf_1_1InputSoundFile.html      |  757 ---
+ SFML-3.1.0/doc/classsf_1_1InputStream-members.html |  118 -
+ SFML-3.1.0/doc/classsf_1_1InputStream.html         |  374 --
+ SFML-3.1.0/doc/classsf_1_1InputStream.png          |  Bin 946 -> 0 bytes
+ SFML-3.1.0/doc/classsf_1_1IpAddress-members.html   |  136 -
+ SFML-3.1.0/doc/classsf_1_1IpAddress.html           |  952 ----
+ .../doc/classsf_1_1MemoryInputStream-members.html  |  119 -
+ SFML-3.1.0/doc/classsf_1_1MemoryInputStream.html   |  329 --
+ SFML-3.1.0/doc/classsf_1_1MemoryInputStream.png    |  Bin 673 -> 0 bytes
+ SFML-3.1.0/doc/classsf_1_1Music-members.html       |  192 -
+ SFML-3.1.0/doc/classsf_1_1Music.html               | 2374 --------
+ SFML-3.1.0/doc/classsf_1_1Music.png                |  Bin 973 -> 0 bytes
+ .../doc/classsf_1_1OutputSoundFile-members.html    |  118 -
+ SFML-3.1.0/doc/classsf_1_1OutputSoundFile.html     |  336 --
+ SFML-3.1.0/doc/classsf_1_1Packet-members.html      |  162 -
+ SFML-3.1.0/doc/classsf_1_1Packet.html              | 1439 -----
+ SFML-3.1.0/doc/classsf_1_1Rect-members.html        |  123 -
+ SFML-3.1.0/doc/classsf_1_1Rect.html                |  531 --
+ .../doc/classsf_1_1RectangleShape-members.html     |  150 -
+ SFML-3.1.0/doc/classsf_1_1RectangleShape.html      | 1327 -----
+ SFML-3.1.0/doc/classsf_1_1RectangleShape.png       |  Bin 1082 -> 0 bytes
+ .../doc/classsf_1_1RenderTarget-members.html       |  142 -
+ SFML-3.1.0/doc/classsf_1_1RenderTarget.html        | 1117 ----
+ SFML-3.1.0/doc/classsf_1_1RenderTarget.png         |  Bin 805 -> 0 bytes
+ .../doc/classsf_1_1RenderTexture-members.html      |  158 -
+ SFML-3.1.0/doc/classsf_1_1RenderTexture.html       | 1568 ------
+ SFML-3.1.0/doc/classsf_1_1RenderTexture.png        |  Bin 589 -> 0 bytes
+ .../doc/classsf_1_1RenderWindow-members.html       |  200 -
+ SFML-3.1.0/doc/classsf_1_1RenderWindow.html        | 2689 ---------
+ SFML-3.1.0/doc/classsf_1_1RenderWindow.png         |  Bin 1388 -> 0 bytes
+ SFML-3.1.0/doc/classsf_1_1Sftp-members.html        |  133 -
+ SFML-3.1.0/doc/classsf_1_1Sftp.html                | 1180 ----
+ ...lasssf_1_1Sftp_1_1AttributesResult-members.html |  120 -
+ .../doc/classsf_1_1Sftp_1_1AttributesResult.html   |  547 --
+ .../doc/classsf_1_1Sftp_1_1AttributesResult.png    |  Bin 654 -> 0 bytes
+ .../classsf_1_1Sftp_1_1ListingResult-members.html  |  120 -
+ .../doc/classsf_1_1Sftp_1_1ListingResult.html      |  547 --
+ .../doc/classsf_1_1Sftp_1_1ListingResult.png       |  Bin 606 -> 0 bytes
+ .../doc/classsf_1_1Sftp_1_1PathResult-members.html |  120 -
+ SFML-3.1.0/doc/classsf_1_1Sftp_1_1PathResult.html  |  547 --
+ SFML-3.1.0/doc/classsf_1_1Sftp_1_1PathResult.png   |  Bin 573 -> 0 bytes
+ .../doc/classsf_1_1Sftp_1_1Result-members.html     |  118 -
+ SFML-3.1.0/doc/classsf_1_1Sftp_1_1Result.html      |  528 --
+ SFML-3.1.0/doc/classsf_1_1Sftp_1_1Result.png       |  Bin 1187 -> 0 bytes
+ SFML-3.1.0/doc/classsf_1_1Shader-members.html      |  166 -
+ SFML-3.1.0/doc/classsf_1_1Shader.html              | 2159 --------
+ SFML-3.1.0/doc/classsf_1_1Shader.png               |  Bin 498 -> 0 bytes
+ SFML-3.1.0/doc/classsf_1_1Shape-members.html       |  147 -
+ SFML-3.1.0/doc/classsf_1_1Shape.html               | 1192 ----
+ SFML-3.1.0/doc/classsf_1_1Shape.png                |  Bin 1519 -> 0 bytes
+ SFML-3.1.0/doc/classsf_1_1Socket-members.html      |  129 -
+ SFML-3.1.0/doc/classsf_1_1Socket.html              |  683 ---
+ SFML-3.1.0/doc/classsf_1_1Socket.png               |  Bin 883 -> 0 bytes
+ .../doc/classsf_1_1SocketSelector-members.html     |  128 -
+ SFML-3.1.0/doc/classsf_1_1SocketSelector.html      |  697 ---
+ SFML-3.1.0/doc/classsf_1_1Sound-members.html       |  176 -
+ SFML-3.1.0/doc/classsf_1_1Sound.html               | 1892 -------
+ SFML-3.1.0/doc/classsf_1_1Sound.png                |  Bin 733 -> 0 bytes
+ SFML-3.1.0/doc/classsf_1_1SoundBuffer-members.html |  133 -
+ SFML-3.1.0/doc/classsf_1_1SoundBuffer.html         |  903 ---
+ .../classsf_1_1SoundBufferRecorder-members.html    |  131 -
+ SFML-3.1.0/doc/classsf_1_1SoundBufferRecorder.html |  705 ---
+ SFML-3.1.0/doc/classsf_1_1SoundBufferRecorder.png  |  Bin 670 -> 0 bytes
+ .../doc/classsf_1_1SoundFileFactory-members.html   |  123 -
+ SFML-3.1.0/doc/classsf_1_1SoundFileFactory.html    |  491 --
+ .../doc/classsf_1_1SoundFileReader-members.html    |  117 -
+ SFML-3.1.0/doc/classsf_1_1SoundFileReader.html     |  323 --
+ .../doc/classsf_1_1SoundFileWriter-members.html    |  116 -
+ SFML-3.1.0/doc/classsf_1_1SoundFileWriter.html     |  286 -
+ .../doc/classsf_1_1SoundRecorder-members.html      |  129 -
+ SFML-3.1.0/doc/classsf_1_1SoundRecorder.html       |  725 ---
+ SFML-3.1.0/doc/classsf_1_1SoundRecorder.png        |  Bin 675 -> 0 bytes
+ SFML-3.1.0/doc/classsf_1_1SoundSource-members.html |  163 -
+ SFML-3.1.0/doc/classsf_1_1SoundSource.html         | 1545 ------
+ SFML-3.1.0/doc/classsf_1_1SoundSource.png          |  Bin 1241 -> 0 bytes
+ SFML-3.1.0/doc/classsf_1_1SoundStream-members.html |  178 -
+ SFML-3.1.0/doc/classsf_1_1SoundStream.html         | 2046 -------
+ SFML-3.1.0/doc/classsf_1_1SoundStream.png          |  Bin 978 -> 0 bytes
+ SFML-3.1.0/doc/classsf_1_1Sprite-members.html      |  142 -
+ SFML-3.1.0/doc/classsf_1_1Sprite.html              | 1027 ----
+ SFML-3.1.0/doc/classsf_1_1Sprite.png               |  Bin 757 -> 0 bytes
+ SFML-3.1.0/doc/classsf_1_1String-members.html      |  169 -
+ SFML-3.1.0/doc/classsf_1_1String.html              | 2065 -------
+ SFML-3.1.0/doc/classsf_1_1TcpListener-members.html |  132 -
+ SFML-3.1.0/doc/classsf_1_1TcpListener.html         |  629 ---
+ SFML-3.1.0/doc/classsf_1_1TcpListener.png          |  Bin 487 -> 0 bytes
+ SFML-3.1.0/doc/classsf_1_1TcpSocket-members.html   |  153 -
+ SFML-3.1.0/doc/classsf_1_1TcpSocket.html           | 1466 -----
+ SFML-3.1.0/doc/classsf_1_1TcpSocket.png            |  Bin 458 -> 0 bytes
+ SFML-3.1.0/doc/classsf_1_1Text-members.html        |  174 -
+ SFML-3.1.0/doc/classsf_1_1Text.html                | 1925 -------
+ SFML-3.1.0/doc/classsf_1_1Text.png                 |  Bin 734 -> 0 bytes
+ SFML-3.1.0/doc/classsf_1_1Texture-members.html     |  156 -
+ SFML-3.1.0/doc/classsf_1_1Texture.html             | 1760 ------
+ SFML-3.1.0/doc/classsf_1_1Texture.png              |  Bin 490 -> 0 bytes
+ SFML-3.1.0/doc/classsf_1_1Time-members.html        |  148 -
+ SFML-3.1.0/doc/classsf_1_1Time.html                | 1510 -----
+ .../classsf_1_1TimeoutWithPredicate-members.html   |  117 -
+ .../doc/classsf_1_1TimeoutWithPredicate.html       |  307 --
+ SFML-3.1.0/doc/classsf_1_1Transform-members.html   |  131 -
+ SFML-3.1.0/doc/classsf_1_1Transform.html           |  891 ---
+ .../doc/classsf_1_1Transformable-members.html      |  128 -
+ SFML-3.1.0/doc/classsf_1_1Transformable.html       |  651 ---
+ SFML-3.1.0/doc/classsf_1_1Transformable.png        |  Bin 1700 -> 0 bytes
+ SFML-3.1.0/doc/classsf_1_1UdpSocket-members.html   |  137 -
+ SFML-3.1.0/doc/classsf_1_1UdpSocket.html           |  885 ---
+ SFML-3.1.0/doc/classsf_1_1UdpSocket.png            |  Bin 466 -> 0 bytes
+ SFML-3.1.0/doc/classsf_1_1Utf.html                 |  130 -
+ .../doc/classsf_1_1Utf_3_0116_01_4-members.html    |  126 -
+ SFML-3.1.0/doc/classsf_1_1Utf_3_0116_01_4.html     |  829 ---
+ .../doc/classsf_1_1Utf_3_0132_01_4-members.html    |  130 -
+ SFML-3.1.0/doc/classsf_1_1Utf_3_0132_01_4.html     | 1022 ----
+ .../doc/classsf_1_1Utf_3_018_01_4-members.html     |  126 -
+ SFML-3.1.0/doc/classsf_1_1Utf_3_018_01_4.html      |  829 ---
+ SFML-3.1.0/doc/classsf_1_1Vector2-members.html     |  143 -
+ SFML-3.1.0/doc/classsf_1_1Vector2.html             | 1286 -----
+ SFML-3.1.0/doc/classsf_1_1Vector3-members.html     |  138 -
+ SFML-3.1.0/doc/classsf_1_1Vector3.html             | 1102 ----
+ SFML-3.1.0/doc/classsf_1_1VertexArray-members.html |  129 -
+ SFML-3.1.0/doc/classsf_1_1VertexArray.html         |  625 ---
+ SFML-3.1.0/doc/classsf_1_1VertexArray.png          |  Bin 523 -> 0 bytes
+ .../doc/classsf_1_1VertexBuffer-members.html       |  135 -
+ SFML-3.1.0/doc/classsf_1_1VertexBuffer.html        |  884 ---
+ SFML-3.1.0/doc/classsf_1_1VertexBuffer.png         |  Bin 770 -> 0 bytes
+ SFML-3.1.0/doc/classsf_1_1VideoMode-members.html   |  126 -
+ SFML-3.1.0/doc/classsf_1_1VideoMode.html           |  621 ---
+ SFML-3.1.0/doc/classsf_1_1View-members.html        |  131 -
+ SFML-3.1.0/doc/classsf_1_1View.html                |  685 ---
+ SFML-3.1.0/doc/classsf_1_1Window-members.html      |  167 -
+ SFML-3.1.0/doc/classsf_1_1Window.html              | 1875 -------
+ SFML-3.1.0/doc/classsf_1_1Window.png               |  Bin 1039 -> 0 bytes
+ SFML-3.1.0/doc/classsf_1_1WindowBase-members.html  |  151 -
+ SFML-3.1.0/doc/classsf_1_1WindowBase.html          | 1452 -----
+ SFML-3.1.0/doc/classsf_1_1WindowBase.png           |  Bin 744 -> 0 bytes
+ SFML-3.1.0/doc/clipboard.js                        |   61 -
+ SFML-3.1.0/doc/cookie.js                           |   58 -
+ SFML-3.1.0/doc/deprecated.html                     |  115 -
+ .../doc/dir_5cf786e58cbf7297a26339ae6e44357c.html  |  130 -
+ .../doc/dir_83d50c0b1f1eceb6f182949162e90861.html  |  130 -
+ .../doc/dir_89e9fb32471ae291b179a889144513db.html  |  125 -
+ .../doc/dir_c0a853e81d6f1c1f0a3eb7a27dc24256.html  |  130 -
+ .../doc/dir_d44c64559bbebec7f509842c48db8b23.html  |  113 -
+ .../doc/dir_dd49ddb3ba8035e4a328f8c5f31cda7e.html  |  129 -
+ .../doc/dir_e68e8157741866f444e17edd764ebbae.html  |  113 -
+ .../doc/dir_e71ec51a9abd604c65f6abb639f6ea75.html  |  142 -
+ SFML-3.1.0/doc/doxygen.css                         | 1499 -----
+ SFML-3.1.0/doc/doxygen.svg                         |   28 -
+ SFML-3.1.0/doc/doxygen_crawl.html                  | 3332 -----------
+ SFML-3.1.0/doc/dynsections.js                      |  198 -
+ SFML-3.1.0/doc/files.html                          |  222 -
+ SFML-3.1.0/doc/functions.html                      |  177 -
+ SFML-3.1.0/doc/functions_b.html                    |  162 -
+ SFML-3.1.0/doc/functions_c.html                    |  196 -
+ SFML-3.1.0/doc/functions_d.html                    |  168 -
+ SFML-3.1.0/doc/functions_e.html                    |  161 -
+ SFML-3.1.0/doc/functions_enum.html                 |  131 -
+ SFML-3.1.0/doc/functions_eval.html                 |  126 -
+ SFML-3.1.0/doc/functions_f.html                    |  166 -
+ SFML-3.1.0/doc/functions_func.html                 |  159 -
+ SFML-3.1.0/doc/functions_func_b.html               |  148 -
+ SFML-3.1.0/doc/functions_func_c.html               |  174 -
+ SFML-3.1.0/doc/functions_func_d.html               |  157 -
+ SFML-3.1.0/doc/functions_func_e.html               |  155 -
+ SFML-3.1.0/doc/functions_func_f.html               |  160 -
+ SFML-3.1.0/doc/functions_func_g.html               |  264 -
+ SFML-3.1.0/doc/functions_func_h.html               |  149 -
+ SFML-3.1.0/doc/functions_func_i.html               |  174 -
+ SFML-3.1.0/doc/functions_func_k.html               |  146 -
+ SFML-3.1.0/doc/functions_func_l.html               |  157 -
+ SFML-3.1.0/doc/functions_func_m.html               |  152 -
+ SFML-3.1.0/doc/functions_func_n.html               |  149 -
+ SFML-3.1.0/doc/functions_func_o.html               |  189 -
+ SFML-3.1.0/doc/functions_func_p.html               |  155 -
+ SFML-3.1.0/doc/functions_func_r.html               |  172 -
+ SFML-3.1.0/doc/functions_func_s.html               |  249 -
+ SFML-3.1.0/doc/functions_func_t.html               |  172 -
+ SFML-3.1.0/doc/functions_func_u.html               |  152 -
+ SFML-3.1.0/doc/functions_func_v.html               |  152 -
+ SFML-3.1.0/doc/functions_func_w.html               |  152 -
+ SFML-3.1.0/doc/functions_func_z.html               |  146 -
+ SFML-3.1.0/doc/functions_func_~.html               |  174 -
+ SFML-3.1.0/doc/functions_g.html                    |  272 -
+ SFML-3.1.0/doc/functions_h.html                    |  156 -
+ SFML-3.1.0/doc/functions_i.html                    |  186 -
+ SFML-3.1.0/doc/functions_j.html                    |  149 -
+ SFML-3.1.0/doc/functions_k.html                    |  150 -
+ SFML-3.1.0/doc/functions_l.html                    |  165 -
+ SFML-3.1.0/doc/functions_m.html                    |  163 -
+ SFML-3.1.0/doc/functions_n.html                    |  153 -
+ SFML-3.1.0/doc/functions_o.html                    |  196 -
+ SFML-3.1.0/doc/functions_p.html                    |  168 -
+ SFML-3.1.0/doc/functions_r.html                    |  183 -
+ SFML-3.1.0/doc/functions_rela.html                 |  133 -
+ SFML-3.1.0/doc/functions_s.html                    |  279 -
+ SFML-3.1.0/doc/functions_t.html                    |  190 -
+ SFML-3.1.0/doc/functions_type.html                 |  131 -
+ SFML-3.1.0/doc/functions_u.html                    |  159 -
+ SFML-3.1.0/doc/functions_v.html                    |  160 -
+ SFML-3.1.0/doc/functions_vars.html                 |  376 --
+ SFML-3.1.0/doc/functions_w.html                    |  158 -
+ SFML-3.1.0/doc/functions_x.html                    |  149 -
+ SFML-3.1.0/doc/functions_y.html                    |  150 -
+ SFML-3.1.0/doc/functions_z.html                    |  151 -
+ SFML-3.1.0/doc/functions_~.html                    |  177 -
+ SFML-3.1.0/doc/globals.html                        |  125 -
+ SFML-3.1.0/doc/globals_defs.html                   |  123 -
+ SFML-3.1.0/doc/globals_type.html                   |  112 -
+ SFML-3.1.0/doc/group__audio.html                   |  223 -
+ SFML-3.1.0/doc/group__graphics.html                |  261 -
+ SFML-3.1.0/doc/group__network.html                 |  135 -
+ SFML-3.1.0/doc/group__system.html                  |  244 -
+ SFML-3.1.0/doc/group__window.html                  |  266 -
+ SFML-3.1.0/doc/hierarchy.html                      |  240 -
+ SFML-3.1.0/doc/index.html                          |  169 -
+ SFML-3.1.0/doc/jquery.js                           |  204 -
+ SFML-3.1.0/doc/mainpage_8hpp.html                  |  110 -
+ SFML-3.1.0/doc/mainpage_8hpp_source.html           |  109 -
+ SFML-3.1.0/doc/menudata.js                         |  163 -
+ SFML-3.1.0/doc/namespacemembers.html               |  345 --
+ SFML-3.1.0/doc/namespacemembers_enum.html          |  126 -
+ SFML-3.1.0/doc/namespacemembers_eval.html          |  118 -
+ SFML-3.1.0/doc/namespacemembers_func.html          |  237 -
+ SFML-3.1.0/doc/namespacemembers_type.html          |  142 -
+ SFML-3.1.0/doc/namespacemembers_vars.html          |  124 -
+ SFML-3.1.0/doc/namespaces.html                     |  122 -
+ SFML-3.1.0/doc/namespacesf.html                    | 1624 ------
+ SFML-3.1.0/doc/namespacesf_1_1Clipboard.html       |  210 -
+ SFML-3.1.0/doc/namespacesf_1_1Dns.html             |  437 --
+ SFML-3.1.0/doc/namespacesf_1_1Glsl.html            |  378 --
+ SFML-3.1.0/doc/namespacesf_1_1Joystick.html        |  566 --
+ SFML-3.1.0/doc/namespacesf_1_1Keyboard.html        | 1322 -----
+ SFML-3.1.0/doc/namespacesf_1_1Listener.html        |  500 --
+ SFML-3.1.0/doc/namespacesf_1_1Literals.html        |  108 -
+ SFML-3.1.0/doc/namespacesf_1_1Mouse.html           |  430 --
+ SFML-3.1.0/doc/namespacesf_1_1PlaybackDevice.html  |  497 --
+ SFML-3.1.0/doc/namespacesf_1_1Sensor.html          |  335 --
+ SFML-3.1.0/doc/namespacesf_1_1Style.html           |  124 -
+ SFML-3.1.0/doc/namespacesf_1_1Touch.html           |  257 -
+ SFML-3.1.0/doc/namespacesf_1_1Vulkan.html          |  225 -
+ SFML-3.1.0/doc/navtree.css                         |  327 --
+ SFML-3.1.0/doc/pages.html                          |  103 -
+ SFML-3.1.0/doc/search/all_0.js                     |   53 -
+ SFML-3.1.0/doc/search/all_1.js                     |   47 -
+ SFML-3.1.0/doc/search/all_10.js                    |    9 -
+ SFML-3.1.0/doc/search/all_11.js                    |   66 -
+ SFML-3.1.0/doc/search/all_12.js                    |  257 -
+ SFML-3.1.0/doc/search/all_13.js                    |   75 -
+ SFML-3.1.0/doc/search/all_14.js                    |   34 -
+ SFML-3.1.0/doc/search/all_15.js                    |   53 -
+ SFML-3.1.0/doc/search/all_16.js                    |   27 -
+ SFML-3.1.0/doc/search/all_17.js                    |    5 -
+ SFML-3.1.0/doc/search/all_18.js                    |    6 -
+ SFML-3.1.0/doc/search/all_19.js                    |    8 -
+ SFML-3.1.0/doc/search/all_1a.js                    |   32 -
+ SFML-3.1.0/doc/search/all_2.js                     |   96 -
+ SFML-3.1.0/doc/search/all_3.js                     |   53 -
+ SFML-3.1.0/doc/search/all_4.js                     |   39 -
+ SFML-3.1.0/doc/search/all_5.js                     |   70 -
+ SFML-3.1.0/doc/search/all_6.js                     |  155 -
+ SFML-3.1.0/doc/search/all_7.js                     |   27 -
+ SFML-3.1.0/doc/search/all_8.js                     |   71 -
+ SFML-3.1.0/doc/search/all_9.js                     |   11 -
+ SFML-3.1.0/doc/search/all_a.js                     |   15 -
+ SFML-3.1.0/doc/search/all_b.js                     |   44 -
+ SFML-3.1.0/doc/search/all_c.js                     |   52 -
+ SFML-3.1.0/doc/search/all_d.js                     |   67 -
+ SFML-3.1.0/doc/search/all_e.js                     |   64 -
+ SFML-3.1.0/doc/search/all_f.js                     |   53 -
+ SFML-3.1.0/doc/search/classes_0.js                 |    7 -
+ SFML-3.1.0/doc/search/classes_1.js                 |    4 -
+ SFML-3.1.0/doc/search/classes_10.js                |   28 -
+ SFML-3.1.0/doc/search/classes_11.js                |   16 -
+ SFML-3.1.0/doc/search/classes_12.js                |    9 -
+ SFML-3.1.0/doc/search/classes_13.js                |   19 -
+ SFML-3.1.0/doc/search/classes_14.js                |    5 -
+ SFML-3.1.0/doc/search/classes_2.js                 |   14 -
+ SFML-3.1.0/doc/search/classes_3.js                 |    5 -
+ SFML-3.1.0/doc/search/classes_4.js                 |    5 -
+ SFML-3.1.0/doc/search/classes_5.js                 |    8 -
+ SFML-3.1.0/doc/search/classes_6.js                 |    5 -
+ SFML-3.1.0/doc/search/classes_7.js                 |    5 -
+ SFML-3.1.0/doc/search/classes_8.js                 |    9 -
+ SFML-3.1.0/doc/search/classes_9.js                 |    8 -
+ SFML-3.1.0/doc/search/classes_a.js                 |    5 -
+ SFML-3.1.0/doc/search/classes_b.js                 |    5 -
+ SFML-3.1.0/doc/search/classes_c.js                 |   13 -
+ SFML-3.1.0/doc/search/classes_d.js                 |    4 -
+ SFML-3.1.0/doc/search/classes_e.js                 |    5 -
+ SFML-3.1.0/doc/search/classes_f.js                 |   15 -
+ SFML-3.1.0/doc/search/defines_0.js                 |   16 -
+ SFML-3.1.0/doc/search/enums_0.js                   |    5 -
+ SFML-3.1.0/doc/search/enums_1.js                   |    4 -
+ SFML-3.1.0/doc/search/enums_2.js                   |    5 -
+ SFML-3.1.0/doc/search/enums_3.js                   |    4 -
+ SFML-3.1.0/doc/search/enums_4.js                   |    4 -
+ SFML-3.1.0/doc/search/enums_5.js                   |    4 -
+ SFML-3.1.0/doc/search/enums_6.js                   |    4 -
+ SFML-3.1.0/doc/search/enums_7.js                   |    4 -
+ SFML-3.1.0/doc/search/enums_8.js                   |    4 -
+ SFML-3.1.0/doc/search/enums_9.js                   |    4 -
+ SFML-3.1.0/doc/search/enums_a.js                   |   10 -
+ SFML-3.1.0/doc/search/enums_b.js                   |    8 -
+ SFML-3.1.0/doc/search/enums_c.js                   |    4 -
+ SFML-3.1.0/doc/search/enums_d.js                   |    4 -
+ SFML-3.1.0/doc/search/enums_e.js                   |    4 -
+ SFML-3.1.0/doc/search/enumvalues_0.js              |   16 -
+ SFML-3.1.0/doc/search/enumvalues_1.js              |   22 -
+ SFML-3.1.0/doc/search/enumvalues_10.js             |    5 -
+ SFML-3.1.0/doc/search/enumvalues_11.js             |   24 -
+ SFML-3.1.0/doc/search/enumvalues_12.js             |   45 -
+ SFML-3.1.0/doc/search/enumvalues_13.js             |   21 -
+ SFML-3.1.0/doc/search/enumvalues_14.js             |   13 -
+ SFML-3.1.0/doc/search/enumvalues_15.js             |   10 -
+ SFML-3.1.0/doc/search/enumvalues_16.js             |    7 -
+ SFML-3.1.0/doc/search/enumvalues_17.js             |    4 -
+ SFML-3.1.0/doc/search/enumvalues_18.js             |    4 -
+ SFML-3.1.0/doc/search/enumvalues_19.js             |    6 -
+ SFML-3.1.0/doc/search/enumvalues_2.js              |   31 -
+ SFML-3.1.0/doc/search/enumvalues_3.js              |   29 -
+ SFML-3.1.0/doc/search/enumvalues_4.js              |   20 -
+ SFML-3.1.0/doc/search/enumvalues_5.js              |   46 -
+ SFML-3.1.0/doc/search/enumvalues_6.js              |   13 -
+ SFML-3.1.0/doc/search/enumvalues_7.js              |   16 -
+ SFML-3.1.0/doc/search/enumvalues_8.js              |   18 -
+ SFML-3.1.0/doc/search/enumvalues_9.js              |    4 -
+ SFML-3.1.0/doc/search/enumvalues_a.js              |    8 -
+ SFML-3.1.0/doc/search/enumvalues_b.js              |   24 -
+ SFML-3.1.0/doc/search/enumvalues_c.js              |   21 -
+ SFML-3.1.0/doc/search/enumvalues_d.js              |   56 -
+ SFML-3.1.0/doc/search/enumvalues_e.js              |   14 -
+ SFML-3.1.0/doc/search/enumvalues_f.js              |   29 -
+ SFML-3.1.0/doc/search/files_0.js                   |    7 -
+ SFML-3.1.0/doc/search/files_1.js                   |    4 -
+ SFML-3.1.0/doc/search/files_10.js                  |    9 -
+ SFML-3.1.0/doc/search/files_11.js                  |   27 -
+ SFML-3.1.0/doc/search/files_12.js                  |   12 -
+ SFML-3.1.0/doc/search/files_13.js                  |    5 -
+ SFML-3.1.0/doc/search/files_14.js                  |   12 -
+ SFML-3.1.0/doc/search/files_15.js                  |    9 -
+ SFML-3.1.0/doc/search/files_2.js                   |   13 -
+ SFML-3.1.0/doc/search/files_3.js                   |    5 -
+ SFML-3.1.0/doc/search/files_4.js                   |    6 -
+ SFML-3.1.0/doc/search/files_5.js                   |    6 -
+ SFML-3.1.0/doc/search/files_6.js                   |    9 -
+ SFML-3.1.0/doc/search/files_7.js                   |    4 -
+ SFML-3.1.0/doc/search/files_8.js                   |    7 -
+ SFML-3.1.0/doc/search/files_9.js                   |    4 -
+ SFML-3.1.0/doc/search/files_a.js                   |    4 -
+ SFML-3.1.0/doc/search/files_b.js                   |    4 -
+ SFML-3.1.0/doc/search/files_c.js                   |    8 -
+ SFML-3.1.0/doc/search/files_d.js                   |    6 -
+ SFML-3.1.0/doc/search/files_e.js                   |    5 -
+ SFML-3.1.0/doc/search/files_f.js                   |    6 -
+ SFML-3.1.0/doc/search/functions_0.js               |   17 -
+ SFML-3.1.0/doc/search/functions_1.js               |    6 -
+ SFML-3.1.0/doc/search/functions_10.js              |   31 -
+ SFML-3.1.0/doc/search/functions_11.js              |  115 -
+ SFML-3.1.0/doc/search/functions_12.js              |   30 -
+ SFML-3.1.0/doc/search/functions_13.js              |   10 -
+ SFML-3.1.0/doc/search/functions_14.js              |   11 -
+ SFML-3.1.0/doc/search/functions_15.js              |   10 -
+ SFML-3.1.0/doc/search/functions_16.js              |    4 -
+ SFML-3.1.0/doc/search/functions_17.js              |   32 -
+ SFML-3.1.0/doc/search/functions_2.js               |   32 -
+ SFML-3.1.0/doc/search/functions_3.js               |   17 -
+ SFML-3.1.0/doc/search/functions_4.js               |   14 -
+ SFML-3.1.0/doc/search/functions_5.js               |   18 -
+ SFML-3.1.0/doc/search/functions_6.js               |  131 -
+ SFML-3.1.0/doc/search/functions_7.js               |    8 -
+ SFML-3.1.0/doc/search/functions_8.js               |   37 -
+ SFML-3.1.0/doc/search/functions_9.js               |    4 -
+ SFML-3.1.0/doc/search/functions_a.js               |   16 -
+ SFML-3.1.0/doc/search/functions_b.js               |   10 -
+ SFML-3.1.0/doc/search/functions_c.js               |    7 -
+ SFML-3.1.0/doc/search/functions_d.js               |   47 -
+ SFML-3.1.0/doc/search/functions_e.js               |   13 -
+ SFML-3.1.0/doc/search/functions_f.js               |    7 -
+ SFML-3.1.0/doc/search/groups_0.js                  |    4 -
+ SFML-3.1.0/doc/search/groups_1.js                  |    4 -
+ SFML-3.1.0/doc/search/groups_2.js                  |    4 -
+ SFML-3.1.0/doc/search/groups_3.js                  |    4 -
+ SFML-3.1.0/doc/search/groups_4.js                  |    4 -
+ SFML-3.1.0/doc/search/groups_5.js                  |    4 -
+ SFML-3.1.0/doc/search/namespaces_0.js              |   17 -
+ SFML-3.1.0/doc/search/pages_0.js                   |    5 -
+ SFML-3.1.0/doc/search/pages_1.js                   |    4 -
+ SFML-3.1.0/doc/search/pages_2.js                   |    4 -
+ SFML-3.1.0/doc/search/pages_3.js                   |    5 -
+ SFML-3.1.0/doc/search/pages_4.js                   |    4 -
+ SFML-3.1.0/doc/search/related_0.js                 |    5 -
+ SFML-3.1.0/doc/search/related_1.js                 |    4 -
+ SFML-3.1.0/doc/search/related_2.js                 |    5 -
+ SFML-3.1.0/doc/search/related_3.js                 |    6 -
+ SFML-3.1.0/doc/search/related_4.js                 |    6 -
+ SFML-3.1.0/doc/search/related_5.js                 |    6 -
+ SFML-3.1.0/doc/search/related_6.js                 |    4 -
+ SFML-3.1.0/doc/search/related_7.js                 |    5 -
+ SFML-3.1.0/doc/search/search.css                   |  378 --
+ SFML-3.1.0/doc/search/search.js                    |  708 ---
+ SFML-3.1.0/doc/search/searchdata.js                |   51 -
+ SFML-3.1.0/doc/search/typedefs_0.js                |    6 -
+ SFML-3.1.0/doc/search/typedefs_1.js                |    5 -
+ SFML-3.1.0/doc/search/typedefs_10.js               |    4 -
+ SFML-3.1.0/doc/search/typedefs_2.js                |    4 -
+ SFML-3.1.0/doc/search/typedefs_3.js                |    4 -
+ SFML-3.1.0/doc/search/typedefs_4.js                |    4 -
+ SFML-3.1.0/doc/search/typedefs_5.js                |    5 -
+ SFML-3.1.0/doc/search/typedefs_6.js                |    9 -
+ SFML-3.1.0/doc/search/typedefs_7.js                |    5 -
+ SFML-3.1.0/doc/search/typedefs_8.js                |    4 -
+ SFML-3.1.0/doc/search/typedefs_9.js                |    4 -
+ SFML-3.1.0/doc/search/typedefs_a.js                |    5 -
+ SFML-3.1.0/doc/search/typedefs_b.js                |    5 -
+ SFML-3.1.0/doc/search/typedefs_c.js                |    6 -
+ SFML-3.1.0/doc/search/typedefs_d.js                |    5 -
+ SFML-3.1.0/doc/search/typedefs_e.js                |    7 -
+ SFML-3.1.0/doc/search/typedefs_f.js                |   15 -
+ SFML-3.1.0/doc/search/variables_0.js               |   18 -
+ SFML-3.1.0/doc/search/variables_1.js               |   20 -
+ SFML-3.1.0/doc/search/variables_10.js              |    6 -
+ SFML-3.1.0/doc/search/variables_11.js              |   26 -
+ SFML-3.1.0/doc/search/variables_12.js              |   11 -
+ SFML-3.1.0/doc/search/variables_13.js              |    5 -
+ SFML-3.1.0/doc/search/variables_14.js              |    7 -
+ SFML-3.1.0/doc/search/variables_15.js              |    6 -
+ SFML-3.1.0/doc/search/variables_16.js              |    4 -
+ SFML-3.1.0/doc/search/variables_17.js              |    5 -
+ SFML-3.1.0/doc/search/variables_18.js              |    5 -
+ SFML-3.1.0/doc/search/variables_2.js               |   19 -
+ SFML-3.1.0/doc/search/variables_3.js               |    7 -
+ SFML-3.1.0/doc/search/variables_4.js               |    4 -
+ SFML-3.1.0/doc/search/variables_5.js               |    5 -
+ SFML-3.1.0/doc/search/variables_6.js               |    7 -
+ SFML-3.1.0/doc/search/variables_7.js               |    7 -
+ SFML-3.1.0/doc/search/variables_8.js               |    9 -
+ SFML-3.1.0/doc/search/variables_9.js               |    4 -
+ SFML-3.1.0/doc/search/variables_a.js               |    5 -
+ SFML-3.1.0/doc/search/variables_b.js               |    8 -
+ SFML-3.1.0/doc/search/variables_c.js               |   10 -
+ SFML-3.1.0/doc/search/variables_d.js               |    4 -
+ SFML-3.1.0/doc/search/variables_e.js               |    6 -
+ SFML-3.1.0/doc/search/variables_f.js               |   11 -
+ SFML-3.1.0/doc/searchOverrides.css                 |   45 -
+ SFML-3.1.0/doc/structsf_1_1BlendMode-members.html  |  126 -
+ SFML-3.1.0/doc/structsf_1_1BlendMode.html          |  621 ---
+ .../doc/structsf_1_1ContextSettings-members.html   |  124 -
+ SFML-3.1.0/doc/structsf_1_1ContextSettings.html    |  315 --
+ .../doc/structsf_1_1Dns_1_1MxRecord-members.html   |  115 -
+ SFML-3.1.0/doc/structsf_1_1Dns_1_1MxRecord.html    |  170 -
+ .../doc/structsf_1_1Dns_1_1SrvRecord-members.html  |  117 -
+ SFML-3.1.0/doc/structsf_1_1Dns_1_1SrvRecord.html   |  210 -
+ SFML-3.1.0/doc/structsf_1_1Event_1_1Closed.html    |  122 -
+ .../doc/structsf_1_1Event_1_1FocusGained.html      |  122 -
+ SFML-3.1.0/doc/structsf_1_1Event_1_1FocusLost.html |  122 -
+ ..._1_1Event_1_1JoystickButtonPressed-members.html |  115 -
+ ...structsf_1_1Event_1_1JoystickButtonPressed.html |  170 -
+ ...1_1Event_1_1JoystickButtonReleased-members.html |  115 -
+ ...tructsf_1_1Event_1_1JoystickButtonReleased.html |  170 -
+ ...ctsf_1_1Event_1_1JoystickConnected-members.html |  114 -
+ .../structsf_1_1Event_1_1JoystickConnected.html    |  150 -
+ ...f_1_1Event_1_1JoystickDisconnected-members.html |  114 -
+ .../structsf_1_1Event_1_1JoystickDisconnected.html |  150 -
+ ...structsf_1_1Event_1_1JoystickMoved-members.html |  116 -
+ .../doc/structsf_1_1Event_1_1JoystickMoved.html    |  190 -
+ .../structsf_1_1Event_1_1KeyPressed-members.html   |  119 -
+ .../doc/structsf_1_1Event_1_1KeyPressed.html       |  250 -
+ .../structsf_1_1Event_1_1KeyReleased-members.html  |  119 -
+ .../doc/structsf_1_1Event_1_1KeyReleased.html      |  250 -
+ ...tsf_1_1Event_1_1MouseButtonPressed-members.html |  115 -
+ .../structsf_1_1Event_1_1MouseButtonPressed.html   |  170 -
+ ...sf_1_1Event_1_1MouseButtonReleased-members.html |  115 -
+ .../structsf_1_1Event_1_1MouseButtonReleased.html  |  170 -
+ .../doc/structsf_1_1Event_1_1MouseEntered.html     |  122 -
+ SFML-3.1.0/doc/structsf_1_1Event_1_1MouseLeft.html |  122 -
+ .../structsf_1_1Event_1_1MouseMoved-members.html   |  114 -
+ .../doc/structsf_1_1Event_1_1MouseMoved.html       |  150 -
+ ...structsf_1_1Event_1_1MouseMovedRaw-members.html |  114 -
+ .../doc/structsf_1_1Event_1_1MouseMovedRaw.html    |  154 -
+ ...tsf_1_1Event_1_1MouseWheelScrolled-members.html |  116 -
+ .../structsf_1_1Event_1_1MouseWheelScrolled.html   |  190 -
+ .../doc/structsf_1_1Event_1_1Resized-members.html  |  114 -
+ SFML-3.1.0/doc/structsf_1_1Event_1_1Resized.html   |  151 -
+ ...structsf_1_1Event_1_1SensorChanged-members.html |  115 -
+ .../doc/structsf_1_1Event_1_1SensorChanged.html    |  170 -
+ .../structsf_1_1Event_1_1TextEntered-members.html  |  114 -
+ .../doc/structsf_1_1Event_1_1TextEntered.html      |  150 -
+ .../structsf_1_1Event_1_1TouchBegan-members.html   |  115 -
+ .../doc/structsf_1_1Event_1_1TouchBegan.html       |  170 -
+ .../structsf_1_1Event_1_1TouchEnded-members.html   |  115 -
+ .../doc/structsf_1_1Event_1_1TouchEnded.html       |  170 -
+ .../structsf_1_1Event_1_1TouchMoved-members.html   |  115 -
+ .../doc/structsf_1_1Event_1_1TouchMoved.html       |  170 -
+ .../doc/structsf_1_1Font_1_1Info-members.html      |  117 -
+ SFML-3.1.0/doc/structsf_1_1Font_1_1Info.html       |  210 -
+ SFML-3.1.0/doc/structsf_1_1Glyph-members.html      |  118 -
+ SFML-3.1.0/doc/structsf_1_1Glyph.html              |  237 -
+ ...ctsf_1_1Joystick_1_1Identification-members.html |  116 -
+ .../structsf_1_1Joystick_1_1Identification.html    |  190 -
+ .../doc/structsf_1_1Listener_1_1Cone-members.html  |  116 -
+ SFML-3.1.0/doc/structsf_1_1Listener_1_1Cone.html   |  191 -
+ .../doc/structsf_1_1Music_1_1Span-members.html     |  115 -
+ SFML-3.1.0/doc/structsf_1_1Music_1_1Span.html      |  175 -
+ .../doc/structsf_1_1RenderStates-members.html      |  127 -
+ SFML-3.1.0/doc/structsf_1_1RenderStates.html       |  530 --
+ .../structsf_1_1Sftp_1_1Attributes-members.html    |  121 -
+ SFML-3.1.0/doc/structsf_1_1Sftp_1_1Attributes.html |  290 -
+ .../structsf_1_1Sftp_1_1SessionInfo-members.html   |  122 -
+ .../doc/structsf_1_1Sftp_1_1SessionInfo.html       |  316 --
+ ..._1_1Sftp_1_1SessionInfo_1_1HostKey-members.html |  118 -
+ ...structsf_1_1Sftp_1_1SessionInfo_1_1HostKey.html |  266 -
+ .../structsf_1_1Shader_1_1CurrentTextureType.html  |  123 -
+ ...tructsf_1_1SoundFileReader_1_1Info-members.html |  117 -
+ .../doc/structsf_1_1SoundFileReader_1_1Info.html   |  210 -
+ .../structsf_1_1SoundSource_1_1Cone-members.html   |  116 -
+ .../doc/structsf_1_1SoundSource_1_1Cone.html       |  191 -
+ .../structsf_1_1SoundStream_1_1Chunk-members.html  |  115 -
+ .../doc/structsf_1_1SoundStream_1_1Chunk.html      |  170 -
+ .../doc/structsf_1_1StencilMode-members.html       |  120 -
+ SFML-3.1.0/doc/structsf_1_1StencilMode.html        |  388 --
+ .../doc/structsf_1_1StencilValue-members.html      |  117 -
+ SFML-3.1.0/doc/structsf_1_1StencilValue.html       |  241 -
+ .../doc/structsf_1_1SuspendAwareClock-members.html |  119 -
+ SFML-3.1.0/doc/structsf_1_1SuspendAwareClock.html  |  266 -
+ .../structsf_1_1Text_1_1ShapedGlyph-members.html   |  120 -
+ .../doc/structsf_1_1Text_1_1ShapedGlyph.html       |  267 -
+ .../structsf_1_1U8StringCharTraits-members.html    |  132 -
+ SFML-3.1.0/doc/structsf_1_1U8StringCharTraits.html |  645 ---
+ SFML-3.1.0/doc/structsf_1_1Version-members.html    |  118 -
+ SFML-3.1.0/doc/structsf_1_1Version.html            |  226 -
+ SFML-3.1.0/doc/structsf_1_1Vertex-members.html     |  116 -
+ SFML-3.1.0/doc/structsf_1_1Vertex.html             |  225 -
+ SFML-3.1.0/doc/tabs.css                            |   81 -
+ SFML-3.1.0/doc/topics.html                         |  107 -
+ SFML-3.1.0/examples/asset_licenses.md              |   38 -
+ SFML-3.1.0/examples/assets/LaunchScreen.storyboard |   38 -
+ SFML-3.1.0/examples/assets/icon.icns               |  Bin 38947 -> 0 bytes
+ SFML-3.1.0/examples/assets/info.plist              |   36 -
+ SFML-3.1.0/examples/assets/logo.png                |  Bin 30801 -> 0 bytes
+ .../examples/event_handling/EventHandling.cpp      |  415 --
+ .../examples/event_handling/event_handling.exe     |  Bin 5505108 -> 0 bytes
+ .../examples/event_handling/resources/tuffy.ttf    |  Bin 18444 -> 0 bytes
+ SFML-3.1.0/examples/ftp/Ftp.cpp                    |  214 -
+ SFML-3.1.0/examples/ftp/ftp.exe                    |  Bin 2605489 -> 0 bytes
+ SFML-3.1.0/examples/http/Http.cpp                  |  103 -
+ SFML-3.1.0/examples/http/http.exe                  |  Bin 2550631 -> 0 bytes
+ SFML-3.1.0/examples/island/Island.cpp              |  614 ---
+ SFML-3.1.0/examples/island/island.exe              |  Bin 5024920 -> 0 bytes
+ SFML-3.1.0/examples/island/resources/terrain.frag  |   11 -
+ SFML-3.1.0/examples/island/resources/terrain.vert  |    8 -
+ SFML-3.1.0/examples/island/resources/tuffy.ttf     |  Bin 18444 -> 0 bytes
+ SFML-3.1.0/examples/joystick/Joystick.cpp          |  308 --
+ SFML-3.1.0/examples/joystick/joystick.exe          |  Bin 5050270 -> 0 bytes
+ SFML-3.1.0/examples/joystick/resources/tuffy.ttf   |  Bin 18444 -> 0 bytes
+ SFML-3.1.0/examples/keyboard/Keyboard.cpp          |  865 ---
+ SFML-3.1.0/examples/keyboard/keyboard.exe          |  Bin 7238601 -> 0 bytes
+ SFML-3.1.0/examples/keyboard/resources/Tuffy.ttf   |  Bin 172324 -> 0 bytes
+ .../examples/keyboard/resources/error_005.ogg      |  Bin 7266 -> 0 bytes
+ .../examples/keyboard/resources/mouseclick1.ogg    |  Bin 4686 -> 0 bytes
+ .../examples/keyboard/resources/mouserelease1.ogg  |  Bin 4775 -> 0 bytes
+ SFML-3.1.0/examples/opengl/OpenGL.cpp              |  338 --
+ SFML-3.1.0/examples/opengl/opengl.exe              |  Bin 5139641 -> 0 bytes
+ .../examples/opengl/resources/background.jpg       |  Bin 107190 -> 0 bytes
+ SFML-3.1.0/examples/opengl/resources/logo.png      |  Bin 33601 -> 0 bytes
+ SFML-3.1.0/examples/opengl/resources/tuffy.ttf     |  Bin 18444 -> 0 bytes
+ SFML-3.1.0/examples/raw_input/RawInput.cpp         |   72 -
+ SFML-3.1.0/examples/raw_input/raw_input.exe        |  Bin 5009236 -> 0 bytes
+ SFML-3.1.0/examples/raw_input/resources/tuffy.ttf  |  Bin 18444 -> 0 bytes
+ SFML-3.1.0/examples/sftp/Sftp.cpp                  |  461 --
+ SFML-3.1.0/examples/sftp/sftp.exe                  |  Bin 2876956 -> 0 bytes
+ SFML-3.1.0/examples/shader/Shader.cpp              |  519 --
+ .../examples/shader/resources/background.jpg       |  Bin 66931 -> 0 bytes
+ .../examples/shader/resources/billboard.frag       |   11 -
+ .../examples/shader/resources/billboard.geom       |   56 -
+ .../examples/shader/resources/billboard.vert       |    5 -
+ SFML-3.1.0/examples/shader/resources/blink.frag    |    9 -
+ SFML-3.1.0/examples/shader/resources/blur.frag     |   20 -
+ SFML-3.1.0/examples/shader/resources/devices.png   |  Bin 7173 -> 0 bytes
+ SFML-3.1.0/examples/shader/resources/edge.frag     |   32 -
+ SFML-3.1.0/examples/shader/resources/logo.png      |  Bin 8849 -> 0 bytes
+ SFML-3.1.0/examples/shader/resources/pixelate.frag |    9 -
+ SFML-3.1.0/examples/shader/resources/sfml.png      |  Bin 25973 -> 0 bytes
+ SFML-3.1.0/examples/shader/resources/storm.vert    |   19 -
+ .../examples/shader/resources/text-background.png  |  Bin 745 -> 0 bytes
+ SFML-3.1.0/examples/shader/resources/tuffy.ttf     |  Bin 18444 -> 0 bytes
+ SFML-3.1.0/examples/shader/resources/wave.vert     |   15 -
+ SFML-3.1.0/examples/shader/shader.exe              |  Bin 5053413 -> 0 bytes
+ SFML-3.1.0/examples/sockets/Sockets.cpp            |   57 -
+ SFML-3.1.0/examples/sockets/TCP.cpp                |  153 -
+ SFML-3.1.0/examples/sockets/TCP.hpp                |    4 -
+ SFML-3.1.0/examples/sockets/UDP.cpp                |   81 -
+ SFML-3.1.0/examples/sockets/UDP.hpp                |    4 -
+ SFML-3.1.0/examples/sockets/sockets.exe            |  Bin 2560747 -> 0 bytes
+ SFML-3.1.0/examples/sound/Sound.cpp                |  100 -
+ SFML-3.1.0/examples/sound/resources/ding.flac      |  Bin 56364 -> 0 bytes
+ SFML-3.1.0/examples/sound/resources/ding.mp3       |  Bin 16527 -> 0 bytes
+ SFML-3.1.0/examples/sound/resources/doodle_pop.ogg |  Bin 116492 -> 0 bytes
+ SFML-3.1.0/examples/sound/resources/killdeer.wav   |  Bin 113156 -> 0 bytes
+ SFML-3.1.0/examples/sound/sound.exe                |  Bin 2404038 -> 0 bytes
+ SFML-3.1.0/examples/sound_capture/SoundCapture.cpp |  130 -
+ .../examples/sound_capture/sound-capture.exe       |  Bin 2404930 -> 0 bytes
+ SFML-3.1.0/examples/sound_device/SoundDevice.cpp   |  248 -
+ .../examples/sound_device/resources/doodle_pop.ogg |  Bin 116492 -> 0 bytes
+ SFML-3.1.0/examples/sound_device/sound-device.exe  |  Bin 2381014 -> 0 bytes
+ SFML-3.1.0/examples/sound_effects/SoundEffects.cpp | 1242 -----
+ .../sound_effects/resources/doodle_pop.ogg         |  Bin 116492 -> 0 bytes
+ .../sound_effects/resources/text-background.png    |  Bin 745 -> 0 bytes
+ .../examples/sound_effects/resources/tuffy.ttf     |  Bin 18444 -> 0 bytes
+ .../examples/sound_effects/sound-effects.exe       |  Bin 7335588 -> 0 bytes
+ SFML-3.1.0/examples/stencil/Stencil.cpp            |  143 -
+ SFML-3.1.0/examples/stencil/stencil.exe            |  Bin 2638039 -> 0 bytes
+ SFML-3.1.0/examples/tennis/Tennis.cpp              |  284 -
+ SFML-3.1.0/examples/tennis/resources/ball.wav      |  Bin 4892 -> 0 bytes
+ SFML-3.1.0/examples/tennis/resources/sfml_logo.png |  Bin 13419 -> 0 bytes
+ SFML-3.1.0/examples/tennis/resources/tuffy.ttf     |  Bin 18444 -> 0 bytes
+ SFML-3.1.0/examples/tennis/tennis.exe              |  Bin 7228224 -> 0 bytes
+ SFML-3.1.0/examples/text/Text.cpp                  |  844 ---
+ .../text/resources/NotoNaskhArabic-Regular.ttf     |  Bin 217140 -> 0 bytes
+ .../examples/text/resources/NotoSerif-Regular.ttf  |  Bin 504932 -> 0 bytes
+ .../text/resources/NotoSerifArmenian-Regular.ttf   |  Bin 55440 -> 0 bytes
+ .../text/resources/NotoSerifDevanagari-Regular.ttf |  Bin 234000 -> 0 bytes
+ .../text/resources/NotoSerifEthiopic-Regular.ttf   |  Bin 304676 -> 0 bytes
+ .../text/resources/NotoSerifGeorgian-Regular.ttf   |  Bin 79192 -> 0 bytes
+ .../text/resources/NotoSerifHebrew-Regular.ttf     |  Bin 56176 -> 0 bytes
+ .../text/resources/NotoSerifJP-Regular.subset.ttf  |  Bin 34896 -> 0 bytes
+ .../text/resources/NotoSerifKR-Regular.subset.ttf  |  Bin 44572 -> 0 bytes
+ .../text/resources/NotoSerifKhmer-Regular.ttf      |  Bin 141548 -> 0 bytes
+ .../text/resources/NotoSerifMyanmar-Regular.ttf    |  Bin 259512 -> 0 bytes
+ .../text/resources/NotoSerifTC-Regular.subset.ttf  |  Bin 35116 -> 0 bytes
+ .../text/resources/NotoSerifTamil-Regular.ttf      |  Bin 90028 -> 0 bytes
+ .../text/resources/NotoSerifThai-Regular.ttf       |  Bin 61428 -> 0 bytes
+ .../text/resources/NotoSerifTibetan-Regular.ttf    |  Bin 736448 -> 0 bytes
+ SFML-3.1.0/examples/text/resources/readme.md       |   33 -
+ SFML-3.1.0/examples/text/resources/tuffy.ttf       |  Bin 18444 -> 0 bytes
+ SFML-3.1.0/examples/text/text.exe                  |  Bin 5111223 -> 0 bytes
+ SFML-3.1.0/examples/voip/Client.cpp                |  153 -
+ SFML-3.1.0/examples/voip/Client.hpp                |    3 -
+ SFML-3.1.0/examples/voip/Server.cpp                |  205 -
+ SFML-3.1.0/examples/voip/Server.hpp                |    3 -
+ SFML-3.1.0/examples/voip/VoIP.cpp                  |   40 -
+ SFML-3.1.0/examples/voip/voip.exe                  |  Bin 3226970 -> 0 bytes
+ SFML-3.1.0/examples/vulkan/Vulkan.cpp              | 2632 ---------
+ SFML-3.1.0/examples/vulkan/resources/logo.png      |  Bin 21279 -> 0 bytes
+ SFML-3.1.0/examples/vulkan/resources/shader.frag   |   16 -
+ .../examples/vulkan/resources/shader.frag.spv      |  Bin 888 -> 0 bytes
+ SFML-3.1.0/examples/vulkan/resources/shader.vert   |   25 -
+ .../examples/vulkan/resources/shader.vert.spv      |  Bin 1600 -> 0 bytes
+ SFML-3.1.0/examples/vulkan/vulkan.exe              |  Bin 1946127 -> 0 bytes
+ SFML-3.1.0/examples/win32/Win32.cpp                |  168 -
+ SFML-3.1.0/examples/win32/resources/image1.jpg     |  Bin 14273 -> 0 bytes
+ SFML-3.1.0/examples/win32/resources/image2.jpg     |  Bin 14866 -> 0 bytes
+ SFML-3.1.0/examples/win32/win32.exe                |  Bin 2624986 -> 0 bytes
+ SFML-3.1.0/examples/window/Window.cpp              |  189 -
+ SFML-3.1.0/examples/window/window.exe              |  Bin 1798666 -> 0 bytes
+ SFML-3.1.0/include/SFML/Audio.hpp                  |   55 -
+ SFML-3.1.0/include/SFML/Audio/AudioResource.hpp    |   93 -
+ SFML-3.1.0/include/SFML/Audio/Export.hpp           |   44 -
+ SFML-3.1.0/include/SFML/Audio/InputSoundFile.hpp   |  326 --
+ SFML-3.1.0/include/SFML/Audio/Listener.hpp         |  234 -
+ SFML-3.1.0/include/SFML/Audio/Music.hpp            |  377 --
+ SFML-3.1.0/include/SFML/Audio/OutputSoundFile.hpp  |  147 -
+ SFML-3.1.0/include/SFML/Audio/PlaybackDevice.hpp   |  239 -
+ SFML-3.1.0/include/SFML/Audio/Sound.hpp            |  284 -
+ SFML-3.1.0/include/SFML/Audio/SoundBuffer.hpp      |  451 --
+ .../include/SFML/Audio/SoundBufferRecorder.hpp     |  149 -
+ SFML-3.1.0/include/SFML/Audio/SoundChannel.hpp     |   65 -
+ SFML-3.1.0/include/SFML/Audio/SoundFileFactory.hpp |  200 -
+ SFML-3.1.0/include/SFML/Audio/SoundFileFactory.inl |   96 -
+ SFML-3.1.0/include/SFML/Audio/SoundFileReader.hpp  |  167 -
+ SFML-3.1.0/include/SFML/Audio/SoundFileWriter.hpp  |  130 -
+ SFML-3.1.0/include/SFML/Audio/SoundRecorder.hpp    |  362 --
+ SFML-3.1.0/include/SFML/Audio/SoundSource.hpp      |  692 ---
+ SFML-3.1.0/include/SFML/Audio/SoundStream.hpp      |  385 --
+ SFML-3.1.0/include/SFML/Config.hpp                 |  164 -
+ SFML-3.1.0/include/SFML/GpuPreference.hpp          |   70 -
+ SFML-3.1.0/include/SFML/Graphics.hpp               |   67 -
+ SFML-3.1.0/include/SFML/Graphics/BlendMode.hpp     |  220 -
+ SFML-3.1.0/include/SFML/Graphics/CircleShape.hpp   |  165 -
+ SFML-3.1.0/include/SFML/Graphics/Color.hpp         |  274 -
+ SFML-3.1.0/include/SFML/Graphics/Color.inl         |  156 -
+ SFML-3.1.0/include/SFML/Graphics/ConvexShape.hpp   |  155 -
+ .../include/SFML/Graphics/CoordinateType.hpp       |   43 -
+ SFML-3.1.0/include/SFML/Graphics/Drawable.hpp      |  120 -
+ SFML-3.1.0/include/SFML/Graphics/Export.hpp        |   44 -
+ SFML-3.1.0/include/SFML/Graphics/Font.hpp          |  639 ---
+ SFML-3.1.0/include/SFML/Graphics/Glsl.hpp          |  224 -
+ SFML-3.1.0/include/SFML/Graphics/Glsl.inl          |  177 -
+ SFML-3.1.0/include/SFML/Graphics/Glyph.hpp         |   67 -
+ SFML-3.1.0/include/SFML/Graphics/Image.hpp         |  417 --
+ SFML-3.1.0/include/SFML/Graphics/PrimitiveType.hpp |   48 -
+ SFML-3.1.0/include/SFML/Graphics/Rect.hpp          |  203 -
+ SFML-3.1.0/include/SFML/Graphics/Rect.inl          |  130 -
+ .../include/SFML/Graphics/RectangleShape.hpp       |  143 -
+ SFML-3.1.0/include/SFML/Graphics/RenderStates.hpp  |  191 -
+ SFML-3.1.0/include/SFML/Graphics/RenderTarget.hpp  |  606 --
+ SFML-3.1.0/include/SFML/Graphics/RenderTexture.hpp |  342 --
+ SFML-3.1.0/include/SFML/Graphics/RenderWindow.hpp  |  308 --
+ SFML-3.1.0/include/SFML/Graphics/Shader.hpp        | 1023 ----
+ SFML-3.1.0/include/SFML/Graphics/Shape.hpp         |  399 --
+ SFML-3.1.0/include/SFML/Graphics/Sprite.hpp        |  278 -
+ SFML-3.1.0/include/SFML/Graphics/StencilMode.hpp   |  256 -
+ SFML-3.1.0/include/SFML/Graphics/Text.hpp          |  873 ---
+ SFML-3.1.0/include/SFML/Graphics/Texture.hpp       |  874 ---
+ SFML-3.1.0/include/SFML/Graphics/Transform.hpp     |  393 --
+ SFML-3.1.0/include/SFML/Graphics/Transform.inl     |  236 -
+ SFML-3.1.0/include/SFML/Graphics/Transformable.hpp |  356 --
+ SFML-3.1.0/include/SFML/Graphics/Vertex.hpp        |  122 -
+ SFML-3.1.0/include/SFML/Graphics/VertexArray.hpp   |  269 -
+ SFML-3.1.0/include/SFML/Graphics/VertexBuffer.hpp  |  414 --
+ SFML-3.1.0/include/SFML/Graphics/View.hpp          |  357 --
+ SFML-3.1.0/include/SFML/Main.hpp                   |   39 -
+ SFML-3.1.0/include/SFML/Network.hpp                |   53 -
+ SFML-3.1.0/include/SFML/Network/Dns.hpp            |  214 -
+ SFML-3.1.0/include/SFML/Network/Export.hpp         |   44 -
+ SFML-3.1.0/include/SFML/Network/Ftp.hpp            |  642 ---
+ SFML-3.1.0/include/SFML/Network/Http.hpp           |  488 --
+ SFML-3.1.0/include/SFML/Network/IpAddress.hpp      |  435 --
+ SFML-3.1.0/include/SFML/Network/Packet.hpp         |  548 --
+ SFML-3.1.0/include/SFML/Network/Sftp.hpp           |  987 ----
+ SFML-3.1.0/include/SFML/Network/Socket.hpp         |  232 -
+ SFML-3.1.0/include/SFML/Network/SocketHandle.hpp   |   52 -
+ SFML-3.1.0/include/SFML/Network/SocketSelector.hpp |  431 --
+ SFML-3.1.0/include/SFML/Network/TcpListener.hpp    |  166 -
+ SFML-3.1.0/include/SFML/Network/TcpSocket.hpp      |  698 ---
+ SFML-3.1.0/include/SFML/Network/UdpSocket.hpp      |  293 -
+ SFML-3.1.0/include/SFML/OpenGL.hpp                 |   78 -
+ SFML-3.1.0/include/SFML/System.hpp                 |   57 -
+ SFML-3.1.0/include/SFML/System/Angle.hpp           |  511 --
+ SFML-3.1.0/include/SFML/System/Angle.inl           |  274 -
+ SFML-3.1.0/include/SFML/System/Clock.hpp           |  196 -
+ SFML-3.1.0/include/SFML/System/Err.hpp             |   77 -
+ SFML-3.1.0/include/SFML/System/Exception.hpp       |   46 -
+ SFML-3.1.0/include/SFML/System/Export.hpp          |   44 -
+ SFML-3.1.0/include/SFML/System/FileInputStream.hpp |  212 -
+ SFML-3.1.0/include/SFML/System/InputStream.hpp     |  166 -
+ .../include/SFML/System/MemoryInputStream.hpp      |  139 -
+ SFML-3.1.0/include/SFML/System/NativeActivity.hpp  |   58 -
+ SFML-3.1.0/include/SFML/System/Sleep.hpp           |   57 -
+ SFML-3.1.0/include/SFML/System/String.hpp          |  794 ---
+ SFML-3.1.0/include/SFML/System/String.inl          |   64 -
+ .../include/SFML/System/SuspendAwareClock.hpp      |   76 -
+ SFML-3.1.0/include/SFML/System/Time.hpp            |  500 --
+ SFML-3.1.0/include/SFML/System/Time.inl            |  284 -
+ .../include/SFML/System/TimeoutWithPredicate.hpp   |  216 -
+ SFML-3.1.0/include/SFML/System/Utf.hpp             |  783 ---
+ SFML-3.1.0/include/SFML/System/Utf.inl             |  945 ----
+ SFML-3.1.0/include/SFML/System/Vector2.hpp         |  438 --
+ SFML-3.1.0/include/SFML/System/Vector2.inl         |  298 -
+ SFML-3.1.0/include/SFML/System/Vector3.hpp         |  359 --
+ SFML-3.1.0/include/SFML/System/Vector3.inl         |  236 -
+ SFML-3.1.0/include/SFML/System/Version.hpp         |   71 -
+ SFML-3.1.0/include/SFML/Window.hpp                 |   55 -
+ SFML-3.1.0/include/SFML/Window/Clipboard.hpp       |  114 -
+ SFML-3.1.0/include/SFML/Window/Context.hpp         |  224 -
+ SFML-3.1.0/include/SFML/Window/ContextSettings.hpp |  125 -
+ SFML-3.1.0/include/SFML/Window/Cursor.hpp          |  303 -
+ SFML-3.1.0/include/SFML/Window/Event.hpp           |  468 --
+ SFML-3.1.0/include/SFML/Window/Event.inl           |   96 -
+ SFML-3.1.0/include/SFML/Window/Export.hpp          |   44 -
+ SFML-3.1.0/include/SFML/Window/GlResource.hpp      |  120 -
+ SFML-3.1.0/include/SFML/Window/Joystick.hpp        |  213 -
+ SFML-3.1.0/include/SFML/Window/Keyboard.hpp        |  475 --
+ SFML-3.1.0/include/SFML/Window/Mouse.hpp           |  183 -
+ SFML-3.1.0/include/SFML/Window/Sensor.hpp          |  139 -
+ SFML-3.1.0/include/SFML/Window/Touch.hpp           |  146 -
+ SFML-3.1.0/include/SFML/Window/VideoMode.hpp       |  224 -
+ SFML-3.1.0/include/SFML/Window/Vulkan.hpp          |  112 -
+ SFML-3.1.0/include/SFML/Window/Window.hpp          |  422 --
+ SFML-3.1.0/include/SFML/Window/WindowBase.hpp      |  653 ---
+ SFML-3.1.0/include/SFML/Window/WindowBase.inl      |  112 -
+ SFML-3.1.0/include/SFML/Window/WindowEnums.hpp     |   65 -
+ SFML-3.1.0/include/SFML/Window/WindowHandle.hpp    |   98 -
+ SFML-3.1.0/include/libssh2.h                       | 1463 -----
+ SFML-3.1.0/include/libssh2_publickey.h             |  128 -
+ SFML-3.1.0/include/libssh2_sftp.h                  |  382 --
+ SFML-3.1.0/include/mbedtls/aes.h                   |  631 ---
+ SFML-3.1.0/include/mbedtls/aria.h                  |  343 --
+ SFML-3.1.0/include/mbedtls/asn1.h                  |  642 ---
+ SFML-3.1.0/include/mbedtls/asn1write.h             |  390 --
+ SFML-3.1.0/include/mbedtls/base64.h                |   82 -
+ SFML-3.1.0/include/mbedtls/bignum.h                | 1088 ----
+ SFML-3.1.0/include/mbedtls/block_cipher.h          |   76 -
+ SFML-3.1.0/include/mbedtls/build_info.h            |  194 -
+ SFML-3.1.0/include/mbedtls/camellia.h              |  305 -
+ SFML-3.1.0/include/mbedtls/ccm.h                   |  526 --
+ SFML-3.1.0/include/mbedtls/chacha20.h              |  202 -
+ SFML-3.1.0/include/mbedtls/chachapoly.h            |  342 --
+ SFML-3.1.0/include/mbedtls/check_config.h          | 1149 ----
+ SFML-3.1.0/include/mbedtls/cipher.h                | 1250 -----
+ SFML-3.1.0/include/mbedtls/cmac.h                  |  246 -
+ SFML-3.1.0/include/mbedtls/compat-2.x.h            |   46 -
+ .../include/mbedtls/config_adjust_legacy_crypto.h  |  535 --
+ .../mbedtls/config_adjust_legacy_from_psa.h        |  873 ---
+ .../mbedtls/config_adjust_psa_from_legacy.h        |  359 --
+ .../mbedtls/config_adjust_psa_superset_legacy.h    |  145 -
+ SFML-3.1.0/include/mbedtls/config_adjust_ssl.h     |   91 -
+ SFML-3.1.0/include/mbedtls/config_adjust_x509.h    |   35 -
+ SFML-3.1.0/include/mbedtls/config_psa.h            |   61 -
+ SFML-3.1.0/include/mbedtls/constant_time.h         |   36 -
+ SFML-3.1.0/include/mbedtls/ctr_drbg.h              |  597 --
+ SFML-3.1.0/include/mbedtls/debug.h                 |  156 -
+ SFML-3.1.0/include/mbedtls/des.h                   |  385 --
+ SFML-3.1.0/include/mbedtls/dhm.h                   |  972 ----
+ SFML-3.1.0/include/mbedtls/ecdh.h                  |  454 --
+ SFML-3.1.0/include/mbedtls/ecdsa.h                 |  674 ---
+ SFML-3.1.0/include/mbedtls/ecjpake.h               |  298 -
+ SFML-3.1.0/include/mbedtls/ecp.h                   | 1528 -----
+ SFML-3.1.0/include/mbedtls/entropy.h               |  274 -
+ SFML-3.1.0/include/mbedtls/error.h                 |  201 -
+ SFML-3.1.0/include/mbedtls/gcm.h                   |  387 --
+ SFML-3.1.0/include/mbedtls/hkdf.h                  |  124 -
+ SFML-3.1.0/include/mbedtls/hmac_drbg.h             |  434 --
+ SFML-3.1.0/include/mbedtls/lms.h                   |  440 --
+ SFML-3.1.0/include/mbedtls/mbedtls_config.h        | 4392 ---------------
+ SFML-3.1.0/include/mbedtls/md.h                    |  526 --
+ SFML-3.1.0/include/mbedtls/md5.h                   |  190 -
+ SFML-3.1.0/include/mbedtls/memory_buffer_alloc.h   |  142 -
+ SFML-3.1.0/include/mbedtls/net_sockets.h           |  299 -
+ SFML-3.1.0/include/mbedtls/nist_kw.h               |  166 -
+ SFML-3.1.0/include/mbedtls/oid.h                   |  727 ---
+ SFML-3.1.0/include/mbedtls/pem.h                   |  160 -
+ SFML-3.1.0/include/mbedtls/pk.h                    | 1296 -----
+ SFML-3.1.0/include/mbedtls/pkcs12.h                |  186 -
+ SFML-3.1.0/include/mbedtls/pkcs5.h                 |  198 -
+ SFML-3.1.0/include/mbedtls/pkcs7.h                 |  240 -
+ SFML-3.1.0/include/mbedtls/platform.h              |  485 --
+ SFML-3.1.0/include/mbedtls/platform_time.h         |   79 -
+ SFML-3.1.0/include/mbedtls/platform_util.h         |  247 -
+ SFML-3.1.0/include/mbedtls/poly1305.h              |  168 -
+ SFML-3.1.0/include/mbedtls/private_access.h        |   20 -
+ SFML-3.1.0/include/mbedtls/psa_util.h              |  207 -
+ SFML-3.1.0/include/mbedtls/ripemd160.h             |  136 -
+ SFML-3.1.0/include/mbedtls/rsa.h                   | 1164 ----
+ SFML-3.1.0/include/mbedtls/sha1.h                  |  219 -
+ SFML-3.1.0/include/mbedtls/sha256.h                |  200 -
+ SFML-3.1.0/include/mbedtls/sha3.h                  |  172 -
+ SFML-3.1.0/include/mbedtls/sha512.h                |  208 -
+ SFML-3.1.0/include/mbedtls/ssl.h                   | 5821 --------------------
+ SFML-3.1.0/include/mbedtls/ssl_cache.h             |  187 -
+ SFML-3.1.0/include/mbedtls/ssl_ciphersuites.h      |  482 --
+ SFML-3.1.0/include/mbedtls/ssl_cookie.h            |  106 -
+ SFML-3.1.0/include/mbedtls/ssl_ticket.h            |  199 -
+ SFML-3.1.0/include/mbedtls/threading.h             |  167 -
+ SFML-3.1.0/include/mbedtls/threading_alt.h         |    1 -
+ SFML-3.1.0/include/mbedtls/timing.h                |   94 -
+ SFML-3.1.0/include/mbedtls/version.h               |   78 -
+ SFML-3.1.0/include/mbedtls/x509.h                  |  500 --
+ SFML-3.1.0/include/mbedtls/x509_crl.h              |  184 -
+ SFML-3.1.0/include/mbedtls/x509_crt.h              | 1208 ----
+ SFML-3.1.0/include/mbedtls/x509_csr.h              |  382 --
+ SFML-3.1.0/include/psa/build_info.h                |   20 -
+ SFML-3.1.0/include/psa/crypto.h                    | 4977 -----------------
+ .../include/psa/crypto_adjust_auto_enabled.h       |   31 -
+ .../psa/crypto_adjust_config_dependencies.h        |   51 -
+ .../psa/crypto_adjust_config_key_pair_types.h      |  101 -
+ .../include/psa/crypto_adjust_config_synonyms.h    |   49 -
+ SFML-3.1.0/include/psa/crypto_builtin_composites.h |  214 -
+ .../include/psa/crypto_builtin_key_derivation.h    |  118 -
+ SFML-3.1.0/include/psa/crypto_builtin_primitives.h |  114 -
+ SFML-3.1.0/include/psa/crypto_compat.h             |  230 -
+ SFML-3.1.0/include/psa/crypto_config.h             |  145 -
+ SFML-3.1.0/include/psa/crypto_driver_common.h      |   44 -
+ .../psa/crypto_driver_contexts_composites.h        |  151 -
+ .../psa/crypto_driver_contexts_key_derivation.h    |   52 -
+ .../psa/crypto_driver_contexts_primitives.h        |  105 -
+ SFML-3.1.0/include/psa/crypto_extra.h              | 1977 -------
+ SFML-3.1.0/include/psa/crypto_legacy.h             |   88 -
+ SFML-3.1.0/include/psa/crypto_platform.h           |  102 -
+ SFML-3.1.0/include/psa/crypto_se_driver.h          | 1383 -----
+ SFML-3.1.0/include/psa/crypto_sizes.h              | 1317 -----
+ SFML-3.1.0/include/psa/crypto_struct.h             |  527 --
+ SFML-3.1.0/include/psa/crypto_types.h              |  508 --
+ SFML-3.1.0/include/psa/crypto_values.h             | 2783 ----------
+ .../lib/cmake/FLAC/flac-config-version.cmake       |   43 -
+ SFML-3.1.0/lib/cmake/FLAC/flac-config.cmake        |   41 -
+ SFML-3.1.0/lib/cmake/FLAC/targets-debug.cmake      |   19 -
+ SFML-3.1.0/lib/cmake/FLAC/targets-release.cmake    |   19 -
+ SFML-3.1.0/lib/cmake/FLAC/targets.cmake            |  124 -
+ SFML-3.1.0/lib/cmake/MbedTLS/MbedTLSConfig.cmake   |   27 -
+ .../lib/cmake/MbedTLS/MbedTLSConfigVersion.cmake   |   65 -
+ .../lib/cmake/MbedTLS/MbedTLSTargets-debug.cmake   |   39 -
+ .../lib/cmake/MbedTLS/MbedTLSTargets-release.cmake |   39 -
+ SFML-3.1.0/lib/cmake/MbedTLS/MbedTLSTargets.cmake  |  123 -
+ SFML-3.1.0/lib/cmake/Ogg/OggConfig.cmake           |   40 -
+ SFML-3.1.0/lib/cmake/Ogg/OggConfigVersion.cmake    |   65 -
+ SFML-3.1.0/lib/cmake/Ogg/OggTargets-debug.cmake    |   19 -
+ SFML-3.1.0/lib/cmake/Ogg/OggTargets-release.cmake  |   19 -
+ SFML-3.1.0/lib/cmake/Ogg/OggTargets.cmake          |  106 -
+ SFML-3.1.0/lib/cmake/SFML/FindDRM.cmake            |   23 -
+ SFML-3.1.0/lib/cmake/SFML/FindEGL.cmake            |   19 -
+ SFML-3.1.0/lib/cmake/SFML/FindFLAC.cmake           |   26 -
+ SFML-3.1.0/lib/cmake/SFML/FindFreetype.cmake       |  163 -
+ SFML-3.1.0/lib/cmake/SFML/FindGBM.cmake            |   23 -
+ SFML-3.1.0/lib/cmake/SFML/FindGLES.cmake           |   19 -
+ SFML-3.1.0/lib/cmake/SFML/FindHarfBuzz.cmake       |  193 -
+ SFML-3.1.0/lib/cmake/SFML/FindLibssh2.cmake        |  107 -
+ SFML-3.1.0/lib/cmake/SFML/FindMbedTLS.cmake        |  140 -
+ SFML-3.1.0/lib/cmake/SFML/FindUDev.cmake           |   63 -
+ SFML-3.1.0/lib/cmake/SFML/FindVorbis.cmake         |   69 -
+ .../lib/cmake/SFML/SFMLAudioDependencies.cmake     |   46 -
+ .../cmake/SFML/SFMLAudioSharedTargets-debug.cmake  |   19 -
+ .../SFML/SFMLAudioSharedTargets-release.cmake      |   19 -
+ .../lib/cmake/SFML/SFMLAudioSharedTargets.cmake    |  124 -
+ .../cmake/SFML/SFMLAudioStaticTargets-debug.cmake  |   19 -
+ .../SFML/SFMLAudioStaticTargets-release.cmake      |   19 -
+ .../lib/cmake/SFML/SFMLAudioStaticTargets.cmake    |  125 -
+ SFML-3.1.0/lib/cmake/SFML/SFMLConfig.cmake         |  194 -
+ SFML-3.1.0/lib/cmake/SFML/SFMLConfigVersion.cmake  |   65 -
+ .../lib/cmake/SFML/SFMLGraphicsDependencies.cmake  |   28 -
+ .../SFML/SFMLGraphicsSharedTargets-debug.cmake     |   19 -
+ .../SFML/SFMLGraphicsSharedTargets-release.cmake   |   19 -
+ .../lib/cmake/SFML/SFMLGraphicsSharedTargets.cmake |  124 -
+ .../SFML/SFMLGraphicsStaticTargets-debug.cmake     |   19 -
+ .../SFML/SFMLGraphicsStaticTargets-release.cmake   |   19 -
+ .../lib/cmake/SFML/SFMLGraphicsStaticTargets.cmake |  125 -
+ .../cmake/SFML/SFMLMainSharedTargets-debug.cmake   |   19 -
+ .../cmake/SFML/SFMLMainSharedTargets-release.cmake |   19 -
+ .../lib/cmake/SFML/SFMLMainSharedTargets.cmake     |  107 -
+ .../cmake/SFML/SFMLMainStaticTargets-debug.cmake   |   19 -
+ .../cmake/SFML/SFMLMainStaticTargets-release.cmake |   19 -
+ .../lib/cmake/SFML/SFMLMainStaticTargets.cmake     |  108 -
+ .../lib/cmake/SFML/SFMLNetworkDependencies.cmake   |   24 -
+ .../SFML/SFMLNetworkSharedTargets-debug.cmake      |   19 -
+ .../SFML/SFMLNetworkSharedTargets-release.cmake    |   19 -
+ .../lib/cmake/SFML/SFMLNetworkSharedTargets.cmake  |  124 -
+ .../SFML/SFMLNetworkStaticTargets-debug.cmake      |   19 -
+ .../SFML/SFMLNetworkStaticTargets-release.cmake    |   19 -
+ .../lib/cmake/SFML/SFMLNetworkStaticTargets.cmake  |  125 -
+ .../lib/cmake/SFML/SFMLSystemDependencies.cmake    |   13 -
+ .../cmake/SFML/SFMLSystemSharedTargets-debug.cmake |   19 -
+ .../SFML/SFMLSystemSharedTargets-release.cmake     |   19 -
+ .../lib/cmake/SFML/SFMLSystemSharedTargets.cmake   |  107 -
+ .../cmake/SFML/SFMLSystemStaticTargets-debug.cmake |   19 -
+ .../SFML/SFMLSystemStaticTargets-release.cmake     |   19 -
+ .../lib/cmake/SFML/SFMLSystemStaticTargets.cmake   |  109 -
+ .../lib/cmake/SFML/SFMLWindowDependencies.cmake    |   50 -
+ .../cmake/SFML/SFMLWindowSharedTargets-debug.cmake |   19 -
+ .../SFML/SFMLWindowSharedTargets-release.cmake     |   19 -
+ .../lib/cmake/SFML/SFMLWindowSharedTargets.cmake   |  124 -
+ .../cmake/SFML/SFMLWindowStaticTargets-debug.cmake |   19 -
+ .../SFML/SFMLWindowStaticTargets-release.cmake     |   19 -
+ .../lib/cmake/SFML/SFMLWindowStaticTargets.cmake   |  125 -
+ SFML-3.1.0/lib/cmake/Vorbis/VorbisConfig.cmake     |   43 -
+ .../lib/cmake/Vorbis/VorbisConfigVersion.cmake     |   65 -
+ .../lib/cmake/Vorbis/VorbisTargets-debug.cmake     |   39 -
+ .../lib/cmake/Vorbis/VorbisTargets-release.cmake   |   39 -
+ SFML-3.1.0/lib/cmake/Vorbis/VorbisTargets.cmake    |  139 -
+ .../lib/cmake/freetype/freetype-config-debug.cmake |   19 -
+ .../cmake/freetype/freetype-config-release.cmake   |   19 -
+ .../cmake/freetype/freetype-config-version.cmake   |   65 -
+ .../lib/cmake/freetype/freetype-config.cmake       |  113 -
+ .../lib/cmake/harfbuzz/harfbuzzConfig-debug.cmake  |   19 -
+ .../cmake/harfbuzz/harfbuzzConfig-release.cmake    |   19 -
+ SFML-3.1.0/lib/cmake/harfbuzz/harfbuzzConfig.cmake |  123 -
+ SFML-3.1.0/lib/cmake/libssh2/FindLibgcrypt.cmake   |   77 -
+ SFML-3.1.0/lib/cmake/libssh2/FindMbedTLS.cmake     |  140 -
+ SFML-3.1.0/lib/cmake/libssh2/FindWolfSSL.cmake     |  101 -
+ .../lib/cmake/libssh2/libssh2-config-version.cmake |   65 -
+ SFML-3.1.0/lib/cmake/libssh2/libssh2-config.cmake  |   72 -
+ .../lib/cmake/libssh2/libssh2-targets-debug.cmake  |   19 -
+ .../cmake/libssh2/libssh2-targets-release.cmake    |   19 -
+ SFML-3.1.0/lib/cmake/libssh2/libssh2-targets.cmake |  108 -
+ SFML-3.1.0/lib/libFLAC.a                           |  Bin 542764 -> 0 bytes
+ SFML-3.1.0/lib/libFLACd.a                          |  Bin 1038872 -> 0 bytes
+ SFML-3.1.0/lib/libfreetype.a                       |  Bin 1078276 -> 0 bytes
+ SFML-3.1.0/lib/libfreetyped.a                      |  Bin 2301248 -> 0 bytes
+ SFML-3.1.0/lib/libharfbuzz.a                       |  Bin 1579698 -> 0 bytes
+ SFML-3.1.0/lib/libharfbuzzd.a                      |  Bin 30236652 -> 0 bytes
+ SFML-3.1.0/lib/libmbedcrypto.a                     |  Bin 797736 -> 0 bytes
+ SFML-3.1.0/lib/libmbedcryptod.a                    |  Bin 13978118 -> 0 bytes
+ SFML-3.1.0/lib/libmbedtls.a                        |  Bin 412012 -> 0 bytes
+ SFML-3.1.0/lib/libmbedtlsd.a                       |  Bin 5472450 -> 0 bytes
+ SFML-3.1.0/lib/libmbedx509.a                       |  Bin 89014 -> 0 bytes
+ SFML-3.1.0/lib/libmbedx509d.a                      |  Bin 3770738 -> 0 bytes
+ SFML-3.1.0/lib/libogg.a                            |  Bin 33256 -> 0 bytes
+ SFML-3.1.0/lib/liboggd.a                           |  Bin 57702 -> 0 bytes
+ SFML-3.1.0/lib/libsfml-audio-d.a                   |  Bin 176834 -> 0 bytes
+ SFML-3.1.0/lib/libsfml-audio-s-d.a                 |  Bin 14873668 -> 0 bytes
+ SFML-3.1.0/lib/libsfml-audio-s.a                   |  Bin 1223844 -> 0 bytes
+ SFML-3.1.0/lib/libsfml-audio.a                     |  Bin 175904 -> 0 bytes
+ SFML-3.1.0/lib/libsfml-graphics-d.a                |  Bin 378990 -> 0 bytes
+ SFML-3.1.0/lib/libsfml-graphics-s-d.a              |  Bin 12343132 -> 0 bytes
+ SFML-3.1.0/lib/libsfml-graphics-s.a                |  Bin 1750030 -> 0 bytes
+ SFML-3.1.0/lib/libsfml-graphics.a                  |  Bin 377048 -> 0 bytes
+ SFML-3.1.0/lib/libsfml-main-d.a                    |  Bin 5916 -> 0 bytes
+ SFML-3.1.0/lib/libsfml-main.a                      |  Bin 1094 -> 0 bytes
+ SFML-3.1.0/lib/libsfml-network-d.a                 |  Bin 194926 -> 0 bytes
+ SFML-3.1.0/lib/libsfml-network-s-d.a               |  Bin 8053732 -> 0 bytes
+ SFML-3.1.0/lib/libsfml-network-s.a                 |  Bin 537832 -> 0 bytes
+ SFML-3.1.0/lib/libsfml-network.a                   |  Bin 193932 -> 0 bytes
+ SFML-3.1.0/lib/libsfml-system-d.a                  |  Bin 91480 -> 0 bytes
+ SFML-3.1.0/lib/libsfml-system-s-d.a                |  Bin 8651020 -> 0 bytes
+ SFML-3.1.0/lib/libsfml-system-s.a                  |  Bin 1414144 -> 0 bytes
+ SFML-3.1.0/lib/libsfml-system.a                    |  Bin 90990 -> 0 bytes
+ SFML-3.1.0/lib/libsfml-window-d.a                  |  Bin 116236 -> 0 bytes
+ SFML-3.1.0/lib/libsfml-window-s-d.a                |  Bin 10269942 -> 0 bytes
+ SFML-3.1.0/lib/libsfml-window-s.a                  |  Bin 416678 -> 0 bytes
+ SFML-3.1.0/lib/libsfml-window.a                    |  Bin 115618 -> 0 bytes
+ SFML-3.1.0/lib/libssh2.a                           |  Bin 350808 -> 0 bytes
+ SFML-3.1.0/lib/libvorbis.a                         |  Bin 969080 -> 0 bytes
+ SFML-3.1.0/lib/libvorbisd.a                        |  Bin 1231974 -> 0 bytes
+ SFML-3.1.0/lib/libvorbisenc.a                      |  Bin 698708 -> 0 bytes
+ SFML-3.1.0/lib/libvorbisencd.a                     |  Bin 857336 -> 0 bytes
+ SFML-3.1.0/lib/libvorbisfile.a                     |  Bin 35764 -> 0 bytes
+ SFML-3.1.0/lib/libvorbisfiled.a                    |  Bin 69428 -> 0 bytes
+ SFML-3.1.0/lib/pkgconfig/harfbuzz.pc               |   13 -
+ SFML-3.1.0/lib/pkgconfig/libssh2.pc                |   21 -
+ SFML-3.1.0/lib/pkgconfig/mbedcrypto.pc             |   10 -
+ SFML-3.1.0/lib/pkgconfig/mbedtls.pc                |   11 -
+ SFML-3.1.0/lib/pkgconfig/mbedx509.pc               |   11 -
+ SFML-3.1.0/license.md                              |    9 -
+ SFML-3.1.0/readme.md                               |   84 -
+ STL.cpp                                            |   18 +
+ Tablero.cpp                                        |  147 +
+ Tablero.h                                          |   44 +
+ Tetris.zpr                                         |  175 +-
+ main.cpp                                           |    5 +-
+ openal32.dll                                       |  Bin 0 -> 630784 bytes
+ sfml-audio-2.dll                                   |  Bin 0 -> 1595654 bytes
+ sfml-graphics-2.dll                                |  Bin 0 -> 1204696 bytes
+ sfml-system-2.dll                                  |  Bin 0 -> 115155 bytes
+ sfml-window-2.dll                                  |  Bin 0 -> 242635 bytes
+ 1337 files changed, 1157 insertions(+), 269965 deletions(-)
+
+commit 75d95249339822d783109fe8b0b570764179cc2d
+Author: ModestoAcunaQuiros <minor.acuna.quiros@est.una.ac.cr>
+Date:   2026-09-02
+
+    Feat: la cola de los eventos durante el juego
+
+ ColaEventos.cpp | 51 +++++++++++++++++++++++++++++++++++++++++++++++++++
+ ColaEventos.h   | 35 +++++++++++++++++++++++++++++++++++
+ 2 files changed, 86 insertions(+)
+
+commit a7f15d668c3f4920ae92aa4973a13c2ae923326c
+Author: ModestoAcunaQuiros <minor.acuna.quiros@est.una.ac.cr>
+Date:   2026-09-02
+
+    Archivos para la partida
+
+ Juego.cpp | 1 +
+ Juego.h   | 8 ++++++++
+ 2 files changed, 9 insertions(+)
+
+commit ed7ba2a7736f9e42e7a6d98450b3ba5df203895f
+Author: ModestoAcunaQuiros <minor.acuna.quiros@est.una.ac.cr>
+Date:   2026-08-29
+
+    Feat Archivos de pilahold
+
+ PilaHold.cpp | 26 ++++++++++++++++++++++++++
+ PilaHold.h   | 26 ++++++++++++++++++++++++++
+ 2 files changed, 52 insertions(+)
+
+commit 5a8ce44e0ecf6453816aa158e1a7a117f7f8a141
+Author: ModestoAcunaQuiros <minor.acuna.quiros@est.una.ac.cr>
+Date:   2026-08-26
+
+    Feat archivos cpp de los .h agreagdos anteriormente
+
+ ColaPieza.cpp        |  91 +++++++++++++++++++++++
+ Interfaz.cpp         | 205 +++++++++++++++++++++++++++++++++++++++++++++++++++
+ audio/OTS_Tetris.ogg | Bin 0 -> 688032 bytes
+ 3 files changed, 296 insertions(+)
+
+commit a7bd92a34437018a5c9fdb065e671004702ca99d
+Author: ModestoAcunaQuiros <minor.acuna.quiros@est.una.ac.cr>
+Date:   2026-08-25
+
+    Feat: cabeceras para la interfaz y para la cola de las piezas
+
+ ColaPieza.h | 30 ++++++++++++++++++++++++++++++
+ Interfaz.h  | 37 +++++++++++++++++++++++++++++++++++++
+ 2 files changed, 67 insertions(+)
+
+commit 17519a7dbabc30f6d320d65b33201ff1812b0c7b
+Author: ModestoAcunaQuiros <minor.acuna.quiros@est.una.ac.cr>
+Date:   2026-08-24
+
+    Feat: archivos para las piezas
+
+ Pieza.cpp           |  66 ++++++++++++++++++++++++++++++++++++++++++++++++++++
+ Pieza.h             |  30 ++++++++++++++++++++++++
+ data/Leeme.txt      |   6 +++++
+ data/Menu.png       | Bin 0 -> 1382890 bytes
+ data/Menu1.png      | Bin 0 -> 601133 bytes
+ data/deer-diary.ttf | Bin 0 -> 17784 bytes
+ main.cpp            |  61 ++++++++++++++++++++++++++++++++++--------------
+ 7 files changed, 145 insertions(+), 18 deletions(-)
+
+commit 617c9d8a510e73e5e42802b65ec08fd35f06c12c
+Author: ModestoAcunaQuiros <minor.acuna.quiros@est.una.ac.cr>
+Date:   2026-08-20
+
+    Commit inicial del proyecto de Datos
+
+ Debug_Win32/Tetris.exe                             |  Bin 0 -> 2131981 bytes
+ Debug_Win32/main.o                                 |  Bin 0 -> 230003 bytes
+ Leeme.txt                                          |    6 +
+ SFML-3.1.0/bin/sfml-audio-3.dll                    |  Bin 0 -> 2403035 bytes
+ SFML-3.1.0/bin/sfml-audio-d-3.dll                  |  Bin 0 -> 12200600 bytes
+ SFML-3.1.0/bin/sfml-graphics-3.dll                 |  Bin 0 -> 3530448 bytes
+ SFML-3.1.0/bin/sfml-graphics-d-3.dll               |  Bin 0 -> 31173923 bytes
+ SFML-3.1.0/bin/sfml-network-3.dll                  |  Bin 0 -> 1615034 bytes
+ SFML-3.1.0/bin/sfml-network-d-3.dll                |  Bin 0 -> 23276402 bytes
+ SFML-3.1.0/bin/sfml-system-3.dll                   |  Bin 0 -> 1398895 bytes
+ SFML-3.1.0/bin/sfml-system-d-3.dll                 |  Bin 0 -> 7592845 bytes
+ SFML-3.1.0/bin/sfml-window-3.dll                   |  Bin 0 -> 353484 bytes
+ SFML-3.1.0/bin/sfml-window-d-3.dll                 |  Bin 0 -> 6966799 bytes
+ SFML-3.1.0/changelog.md                            | 1287 +++++
+ SFML-3.1.0/doc/Angle_8hpp.html                     |  133 +
+ SFML-3.1.0/doc/Angle_8hpp_source.html              |  258 +
+ SFML-3.1.0/doc/AudioResource_8hpp.html             |  125 +
+ SFML-3.1.0/doc/AudioResource_8hpp_source.html      |  173 +
+ SFML-3.1.0/doc/Audio_2Export_8hpp.html             |  135 +
+ SFML-3.1.0/doc/Audio_2Export_8hpp_source.html      |  148 +
+ SFML-3.1.0/doc/Audio_8hpp.html                     |  125 +
+ SFML-3.1.0/doc/Audio_8hpp_source.html              |  168 +
+ SFML-3.1.0/doc/BlendMode_8hpp.html                 |  140 +
+ SFML-3.1.0/doc/BlendMode_8hpp_source.html          |  235 +
+ SFML-3.1.0/doc/CircleShape_8hpp.html               |  127 +
+ SFML-3.1.0/doc/CircleShape_8hpp_source.html        |  187 +
+ SFML-3.1.0/doc/Clipboard_8hpp.html                 |  128 +
+ SFML-3.1.0/doc/Clipboard_8hpp_source.html          |  160 +
+ SFML-3.1.0/doc/Clock_8hpp.html                     |  127 +
+ SFML-3.1.0/doc/Clock_8hpp_source.html              |  202 +
+ SFML-3.1.0/doc/Color_8hpp.html                     |  125 +
+ SFML-3.1.0/doc/Color_8hpp_source.html              |  219 +
+ SFML-3.1.0/doc/Config_8hpp.html                    |  236 +
+ SFML-3.1.0/doc/Config_8hpp_source.html             |  261 +
+ SFML-3.1.0/doc/ContextSettings_8hpp.html           |  125 +
+ SFML-3.1.0/doc/ContextSettings_8hpp_source.html    |  180 +
+ SFML-3.1.0/doc/Context_8hpp.html                   |  134 +
+ SFML-3.1.0/doc/Context_8hpp_source.html            |  218 +
+ SFML-3.1.0/doc/ConvexShape_8hpp.html               |  127 +
+ SFML-3.1.0/doc/ConvexShape_8hpp_source.html        |  179 +
+ SFML-3.1.0/doc/CoordinateType_8hpp.html            |  125 +
+ SFML-3.1.0/doc/CoordinateType_8hpp_source.html     |  149 +
+ SFML-3.1.0/doc/Cursor_8hpp.html                    |  128 +
+ SFML-3.1.0/doc/Cursor_8hpp_source.html             |  228 +
+ SFML-3.1.0/doc/Dns_8hpp.html                       |  150 +
+ SFML-3.1.0/doc/Dns_8hpp_source.html                |  220 +
+ SFML-3.1.0/doc/Drawable_8hpp.html                  |  124 +
+ SFML-3.1.0/doc/Drawable_8hpp_source.html           |  167 +
+ SFML-3.1.0/doc/Err_8hpp.html                       |  125 +
+ SFML-3.1.0/doc/Err_8hpp_source.html                |  150 +
+ SFML-3.1.0/doc/Event_8hpp.html                     |  177 +
+ SFML-3.1.0/doc/Event_8hpp_source.html              |  487 ++
+ SFML-3.1.0/doc/Exception_8hpp.html                 |  125 +
+ SFML-3.1.0/doc/Exception_8hpp_source.html          |  153 +
+ SFML-3.1.0/doc/FileInputStream_8hpp.html           |  130 +
+ SFML-3.1.0/doc/FileInputStream_8hpp_source.html    |  218 +
+ SFML-3.1.0/doc/Font_8hpp.html                      |  138 +
+ SFML-3.1.0/doc/Font_8hpp_source.html               |  317 ++
+ SFML-3.1.0/doc/Ftp_8hpp.html                       |  135 +
+ SFML-3.1.0/doc/Ftp_8hpp_source.html                |  380 ++
+ SFML-3.1.0/doc/GlResource_8hpp.html                |  127 +
+ SFML-3.1.0/doc/GlResource_8hpp_source.html         |  184 +
+ SFML-3.1.0/doc/Glsl_8hpp.html                      |  149 +
+ SFML-3.1.0/doc/Glsl_8hpp_source.html               |  216 +
+ SFML-3.1.0/doc/Glyph_8hpp.html                     |  125 +
+ SFML-3.1.0/doc/Glyph_8hpp_source.html              |  167 +
+ SFML-3.1.0/doc/GpuPreference_8hpp.html             |  149 +
+ SFML-3.1.0/doc/GpuPreference_8hpp_source.html      |  151 +
+ SFML-3.1.0/doc/Graphics_2Export_8hpp.html          |  135 +
+ SFML-3.1.0/doc/Graphics_2Export_8hpp_source.html   |  148 +
+ SFML-3.1.0/doc/Graphics_8hpp.html                  |  138 +
+ SFML-3.1.0/doc/Graphics_8hpp_source.html           |  194 +
+ SFML-3.1.0/doc/Http_8hpp.html                      |  136 +
+ SFML-3.1.0/doc/Http_8hpp_source.html               |  331 ++
+ SFML-3.1.0/doc/Image_8hpp.html                     |  133 +
+ SFML-3.1.0/doc/Image_8hpp_source.html              |  242 +
+ SFML-3.1.0/doc/InputSoundFile_8hpp.html            |  130 +
+ SFML-3.1.0/doc/InputSoundFile_8hpp_source.html     |  242 +
+ SFML-3.1.0/doc/InputStream_8hpp.html               |  127 +
+ SFML-3.1.0/doc/InputStream_8hpp_source.html        |  174 +
+ SFML-3.1.0/doc/IpAddress_8hpp.html                 |  152 +
+ SFML-3.1.0/doc/IpAddress_8hpp_source.html          |  275 +
+ SFML-3.1.0/doc/Joystick_8hpp.html                  |  172 +
+ SFML-3.1.0/doc/Joystick_8hpp_source.html           |  215 +
+ SFML-3.1.0/doc/Keyboard_8hpp.html                  |  471 ++
+ SFML-3.1.0/doc/Keyboard_8hpp_source.html           |  602 ++
+ SFML-3.1.0/doc/Listener_8hpp.html                  |  156 +
+ SFML-3.1.0/doc/Listener_8hpp_source.html           |  202 +
+ SFML-3.1.0/doc/Main_8hpp.html                      |  111 +
+ SFML-3.1.0/doc/Main_8hpp_source.html               |  145 +
+ SFML-3.1.0/doc/MemoryInputStream_8hpp.html         |  128 +
+ SFML-3.1.0/doc/MemoryInputStream_8hpp_source.html  |  182 +
+ SFML-3.1.0/doc/Mouse_8hpp.html                     |  159 +
+ SFML-3.1.0/doc/Mouse_8hpp_source.html              |  203 +
+ SFML-3.1.0/doc/Music_8hpp.html                     |  132 +
+ SFML-3.1.0/doc/Music_8hpp_source.html              |  243 +
+ SFML-3.1.0/doc/NativeActivity_8hpp.html            |  124 +
+ SFML-3.1.0/doc/NativeActivity_8hpp_source.html     |  154 +
+ SFML-3.1.0/doc/Network_2Export_8hpp.html           |  135 +
+ SFML-3.1.0/doc/Network_2Export_8hpp_source.html    |  148 +
+ SFML-3.1.0/doc/Network_8hpp.html                   |  123 +
+ SFML-3.1.0/doc/Network_8hpp_source.html            |  164 +
+ SFML-3.1.0/doc/OpenGL_8hpp.html                    |  111 +
+ SFML-3.1.0/doc/OpenGL_8hpp_source.html             |  179 +
+ SFML-3.1.0/doc/OutputSoundFile_8hpp.html           |  130 +
+ SFML-3.1.0/doc/OutputSoundFile_8hpp_source.html    |  187 +
+ SFML-3.1.0/doc/Packet_8hpp.html                    |  128 +
+ SFML-3.1.0/doc/Packet_8hpp_source.html             |  282 +
+ SFML-3.1.0/doc/PlaybackDevice_8hpp.html            |  167 +
+ SFML-3.1.0/doc/PlaybackDevice_8hpp_source.html     |  201 +
+ SFML-3.1.0/doc/PrimitiveType_8hpp.html             |  132 +
+ SFML-3.1.0/doc/PrimitiveType_8hpp_source.html      |  156 +
+ SFML-3.1.0/doc/Rect_8hpp.html                      |  132 +
+ SFML-3.1.0/doc/Rect_8hpp_source.html               |  195 +
+ SFML-3.1.0/doc/RectangleShape_8hpp.html            |  127 +
+ SFML-3.1.0/doc/RectangleShape_8hpp_source.html     |  183 +
+ SFML-3.1.0/doc/RenderStates_8hpp.html              |  128 +
+ SFML-3.1.0/doc/RenderStates_8hpp_source.html       |  215 +
+ SFML-3.1.0/doc/RenderTarget_8hpp.html              |  137 +
+ SFML-3.1.0/doc/RenderTarget_8hpp_source.html       |  329 ++
+ SFML-3.1.0/doc/RenderTexture_8hpp.html             |  129 +
+ SFML-3.1.0/doc/RenderTexture_8hpp_source.html      |  234 +
+ SFML-3.1.0/doc/RenderWindow_8hpp.html              |  132 +
+ SFML-3.1.0/doc/RenderWindow_8hpp_source.html       |  225 +
+ SFML-3.1.0/doc/Sensor_8hpp.html                    |  152 +
+ SFML-3.1.0/doc/Sensor_8hpp_source.html             |  181 +
+ SFML-3.1.0/doc/Sftp_8hpp.html                      |  148 +
+ SFML-3.1.0/doc/Sftp_8hpp_source.html               |  501 ++
+ SFML-3.1.0/doc/Shader_8hpp.html                    |  133 +
+ SFML-3.1.0/doc/Shader_8hpp_source.html             |  386 ++
+ SFML-3.1.0/doc/Shape_8hpp.html                     |  133 +
+ SFML-3.1.0/doc/Shape_8hpp_source.html              |  264 +
+ SFML-3.1.0/doc/Sleep_8hpp.html                     |  124 +
+ SFML-3.1.0/doc/Sleep_8hpp_source.html              |  149 +
+ SFML-3.1.0/doc/SocketHandle_8hpp.html              |  123 +
+ SFML-3.1.0/doc/SocketHandle_8hpp_source.html       |  158 +
+ SFML-3.1.0/doc/SocketSelector_8hpp.html            |  128 +
+ SFML-3.1.0/doc/SocketSelector_8hpp_source.html     |  218 +
+ SFML-3.1.0/doc/Socket_8hpp.html                    |  126 +
+ SFML-3.1.0/doc/Socket_8hpp_source.html             |  230 +
+ SFML-3.1.0/doc/SoundBufferRecorder_8hpp.html       |  129 +
+ .../doc/SoundBufferRecorder_8hpp_source.html       |  185 +
+ SFML-3.1.0/doc/SoundBuffer_8hpp.html               |  131 +
+ SFML-3.1.0/doc/SoundBuffer_8hpp_source.html        |  260 +
+ SFML-3.1.0/doc/SoundChannel_8hpp.html              |  149 +
+ SFML-3.1.0/doc/SoundChannel_8hpp_source.html       |  184 +
+ SFML-3.1.0/doc/SoundFileFactory_8hpp.html          |  129 +
+ SFML-3.1.0/doc/SoundFileFactory_8hpp_source.html   |  218 +
+ SFML-3.1.0/doc/SoundFileReader_8hpp.html           |  130 +
+ SFML-3.1.0/doc/SoundFileReader_8hpp_source.html    |  190 +
+ SFML-3.1.0/doc/SoundFileWriter_8hpp.html           |  128 +
+ SFML-3.1.0/doc/SoundFileWriter_8hpp_source.html    |  172 +
+ SFML-3.1.0/doc/SoundRecorder_8hpp.html             |  130 +
+ SFML-3.1.0/doc/SoundRecorder_8hpp_source.html      |  215 +
+ SFML-3.1.0/doc/SoundSource_8hpp.html               |  130 +
+ SFML-3.1.0/doc/SoundSource_8hpp_source.html        |  322 ++
+ SFML-3.1.0/doc/SoundStream_8hpp.html               |  134 +
+ SFML-3.1.0/doc/SoundStream_8hpp_source.html        |  248 +
+ SFML-3.1.0/doc/Sound_8hpp.html                     |  127 +
+ SFML-3.1.0/doc/Sound_8hpp_source.html              |  228 +
+ SFML-3.1.0/doc/Sprite_8hpp.html                    |  130 +
+ SFML-3.1.0/doc/Sprite_8hpp_source.html             |  223 +
+ SFML-3.1.0/doc/StencilMode_8hpp.html               |  154 +
+ SFML-3.1.0/doc/StencilMode_8hpp_source.html        |  233 +
+ SFML-3.1.0/doc/String_8hpp.html                    |  140 +
+ SFML-3.1.0/doc/String_8hpp_source.html             |  394 ++
+ SFML-3.1.0/doc/SuspendAwareClock_8hpp.html         |  125 +
+ SFML-3.1.0/doc/SuspendAwareClock_8hpp_source.html  |  167 +
+ SFML-3.1.0/doc/System_2Export_8hpp.html            |  135 +
+ SFML-3.1.0/doc/System_2Export_8hpp_source.html     |  148 +
+ SFML-3.1.0/doc/System_8hpp.html                    |  126 +
+ SFML-3.1.0/doc/System_8hpp_source.html             |  170 +
+ SFML-3.1.0/doc/TcpListener_8hpp.html               |  126 +
+ SFML-3.1.0/doc/TcpListener_8hpp_source.html        |  179 +
+ SFML-3.1.0/doc/TcpSocket_8hpp.html                 |  134 +
+ SFML-3.1.0/doc/TcpSocket_8hpp_source.html          |  278 +
+ SFML-3.1.0/doc/Text_8hpp.html                      |  140 +
+ SFML-3.1.0/doc/Text_8hpp_source.html               |  412 ++
+ SFML-3.1.0/doc/Texture_8hpp.html                   |  137 +
+ SFML-3.1.0/doc/Texture_8hpp_source.html            |  317 ++
+ SFML-3.1.0/doc/Time_8hpp.html                      |  126 +
+ SFML-3.1.0/doc/Time_8hpp_source.html               |  265 +
+ SFML-3.1.0/doc/TimeoutWithPredicate_8hpp.html      |  126 +
+ .../doc/TimeoutWithPredicate_8hpp_source.html      |  175 +
+ SFML-3.1.0/doc/Touch_8hpp.html                     |  131 +
+ SFML-3.1.0/doc/Touch_8hpp_source.html              |  173 +
+ SFML-3.1.0/doc/Transform_8hpp.html                 |  128 +
+ SFML-3.1.0/doc/Transform_8hpp_source.html          |  231 +
+ SFML-3.1.0/doc/Transformable_8hpp.html             |  126 +
+ SFML-3.1.0/doc/Transformable_8hpp_source.html      |  216 +
+ SFML-3.1.0/doc/UdpSocket_8hpp.html                 |  129 +
+ SFML-3.1.0/doc/UdpSocket_8hpp_source.html          |  205 +
+ SFML-3.1.0/doc/Utf_8hpp.html                       |  141 +
+ SFML-3.1.0/doc/Utf_8hpp_source.html                |  373 ++
+ SFML-3.1.0/doc/Vector2_8hpp.html                   |  135 +
+ SFML-3.1.0/doc/Vector2_8hpp_source.html            |  270 +
+ SFML-3.1.0/doc/Vector3_8hpp.html                   |  134 +
+ SFML-3.1.0/doc/Vector3_8hpp_source.html            |  248 +
+ SFML-3.1.0/doc/Version_8hpp.html                   |  131 +
+ SFML-3.1.0/doc/Version_8hpp_source.html            |  166 +
+ SFML-3.1.0/doc/VertexArray_8hpp.html               |  131 +
+ SFML-3.1.0/doc/VertexArray_8hpp_source.html        |  228 +
+ SFML-3.1.0/doc/VertexBuffer_8hpp.html              |  135 +
+ SFML-3.1.0/doc/VertexBuffer_8hpp_source.html       |  256 +
+ SFML-3.1.0/doc/Vertex_8hpp.html                    |  125 +
+ SFML-3.1.0/doc/Vertex_8hpp_source.html             |  164 +
+ SFML-3.1.0/doc/VideoMode_8hpp.html                 |  126 +
+ SFML-3.1.0/doc/VideoMode_8hpp_source.html          |  196 +
+ SFML-3.1.0/doc/View_8hpp.html                      |  128 +
+ SFML-3.1.0/doc/View_8hpp_source.html               |  232 +
+ SFML-3.1.0/doc/Vulkan_8hpp.html                    |  172 +
+ SFML-3.1.0/doc/Vulkan_8hpp_source.html             |  187 +
+ SFML-3.1.0/doc/WindowBase_8hpp.html                |  133 +
+ SFML-3.1.0/doc/WindowBase_8hpp_source.html         |  318 ++
+ SFML-3.1.0/doc/WindowEnums_8hpp.html               |  136 +
+ SFML-3.1.0/doc/WindowEnums_8hpp_source.html        |  171 +
+ SFML-3.1.0/doc/WindowHandle_8hpp.html              |  124 +
+ SFML-3.1.0/doc/WindowHandle_8hpp_source.html       |  182 +
+ SFML-3.1.0/doc/Window_2Export_8hpp.html            |  135 +
+ SFML-3.1.0/doc/Window_2Export_8hpp_source.html     |  148 +
+ SFML-3.1.0/doc/Window_2Window_8hpp.html            |  132 +
+ SFML-3.1.0/doc/Window_2Window_8hpp_source.html     |  254 +
+ SFML-3.1.0/doc/Window_8hpp.html                    |  125 +
+ SFML-3.1.0/doc/Window_8hpp_source.html             |  168 +
+ SFML-3.1.0/doc/annotated.html                      |  237 +
+ SFML-3.1.0/doc/classes.html                        |  172 +
+ SFML-3.1.0/doc/classsf_1_1Angle-members.html       |  144 +
+ SFML-3.1.0/doc/classsf_1_1Angle.html               | 1373 +++++
+ .../doc/classsf_1_1AudioResource-members.html      |  118 +
+ SFML-3.1.0/doc/classsf_1_1AudioResource.html       |  293 +
+ SFML-3.1.0/doc/classsf_1_1AudioResource.png        |  Bin 0 -> 1239 bytes
+ SFML-3.1.0/doc/classsf_1_1CircleShape-members.html |  151 +
+ SFML-3.1.0/doc/classsf_1_1CircleShape.html         | 1363 +++++
+ SFML-3.1.0/doc/classsf_1_1CircleShape.png          |  Bin 0 -> 1033 bytes
+ SFML-3.1.0/doc/classsf_1_1Clock-members.html       |  119 +
+ SFML-3.1.0/doc/classsf_1_1Clock.html               |  300 +
+ SFML-3.1.0/doc/classsf_1_1Color-members.html       |  138 +
+ SFML-3.1.0/doc/classsf_1_1Color.html               |  994 ++++
+ SFML-3.1.0/doc/classsf_1_1Context-members.html     |  126 +
+ SFML-3.1.0/doc/classsf_1_1Context.html             |  554 ++
+ SFML-3.1.0/doc/classsf_1_1Context.png              |  Bin 0 -> 482 bytes
+ SFML-3.1.0/doc/classsf_1_1ConvexShape-members.html |  150 +
+ SFML-3.1.0/doc/classsf_1_1ConvexShape.html         | 1339 +++++
+ SFML-3.1.0/doc/classsf_1_1ConvexShape.png          |  Bin 0 -> 1042 bytes
+ SFML-3.1.0/doc/classsf_1_1Cursor-members.html      |  124 +
+ SFML-3.1.0/doc/classsf_1_1Cursor.html              |  652 +++
+ SFML-3.1.0/doc/classsf_1_1Drawable-members.html    |  116 +
+ SFML-3.1.0/doc/classsf_1_1Drawable.html            |  291 +
+ SFML-3.1.0/doc/classsf_1_1Drawable.png             |  Bin 0 -> 2213 bytes
+ SFML-3.1.0/doc/classsf_1_1Event-members.html       |  120 +
+ SFML-3.1.0/doc/classsf_1_1Event.html               |  451 ++
+ SFML-3.1.0/doc/classsf_1_1Exception.html           |  128 +
+ SFML-3.1.0/doc/classsf_1_1Exception.png            |  Bin 0 -> 528 bytes
+ .../doc/classsf_1_1FileInputStream-members.html    |  126 +
+ SFML-3.1.0/doc/classsf_1_1FileInputStream.html     |  542 ++
+ SFML-3.1.0/doc/classsf_1_1FileInputStream.png      |  Bin 0 -> 585 bytes
+ SFML-3.1.0/doc/classsf_1_1Font-members.html        |  135 +
+ SFML-3.1.0/doc/classsf_1_1Font.html                | 1052 ++++
+ SFML-3.1.0/doc/classsf_1_1Ftp-members.html         |  135 +
+ SFML-3.1.0/doc/classsf_1_1Ftp.html                 | 1024 ++++
+ ...lasssf_1_1Ftp_1_1DirectoryResponse-members.html |  120 +
+ .../doc/classsf_1_1Ftp_1_1DirectoryResponse.html   |  464 ++
+ .../doc/classsf_1_1Ftp_1_1DirectoryResponse.png    |  Bin 0 -> 700 bytes
+ .../classsf_1_1Ftp_1_1ListingResponse-members.html |  120 +
+ .../doc/classsf_1_1Ftp_1_1ListingResponse.html     |  469 ++
+ .../doc/classsf_1_1Ftp_1_1ListingResponse.png      |  Bin 0 -> 677 bytes
+ .../doc/classsf_1_1Ftp_1_1Response-members.html    |  118 +
+ SFML-3.1.0/doc/classsf_1_1Ftp_1_1Response.html     |  449 ++
+ SFML-3.1.0/doc/classsf_1_1Ftp_1_1Response.png      |  Bin 0 -> 1010 bytes
+ SFML-3.1.0/doc/classsf_1_1GlResource-members.html  |  116 +
+ SFML-3.1.0/doc/classsf_1_1GlResource.html          |  256 +
+ SFML-3.1.0/doc/classsf_1_1GlResource.png           |  Bin 0 -> 1789 bytes
+ ...GlResource_1_1TransientContextLock-members.html |  117 +
+ ...sssf_1_1GlResource_1_1TransientContextLock.html |  231 +
+ SFML-3.1.0/doc/classsf_1_1Http-members.html        |  119 +
+ SFML-3.1.0/doc/classsf_1_1Http.html                |  403 ++
+ .../doc/classsf_1_1Http_1_1Request-members.html    |  121 +
+ SFML-3.1.0/doc/classsf_1_1Http_1_1Request.html     |  403 ++
+ .../doc/classsf_1_1Http_1_1Response-members.html   |  120 +
+ SFML-3.1.0/doc/classsf_1_1Http_1_1Response.html    |  437 ++
+ SFML-3.1.0/doc/classsf_1_1Image-members.html       |  134 +
+ SFML-3.1.0/doc/classsf_1_1Image.html               |  914 +++
+ .../doc/classsf_1_1InputSoundFile-members.html     |  131 +
+ SFML-3.1.0/doc/classsf_1_1InputSoundFile.html      |  757 +++
+ SFML-3.1.0/doc/classsf_1_1InputStream-members.html |  118 +
+ SFML-3.1.0/doc/classsf_1_1InputStream.html         |  374 ++
+ SFML-3.1.0/doc/classsf_1_1InputStream.png          |  Bin 0 -> 946 bytes
+ SFML-3.1.0/doc/classsf_1_1IpAddress-members.html   |  136 +
+ SFML-3.1.0/doc/classsf_1_1IpAddress.html           |  952 ++++
+ .../doc/classsf_1_1MemoryInputStream-members.html  |  119 +
+ SFML-3.1.0/doc/classsf_1_1MemoryInputStream.html   |  329 ++
+ SFML-3.1.0/doc/classsf_1_1MemoryInputStream.png    |  Bin 0 -> 673 bytes
+ SFML-3.1.0/doc/classsf_1_1Music-members.html       |  192 +
+ SFML-3.1.0/doc/classsf_1_1Music.html               | 2374 ++++++++
+ SFML-3.1.0/doc/classsf_1_1Music.png                |  Bin 0 -> 973 bytes
+ .../doc/classsf_1_1OutputSoundFile-members.html    |  118 +
+ SFML-3.1.0/doc/classsf_1_1OutputSoundFile.html     |  336 ++
+ SFML-3.1.0/doc/classsf_1_1Packet-members.html      |  162 +
+ SFML-3.1.0/doc/classsf_1_1Packet.html              | 1439 +++++
+ SFML-3.1.0/doc/classsf_1_1Rect-members.html        |  123 +
+ SFML-3.1.0/doc/classsf_1_1Rect.html                |  531 ++
+ .../doc/classsf_1_1RectangleShape-members.html     |  150 +
+ SFML-3.1.0/doc/classsf_1_1RectangleShape.html      | 1327 +++++
+ SFML-3.1.0/doc/classsf_1_1RectangleShape.png       |  Bin 0 -> 1082 bytes
+ .../doc/classsf_1_1RenderTarget-members.html       |  142 +
+ SFML-3.1.0/doc/classsf_1_1RenderTarget.html        | 1117 ++++
+ SFML-3.1.0/doc/classsf_1_1RenderTarget.png         |  Bin 0 -> 805 bytes
+ .../doc/classsf_1_1RenderTexture-members.html      |  158 +
+ SFML-3.1.0/doc/classsf_1_1RenderTexture.html       | 1568 ++++++
+ SFML-3.1.0/doc/classsf_1_1RenderTexture.png        |  Bin 0 -> 589 bytes
+ .../doc/classsf_1_1RenderWindow-members.html       |  200 +
+ SFML-3.1.0/doc/classsf_1_1RenderWindow.html        | 2689 +++++++++
+ SFML-3.1.0/doc/classsf_1_1RenderWindow.png         |  Bin 0 -> 1388 bytes
+ SFML-3.1.0/doc/classsf_1_1Sftp-members.html        |  133 +
+ SFML-3.1.0/doc/classsf_1_1Sftp.html                | 1180 ++++
+ ...lasssf_1_1Sftp_1_1AttributesResult-members.html |  120 +
+ .../doc/classsf_1_1Sftp_1_1AttributesResult.html   |  547 ++
+ .../doc/classsf_1_1Sftp_1_1AttributesResult.png    |  Bin 0 -> 654 bytes
+ .../classsf_1_1Sftp_1_1ListingResult-members.html  |  120 +
+ .../doc/classsf_1_1Sftp_1_1ListingResult.html      |  547 ++
+ .../doc/classsf_1_1Sftp_1_1ListingResult.png       |  Bin 0 -> 606 bytes
+ .../doc/classsf_1_1Sftp_1_1PathResult-members.html |  120 +
+ SFML-3.1.0/doc/classsf_1_1Sftp_1_1PathResult.html  |  547 ++
+ SFML-3.1.0/doc/classsf_1_1Sftp_1_1PathResult.png   |  Bin 0 -> 573 bytes
+ .../doc/classsf_1_1Sftp_1_1Result-members.html     |  118 +
+ SFML-3.1.0/doc/classsf_1_1Sftp_1_1Result.html      |  528 ++
+ SFML-3.1.0/doc/classsf_1_1Sftp_1_1Result.png       |  Bin 0 -> 1187 bytes
+ SFML-3.1.0/doc/classsf_1_1Shader-members.html      |  166 +
+ SFML-3.1.0/doc/classsf_1_1Shader.html              | 2159 ++++++++
+ SFML-3.1.0/doc/classsf_1_1Shader.png               |  Bin 0 -> 498 bytes
+ SFML-3.1.0/doc/classsf_1_1Shape-members.html       |  147 +
+ SFML-3.1.0/doc/classsf_1_1Shape.html               | 1192 ++++
+ SFML-3.1.0/doc/classsf_1_1Shape.png                |  Bin 0 -> 1519 bytes
+ SFML-3.1.0/doc/classsf_1_1Socket-members.html      |  129 +
+ SFML-3.1.0/doc/classsf_1_1Socket.html              |  683 +++
+ SFML-3.1.0/doc/classsf_1_1Socket.png               |  Bin 0 -> 883 bytes
+ .../doc/classsf_1_1SocketSelector-members.html     |  128 +
+ SFML-3.1.0/doc/classsf_1_1SocketSelector.html      |  697 +++
+ SFML-3.1.0/doc/classsf_1_1Sound-members.html       |  176 +
+ SFML-3.1.0/doc/classsf_1_1Sound.html               | 1892 +++++++
+ SFML-3.1.0/doc/classsf_1_1Sound.png                |  Bin 0 -> 733 bytes
+ SFML-3.1.0/doc/classsf_1_1SoundBuffer-members.html |  133 +
+ SFML-3.1.0/doc/classsf_1_1SoundBuffer.html         |  903 +++
+ .../classsf_1_1SoundBufferRecorder-members.html    |  131 +
+ SFML-3.1.0/doc/classsf_1_1SoundBufferRecorder.html |  705 +++
+ SFML-3.1.0/doc/classsf_1_1SoundBufferRecorder.png  |  Bin 0 -> 670 bytes
+ .../doc/classsf_1_1SoundFileFactory-members.html   |  123 +
+ SFML-3.1.0/doc/classsf_1_1SoundFileFactory.html    |  491 ++
+ .../doc/classsf_1_1SoundFileReader-members.html    |  117 +
+ SFML-3.1.0/doc/classsf_1_1SoundFileReader.html     |  323 ++
+ .../doc/classsf_1_1SoundFileWriter-members.html    |  116 +
+ SFML-3.1.0/doc/classsf_1_1SoundFileWriter.html     |  286 +
+ .../doc/classsf_1_1SoundRecorder-members.html      |  129 +
+ SFML-3.1.0/doc/classsf_1_1SoundRecorder.html       |  725 +++
+ SFML-3.1.0/doc/classsf_1_1SoundRecorder.png        |  Bin 0 -> 675 bytes
+ SFML-3.1.0/doc/classsf_1_1SoundSource-members.html |  163 +
+ SFML-3.1.0/doc/classsf_1_1SoundSource.html         | 1545 ++++++
+ SFML-3.1.0/doc/classsf_1_1SoundSource.png          |  Bin 0 -> 1241 bytes
+ SFML-3.1.0/doc/classsf_1_1SoundStream-members.html |  178 +
+ SFML-3.1.0/doc/classsf_1_1SoundStream.html         | 2046 +++++++
+ SFML-3.1.0/doc/classsf_1_1SoundStream.png          |  Bin 0 -> 978 bytes
+ SFML-3.1.0/doc/classsf_1_1Sprite-members.html      |  142 +
+ SFML-3.1.0/doc/classsf_1_1Sprite.html              | 1027 ++++
+ SFML-3.1.0/doc/classsf_1_1Sprite.png               |  Bin 0 -> 757 bytes
+ SFML-3.1.0/doc/classsf_1_1String-members.html      |  169 +
+ SFML-3.1.0/doc/classsf_1_1String.html              | 2065 +++++++
+ SFML-3.1.0/doc/classsf_1_1TcpListener-members.html |  132 +
+ SFML-3.1.0/doc/classsf_1_1TcpListener.html         |  629 +++
+ SFML-3.1.0/doc/classsf_1_1TcpListener.png          |  Bin 0 -> 487 bytes
+ SFML-3.1.0/doc/classsf_1_1TcpSocket-members.html   |  153 +
+ SFML-3.1.0/doc/classsf_1_1TcpSocket.html           | 1466 +++++
+ SFML-3.1.0/doc/classsf_1_1TcpSocket.png            |  Bin 0 -> 458 bytes
+ SFML-3.1.0/doc/classsf_1_1Text-members.html        |  174 +
+ SFML-3.1.0/doc/classsf_1_1Text.html                | 1925 +++++++
+ SFML-3.1.0/doc/classsf_1_1Text.png                 |  Bin 0 -> 734 bytes
+ SFML-3.1.0/doc/classsf_1_1Texture-members.html     |  156 +
+ SFML-3.1.0/doc/classsf_1_1Texture.html             | 1760 ++++++
+ SFML-3.1.0/doc/classsf_1_1Texture.png              |  Bin 0 -> 490 bytes
+ SFML-3.1.0/doc/classsf_1_1Time-members.html        |  148 +
+ SFML-3.1.0/doc/classsf_1_1Time.html                | 1510 +++++
+ .../classsf_1_1TimeoutWithPredicate-members.html   |  117 +
+ .../doc/classsf_1_1TimeoutWithPredicate.html       |  307 ++
+ SFML-3.1.0/doc/classsf_1_1Transform-members.html   |  131 +
+ SFML-3.1.0/doc/classsf_1_1Transform.html           |  891 +++
+ .../doc/classsf_1_1Transformable-members.html      |  128 +
+ SFML-3.1.0/doc/classsf_1_1Transformable.html       |  651 +++
+ SFML-3.1.0/doc/classsf_1_1Transformable.png        |  Bin 0 -> 1700 bytes
+ SFML-3.1.0/doc/classsf_1_1UdpSocket-members.html   |  137 +
+ SFML-3.1.0/doc/classsf_1_1UdpSocket.html           |  885 +++
+ SFML-3.1.0/doc/classsf_1_1UdpSocket.png            |  Bin 0 -> 466 bytes
+ SFML-3.1.0/doc/classsf_1_1Utf.html                 |  130 +
+ .../doc/classsf_1_1Utf_3_0116_01_4-members.html    |  126 +
+ SFML-3.1.0/doc/classsf_1_1Utf_3_0116_01_4.html     |  829 +++
+ .../doc/classsf_1_1Utf_3_0132_01_4-members.html    |  130 +
+ SFML-3.1.0/doc/classsf_1_1Utf_3_0132_01_4.html     | 1022 ++++
+ .../doc/classsf_1_1Utf_3_018_01_4-members.html     |  126 +
+ SFML-3.1.0/doc/classsf_1_1Utf_3_018_01_4.html      |  829 +++
+ SFML-3.1.0/doc/classsf_1_1Vector2-members.html     |  143 +
+ SFML-3.1.0/doc/classsf_1_1Vector2.html             | 1286 +++++
+ SFML-3.1.0/doc/classsf_1_1Vector3-members.html     |  138 +
+ SFML-3.1.0/doc/classsf_1_1Vector3.html             | 1102 ++++
+ SFML-3.1.0/doc/classsf_1_1VertexArray-members.html |  129 +
+ SFML-3.1.0/doc/classsf_1_1VertexArray.html         |  625 +++
+ SFML-3.1.0/doc/classsf_1_1VertexArray.png          |  Bin 0 -> 523 bytes
+ .../doc/classsf_1_1VertexBuffer-members.html       |  135 +
+ SFML-3.1.0/doc/classsf_1_1VertexBuffer.html        |  884 +++
+ SFML-3.1.0/doc/classsf_1_1VertexBuffer.png         |  Bin 0 -> 770 bytes
+ SFML-3.1.0/doc/classsf_1_1VideoMode-members.html   |  126 +
+ SFML-3.1.0/doc/classsf_1_1VideoMode.html           |  621 +++
+ SFML-3.1.0/doc/classsf_1_1View-members.html        |  131 +
+ SFML-3.1.0/doc/classsf_1_1View.html                |  685 +++
+ SFML-3.1.0/doc/classsf_1_1Window-members.html      |  167 +
+ SFML-3.1.0/doc/classsf_1_1Window.html              | 1875 +++++++
+ SFML-3.1.0/doc/classsf_1_1Window.png               |  Bin 0 -> 1039 bytes
+ SFML-3.1.0/doc/classsf_1_1WindowBase-members.html  |  151 +
+ SFML-3.1.0/doc/classsf_1_1WindowBase.html          | 1452 +++++
+ SFML-3.1.0/doc/classsf_1_1WindowBase.png           |  Bin 0 -> 744 bytes
+ SFML-3.1.0/doc/clipboard.js                        |   61 +
+ SFML-3.1.0/doc/cookie.js                           |   58 +
+ SFML-3.1.0/doc/deprecated.html                     |  115 +
+ .../doc/dir_5cf786e58cbf7297a26339ae6e44357c.html  |  130 +
+ .../doc/dir_83d50c0b1f1eceb6f182949162e90861.html  |  130 +
+ .../doc/dir_89e9fb32471ae291b179a889144513db.html  |  125 +
+ .../doc/dir_c0a853e81d6f1c1f0a3eb7a27dc24256.html  |  130 +
+ .../doc/dir_d44c64559bbebec7f509842c48db8b23.html  |  113 +
+ .../doc/dir_dd49ddb3ba8035e4a328f8c5f31cda7e.html  |  129 +
+ .../doc/dir_e68e8157741866f444e17edd764ebbae.html  |  113 +
+ .../doc/dir_e71ec51a9abd604c65f6abb639f6ea75.html  |  142 +
+ SFML-3.1.0/doc/doxygen.css                         | 1499 +++++
+ SFML-3.1.0/doc/doxygen.svg                         |   28 +
+ SFML-3.1.0/doc/doxygen_crawl.html                  | 3332 +++++++++++
+ SFML-3.1.0/doc/dynsections.js                      |  198 +
+ SFML-3.1.0/doc/files.html                          |  222 +
+ SFML-3.1.0/doc/functions.html                      |  177 +
+ SFML-3.1.0/doc/functions_b.html                    |  162 +
+ SFML-3.1.0/doc/functions_c.html                    |  196 +
+ SFML-3.1.0/doc/functions_d.html                    |  168 +
+ SFML-3.1.0/doc/functions_e.html                    |  161 +
+ SFML-3.1.0/doc/functions_enum.html                 |  131 +
+ SFML-3.1.0/doc/functions_eval.html                 |  126 +
+ SFML-3.1.0/doc/functions_f.html                    |  166 +
+ SFML-3.1.0/doc/functions_func.html                 |  159 +
+ SFML-3.1.0/doc/functions_func_b.html               |  148 +
+ SFML-3.1.0/doc/functions_func_c.html               |  174 +
+ SFML-3.1.0/doc/functions_func_d.html               |  157 +
+ SFML-3.1.0/doc/functions_func_e.html               |  155 +
+ SFML-3.1.0/doc/functions_func_f.html               |  160 +
+ SFML-3.1.0/doc/functions_func_g.html               |  264 +
+ SFML-3.1.0/doc/functions_func_h.html               |  149 +
+ SFML-3.1.0/doc/functions_func_i.html               |  174 +
+ SFML-3.1.0/doc/functions_func_k.html               |  146 +
+ SFML-3.1.0/doc/functions_func_l.html               |  157 +
+ SFML-3.1.0/doc/functions_func_m.html               |  152 +
+ SFML-3.1.0/doc/functions_func_n.html               |  149 +
+ SFML-3.1.0/doc/functions_func_o.html               |  189 +
+ SFML-3.1.0/doc/functions_func_p.html               |  155 +
+ SFML-3.1.0/doc/functions_func_r.html               |  172 +
+ SFML-3.1.0/doc/functions_func_s.html               |  249 +
+ SFML-3.1.0/doc/functions_func_t.html               |  172 +
+ SFML-3.1.0/doc/functions_func_u.html               |  152 +
+ SFML-3.1.0/doc/functions_func_v.html               |  152 +
+ SFML-3.1.0/doc/functions_func_w.html               |  152 +
+ SFML-3.1.0/doc/functions_func_z.html               |  146 +
+ SFML-3.1.0/doc/functions_func_~.html               |  174 +
+ SFML-3.1.0/doc/functions_g.html                    |  272 +
+ SFML-3.1.0/doc/functions_h.html                    |  156 +
+ SFML-3.1.0/doc/functions_i.html                    |  186 +
+ SFML-3.1.0/doc/functions_j.html                    |  149 +
+ SFML-3.1.0/doc/functions_k.html                    |  150 +
+ SFML-3.1.0/doc/functions_l.html                    |  165 +
+ SFML-3.1.0/doc/functions_m.html                    |  163 +
+ SFML-3.1.0/doc/functions_n.html                    |  153 +
+ SFML-3.1.0/doc/functions_o.html                    |  196 +
+ SFML-3.1.0/doc/functions_p.html                    |  168 +
+ SFML-3.1.0/doc/functions_r.html                    |  183 +
+ SFML-3.1.0/doc/functions_rela.html                 |  133 +
+ SFML-3.1.0/doc/functions_s.html                    |  279 +
+ SFML-3.1.0/doc/functions_t.html                    |  190 +
+ SFML-3.1.0/doc/functions_type.html                 |  131 +
+ SFML-3.1.0/doc/functions_u.html                    |  159 +
+ SFML-3.1.0/doc/functions_v.html                    |  160 +
+ SFML-3.1.0/doc/functions_vars.html                 |  376 ++
+ SFML-3.1.0/doc/functions_w.html                    |  158 +
+ SFML-3.1.0/doc/functions_x.html                    |  149 +
+ SFML-3.1.0/doc/functions_y.html                    |  150 +
+ SFML-3.1.0/doc/functions_z.html                    |  151 +
+ SFML-3.1.0/doc/functions_~.html                    |  177 +
+ SFML-3.1.0/doc/globals.html                        |  125 +
+ SFML-3.1.0/doc/globals_defs.html                   |  123 +
+ SFML-3.1.0/doc/globals_type.html                   |  112 +
+ SFML-3.1.0/doc/group__audio.html                   |  223 +
+ SFML-3.1.0/doc/group__graphics.html                |  261 +
+ SFML-3.1.0/doc/group__network.html                 |  135 +
+ SFML-3.1.0/doc/group__system.html                  |  244 +
+ SFML-3.1.0/doc/group__window.html                  |  266 +
+ SFML-3.1.0/doc/hierarchy.html                      |  240 +
+ SFML-3.1.0/doc/index.html                          |  169 +
+ SFML-3.1.0/doc/jquery.js                           |  204 +
+ SFML-3.1.0/doc/mainpage_8hpp.html                  |  110 +
+ SFML-3.1.0/doc/mainpage_8hpp_source.html           |  109 +
+ SFML-3.1.0/doc/menudata.js                         |  163 +
+ SFML-3.1.0/doc/namespacemembers.html               |  345 ++
+ SFML-3.1.0/doc/namespacemembers_enum.html          |  126 +
+ SFML-3.1.0/doc/namespacemembers_eval.html          |  118 +
+ SFML-3.1.0/doc/namespacemembers_func.html          |  237 +
+ SFML-3.1.0/doc/namespacemembers_type.html          |  142 +
+ SFML-3.1.0/doc/namespacemembers_vars.html          |  124 +
+ SFML-3.1.0/doc/namespaces.html                     |  122 +
+ SFML-3.1.0/doc/namespacesf.html                    | 1624 ++++++
+ SFML-3.1.0/doc/namespacesf_1_1Clipboard.html       |  210 +
+ SFML-3.1.0/doc/namespacesf_1_1Dns.html             |  437 ++
+ SFML-3.1.0/doc/namespacesf_1_1Glsl.html            |  378 ++
+ SFML-3.1.0/doc/namespacesf_1_1Joystick.html        |  566 ++
+ SFML-3.1.0/doc/namespacesf_1_1Keyboard.html        | 1322 +++++
+ SFML-3.1.0/doc/namespacesf_1_1Listener.html        |  500 ++
+ SFML-3.1.0/doc/namespacesf_1_1Literals.html        |  108 +
+ SFML-3.1.0/doc/namespacesf_1_1Mouse.html           |  430 ++
+ SFML-3.1.0/doc/namespacesf_1_1PlaybackDevice.html  |  497 ++
+ SFML-3.1.0/doc/namespacesf_1_1Sensor.html          |  335 ++
+ SFML-3.1.0/doc/namespacesf_1_1Style.html           |  124 +
+ SFML-3.1.0/doc/namespacesf_1_1Touch.html           |  257 +
+ SFML-3.1.0/doc/namespacesf_1_1Vulkan.html          |  225 +
+ SFML-3.1.0/doc/navtree.css                         |  327 ++
+ SFML-3.1.0/doc/pages.html                          |  103 +
+ SFML-3.1.0/doc/search/all_0.js                     |   53 +
+ SFML-3.1.0/doc/search/all_1.js                     |   47 +
+ SFML-3.1.0/doc/search/all_10.js                    |    9 +
+ SFML-3.1.0/doc/search/all_11.js                    |   66 +
+ SFML-3.1.0/doc/search/all_12.js                    |  257 +
+ SFML-3.1.0/doc/search/all_13.js                    |   75 +
+ SFML-3.1.0/doc/search/all_14.js                    |   34 +
+ SFML-3.1.0/doc/search/all_15.js                    |   53 +
+ SFML-3.1.0/doc/search/all_16.js                    |   27 +
+ SFML-3.1.0/doc/search/all_17.js                    |    5 +
+ SFML-3.1.0/doc/search/all_18.js                    |    6 +
+ SFML-3.1.0/doc/search/all_19.js                    |    8 +
+ SFML-3.1.0/doc/search/all_1a.js                    |   32 +
+ SFML-3.1.0/doc/search/all_2.js                     |   96 +
+ SFML-3.1.0/doc/search/all_3.js                     |   53 +
+ SFML-3.1.0/doc/search/all_4.js                     |   39 +
+ SFML-3.1.0/doc/search/all_5.js                     |   70 +
+ SFML-3.1.0/doc/search/all_6.js                     |  155 +
+ SFML-3.1.0/doc/search/all_7.js                     |   27 +
+ SFML-3.1.0/doc/search/all_8.js                     |   71 +
+ SFML-3.1.0/doc/search/all_9.js                     |   11 +
+ SFML-3.1.0/doc/search/all_a.js                     |   15 +
+ SFML-3.1.0/doc/search/all_b.js                     |   44 +
+ SFML-3.1.0/doc/search/all_c.js                     |   52 +
+ SFML-3.1.0/doc/search/all_d.js                     |   67 +
+ SFML-3.1.0/doc/search/all_e.js                     |   64 +
+ SFML-3.1.0/doc/search/all_f.js                     |   53 +
+ SFML-3.1.0/doc/search/classes_0.js                 |    7 +
+ SFML-3.1.0/doc/search/classes_1.js                 |    4 +
+ SFML-3.1.0/doc/search/classes_10.js                |   28 +
+ SFML-3.1.0/doc/search/classes_11.js                |   16 +
+ SFML-3.1.0/doc/search/classes_12.js                |    9 +
+ SFML-3.1.0/doc/search/classes_13.js                |   19 +
+ SFML-3.1.0/doc/search/classes_14.js                |    5 +
+ SFML-3.1.0/doc/search/classes_2.js                 |   14 +
+ SFML-3.1.0/doc/search/classes_3.js                 |    5 +
+ SFML-3.1.0/doc/search/classes_4.js                 |    5 +
+ SFML-3.1.0/doc/search/classes_5.js                 |    8 +
+ SFML-3.1.0/doc/search/classes_6.js                 |    5 +
+ SFML-3.1.0/doc/search/classes_7.js                 |    5 +
+ SFML-3.1.0/doc/search/classes_8.js                 |    9 +
+ SFML-3.1.0/doc/search/classes_9.js                 |    8 +
+ SFML-3.1.0/doc/search/classes_a.js                 |    5 +
+ SFML-3.1.0/doc/search/classes_b.js                 |    5 +
+ SFML-3.1.0/doc/search/classes_c.js                 |   13 +
+ SFML-3.1.0/doc/search/classes_d.js                 |    4 +
+ SFML-3.1.0/doc/search/classes_e.js                 |    5 +
+ SFML-3.1.0/doc/search/classes_f.js                 |   15 +
+ SFML-3.1.0/doc/search/defines_0.js                 |   16 +
+ SFML-3.1.0/doc/search/enums_0.js                   |    5 +
+ SFML-3.1.0/doc/search/enums_1.js                   |    4 +
+ SFML-3.1.0/doc/search/enums_2.js                   |    5 +
+ SFML-3.1.0/doc/search/enums_3.js                   |    4 +
+ SFML-3.1.0/doc/search/enums_4.js                   |    4 +
+ SFML-3.1.0/doc/search/enums_5.js                   |    4 +
+ SFML-3.1.0/doc/search/enums_6.js                   |    4 +
+ SFML-3.1.0/doc/search/enums_7.js                   |    4 +
+ SFML-3.1.0/doc/search/enums_8.js                   |    4 +
+ SFML-3.1.0/doc/search/enums_9.js                   |    4 +
+ SFML-3.1.0/doc/search/enums_a.js                   |   10 +
+ SFML-3.1.0/doc/search/enums_b.js                   |    8 +
+ SFML-3.1.0/doc/search/enums_c.js                   |    4 +
+ SFML-3.1.0/doc/search/enums_d.js                   |    4 +
+ SFML-3.1.0/doc/search/enums_e.js                   |    4 +
+ SFML-3.1.0/doc/search/enumvalues_0.js              |   16 +
+ SFML-3.1.0/doc/search/enumvalues_1.js              |   22 +
+ SFML-3.1.0/doc/search/enumvalues_10.js             |    5 +
+ SFML-3.1.0/doc/search/enumvalues_11.js             |   24 +
+ SFML-3.1.0/doc/search/enumvalues_12.js             |   45 +
+ SFML-3.1.0/doc/search/enumvalues_13.js             |   21 +
+ SFML-3.1.0/doc/search/enumvalues_14.js             |   13 +
+ SFML-3.1.0/doc/search/enumvalues_15.js             |   10 +
+ SFML-3.1.0/doc/search/enumvalues_16.js             |    7 +
+ SFML-3.1.0/doc/search/enumvalues_17.js             |    4 +
+ SFML-3.1.0/doc/search/enumvalues_18.js             |    4 +
+ SFML-3.1.0/doc/search/enumvalues_19.js             |    6 +
+ SFML-3.1.0/doc/search/enumvalues_2.js              |   31 +
+ SFML-3.1.0/doc/search/enumvalues_3.js              |   29 +
+ SFML-3.1.0/doc/search/enumvalues_4.js              |   20 +
+ SFML-3.1.0/doc/search/enumvalues_5.js              |   46 +
+ SFML-3.1.0/doc/search/enumvalues_6.js              |   13 +
+ SFML-3.1.0/doc/search/enumvalues_7.js              |   16 +
+ SFML-3.1.0/doc/search/enumvalues_8.js              |   18 +
+ SFML-3.1.0/doc/search/enumvalues_9.js              |    4 +
+ SFML-3.1.0/doc/search/enumvalues_a.js              |    8 +
+ SFML-3.1.0/doc/search/enumvalues_b.js              |   24 +
+ SFML-3.1.0/doc/search/enumvalues_c.js              |   21 +
+ SFML-3.1.0/doc/search/enumvalues_d.js              |   56 +
+ SFML-3.1.0/doc/search/enumvalues_e.js              |   14 +
+ SFML-3.1.0/doc/search/enumvalues_f.js              |   29 +
+ SFML-3.1.0/doc/search/files_0.js                   |    7 +
+ SFML-3.1.0/doc/search/files_1.js                   |    4 +
+ SFML-3.1.0/doc/search/files_10.js                  |    9 +
+ SFML-3.1.0/doc/search/files_11.js                  |   27 +
+ SFML-3.1.0/doc/search/files_12.js                  |   12 +
+ SFML-3.1.0/doc/search/files_13.js                  |    5 +
+ SFML-3.1.0/doc/search/files_14.js                  |   12 +
+ SFML-3.1.0/doc/search/files_15.js                  |    9 +
+ SFML-3.1.0/doc/search/files_2.js                   |   13 +
+ SFML-3.1.0/doc/search/files_3.js                   |    5 +
+ SFML-3.1.0/doc/search/files_4.js                   |    6 +
+ SFML-3.1.0/doc/search/files_5.js                   |    6 +
+ SFML-3.1.0/doc/search/files_6.js                   |    9 +
+ SFML-3.1.0/doc/search/files_7.js                   |    4 +
+ SFML-3.1.0/doc/search/files_8.js                   |    7 +
+ SFML-3.1.0/doc/search/files_9.js                   |    4 +
+ SFML-3.1.0/doc/search/files_a.js                   |    4 +
+ SFML-3.1.0/doc/search/files_b.js                   |    4 +
+ SFML-3.1.0/doc/search/files_c.js                   |    8 +
+ SFML-3.1.0/doc/search/files_d.js                   |    6 +
+ SFML-3.1.0/doc/search/files_e.js                   |    5 +
+ SFML-3.1.0/doc/search/files_f.js                   |    6 +
+ SFML-3.1.0/doc/search/functions_0.js               |   17 +
+ SFML-3.1.0/doc/search/functions_1.js               |    6 +
+ SFML-3.1.0/doc/search/functions_10.js              |   31 +
+ SFML-3.1.0/doc/search/functions_11.js              |  115 +
+ SFML-3.1.0/doc/search/functions_12.js              |   30 +
+ SFML-3.1.0/doc/search/functions_13.js              |   10 +
+ SFML-3.1.0/doc/search/functions_14.js              |   11 +
+ SFML-3.1.0/doc/search/functions_15.js              |   10 +
+ SFML-3.1.0/doc/search/functions_16.js              |    4 +
+ SFML-3.1.0/doc/search/functions_17.js              |   32 +
+ SFML-3.1.0/doc/search/functions_2.js               |   32 +
+ SFML-3.1.0/doc/search/functions_3.js               |   17 +
+ SFML-3.1.0/doc/search/functions_4.js               |   14 +
+ SFML-3.1.0/doc/search/functions_5.js               |   18 +
+ SFML-3.1.0/doc/search/functions_6.js               |  131 +
+ SFML-3.1.0/doc/search/functions_7.js               |    8 +
+ SFML-3.1.0/doc/search/functions_8.js               |   37 +
+ SFML-3.1.0/doc/search/functions_9.js               |    4 +
+ SFML-3.1.0/doc/search/functions_a.js               |   16 +
+ SFML-3.1.0/doc/search/functions_b.js               |   10 +
+ SFML-3.1.0/doc/search/functions_c.js               |    7 +
+ SFML-3.1.0/doc/search/functions_d.js               |   47 +
+ SFML-3.1.0/doc/search/functions_e.js               |   13 +
+ SFML-3.1.0/doc/search/functions_f.js               |    7 +
+ SFML-3.1.0/doc/search/groups_0.js                  |    4 +
+ SFML-3.1.0/doc/search/groups_1.js                  |    4 +
+ SFML-3.1.0/doc/search/groups_2.js                  |    4 +
+ SFML-3.1.0/doc/search/groups_3.js                  |    4 +
+ SFML-3.1.0/doc/search/groups_4.js                  |    4 +
+ SFML-3.1.0/doc/search/groups_5.js                  |    4 +
+ SFML-3.1.0/doc/search/namespaces_0.js              |   17 +
+ SFML-3.1.0/doc/search/pages_0.js                   |    5 +
+ SFML-3.1.0/doc/search/pages_1.js                   |    4 +
+ SFML-3.1.0/doc/search/pages_2.js                   |    4 +
+ SFML-3.1.0/doc/search/pages_3.js                   |    5 +
+ SFML-3.1.0/doc/search/pages_4.js                   |    4 +
+ SFML-3.1.0/doc/search/related_0.js                 |    5 +
+ SFML-3.1.0/doc/search/related_1.js                 |    4 +
+ SFML-3.1.0/doc/search/related_2.js                 |    5 +
+ SFML-3.1.0/doc/search/related_3.js                 |    6 +
+ SFML-3.1.0/doc/search/related_4.js                 |    6 +
+ SFML-3.1.0/doc/search/related_5.js                 |    6 +
+ SFML-3.1.0/doc/search/related_6.js                 |    4 +
+ SFML-3.1.0/doc/search/related_7.js                 |    5 +
+ SFML-3.1.0/doc/search/search.css                   |  378 ++
+ SFML-3.1.0/doc/search/search.js                    |  708 +++
+ SFML-3.1.0/doc/search/searchdata.js                |   51 +
+ SFML-3.1.0/doc/search/typedefs_0.js                |    6 +
+ SFML-3.1.0/doc/search/typedefs_1.js                |    5 +
+ SFML-3.1.0/doc/search/typedefs_10.js               |    4 +
+ SFML-3.1.0/doc/search/typedefs_2.js                |    4 +
+ SFML-3.1.0/doc/search/typedefs_3.js                |    4 +
+ SFML-3.1.0/doc/search/typedefs_4.js                |    4 +
+ SFML-3.1.0/doc/search/typedefs_5.js                |    5 +
+ SFML-3.1.0/doc/search/typedefs_6.js                |    9 +
+ SFML-3.1.0/doc/search/typedefs_7.js                |    5 +
+ SFML-3.1.0/doc/search/typedefs_8.js                |    4 +
+ SFML-3.1.0/doc/search/typedefs_9.js                |    4 +
+ SFML-3.1.0/doc/search/typedefs_a.js                |    5 +
+ SFML-3.1.0/doc/search/typedefs_b.js                |    5 +
+ SFML-3.1.0/doc/search/typedefs_c.js                |    6 +
+ SFML-3.1.0/doc/search/typedefs_d.js                |    5 +
+ SFML-3.1.0/doc/search/typedefs_e.js                |    7 +
+ SFML-3.1.0/doc/search/typedefs_f.js                |   15 +
+ SFML-3.1.0/doc/search/variables_0.js               |   18 +
+ SFML-3.1.0/doc/search/variables_1.js               |   20 +
+ SFML-3.1.0/doc/search/variables_10.js              |    6 +
+ SFML-3.1.0/doc/search/variables_11.js              |   26 +
+ SFML-3.1.0/doc/search/variables_12.js              |   11 +
+ SFML-3.1.0/doc/search/variables_13.js              |    5 +
+ SFML-3.1.0/doc/search/variables_14.js              |    7 +
+ SFML-3.1.0/doc/search/variables_15.js              |    6 +
+ SFML-3.1.0/doc/search/variables_16.js              |    4 +
+ SFML-3.1.0/doc/search/variables_17.js              |    5 +
+ SFML-3.1.0/doc/search/variables_18.js              |    5 +
+ SFML-3.1.0/doc/search/variables_2.js               |   19 +
+ SFML-3.1.0/doc/search/variables_3.js               |    7 +
+ SFML-3.1.0/doc/search/variables_4.js               |    4 +
+ SFML-3.1.0/doc/search/variables_5.js               |    5 +
+ SFML-3.1.0/doc/search/variables_6.js               |    7 +
+ SFML-3.1.0/doc/search/variables_7.js               |    7 +
+ SFML-3.1.0/doc/search/variables_8.js               |    9 +
+ SFML-3.1.0/doc/search/variables_9.js               |    4 +
+ SFML-3.1.0/doc/search/variables_a.js               |    5 +
+ SFML-3.1.0/doc/search/variables_b.js               |    8 +
+ SFML-3.1.0/doc/search/variables_c.js               |   10 +
+ SFML-3.1.0/doc/search/variables_d.js               |    4 +
+ SFML-3.1.0/doc/search/variables_e.js               |    6 +
+ SFML-3.1.0/doc/search/variables_f.js               |   11 +
+ SFML-3.1.0/doc/searchOverrides.css                 |   45 +
+ SFML-3.1.0/doc/structsf_1_1BlendMode-members.html  |  126 +
+ SFML-3.1.0/doc/structsf_1_1BlendMode.html          |  621 +++
+ .../doc/structsf_1_1ContextSettings-members.html   |  124 +
+ SFML-3.1.0/doc/structsf_1_1ContextSettings.html    |  315 ++
+ .../doc/structsf_1_1Dns_1_1MxRecord-members.html   |  115 +
+ SFML-3.1.0/doc/structsf_1_1Dns_1_1MxRecord.html    |  170 +
+ .../doc/structsf_1_1Dns_1_1SrvRecord-members.html  |  117 +
+ SFML-3.1.0/doc/structsf_1_1Dns_1_1SrvRecord.html   |  210 +
+ SFML-3.1.0/doc/structsf_1_1Event_1_1Closed.html    |  122 +
+ .../doc/structsf_1_1Event_1_1FocusGained.html      |  122 +
+ SFML-3.1.0/doc/structsf_1_1Event_1_1FocusLost.html |  122 +
+ ..._1_1Event_1_1JoystickButtonPressed-members.html |  115 +
+ ...structsf_1_1Event_1_1JoystickButtonPressed.html |  170 +
+ ...1_1Event_1_1JoystickButtonReleased-members.html |  115 +
+ ...tructsf_1_1Event_1_1JoystickButtonReleased.html |  170 +
+ ...ctsf_1_1Event_1_1JoystickConnected-members.html |  114 +
+ .../structsf_1_1Event_1_1JoystickConnected.html    |  150 +
+ ...f_1_1Event_1_1JoystickDisconnected-members.html |  114 +
+ .../structsf_1_1Event_1_1JoystickDisconnected.html |  150 +
+ ...structsf_1_1Event_1_1JoystickMoved-members.html |  116 +
+ .../doc/structsf_1_1Event_1_1JoystickMoved.html    |  190 +
+ .../structsf_1_1Event_1_1KeyPressed-members.html   |  119 +
+ .../doc/structsf_1_1Event_1_1KeyPressed.html       |  250 +
+ .../structsf_1_1Event_1_1KeyReleased-members.html  |  119 +
+ .../doc/structsf_1_1Event_1_1KeyReleased.html      |  250 +
+ ...tsf_1_1Event_1_1MouseButtonPressed-members.html |  115 +
+ .../structsf_1_1Event_1_1MouseButtonPressed.html   |  170 +
+ ...sf_1_1Event_1_1MouseButtonReleased-members.html |  115 +
+ .../structsf_1_1Event_1_1MouseButtonReleased.html  |  170 +
+ .../doc/structsf_1_1Event_1_1MouseEntered.html     |  122 +
+ SFML-3.1.0/doc/structsf_1_1Event_1_1MouseLeft.html |  122 +
+ .../structsf_1_1Event_1_1MouseMoved-members.html   |  114 +
+ .../doc/structsf_1_1Event_1_1MouseMoved.html       |  150 +
+ ...structsf_1_1Event_1_1MouseMovedRaw-members.html |  114 +
+ .../doc/structsf_1_1Event_1_1MouseMovedRaw.html    |  154 +
+ ...tsf_1_1Event_1_1MouseWheelScrolled-members.html |  116 +
+ .../structsf_1_1Event_1_1MouseWheelScrolled.html   |  190 +
+ .../doc/structsf_1_1Event_1_1Resized-members.html  |  114 +
+ SFML-3.1.0/doc/structsf_1_1Event_1_1Resized.html   |  151 +
+ ...structsf_1_1Event_1_1SensorChanged-members.html |  115 +
+ .../doc/structsf_1_1Event_1_1SensorChanged.html    |  170 +
+ .../structsf_1_1Event_1_1TextEntered-members.html  |  114 +
+ .../doc/structsf_1_1Event_1_1TextEntered.html      |  150 +
+ .../structsf_1_1Event_1_1TouchBegan-members.html   |  115 +
+ .../doc/structsf_1_1Event_1_1TouchBegan.html       |  170 +
+ .../structsf_1_1Event_1_1TouchEnded-members.html   |  115 +
+ .../doc/structsf_1_1Event_1_1TouchEnded.html       |  170 +
+ .../structsf_1_1Event_1_1TouchMoved-members.html   |  115 +
+ .../doc/structsf_1_1Event_1_1TouchMoved.html       |  170 +
+ .../doc/structsf_1_1Font_1_1Info-members.html      |  117 +
+ SFML-3.1.0/doc/structsf_1_1Font_1_1Info.html       |  210 +
+ SFML-3.1.0/doc/structsf_1_1Glyph-members.html      |  118 +
+ SFML-3.1.0/doc/structsf_1_1Glyph.html              |  237 +
+ ...ctsf_1_1Joystick_1_1Identification-members.html |  116 +
+ .../structsf_1_1Joystick_1_1Identification.html    |  190 +
+ .../doc/structsf_1_1Listener_1_1Cone-members.html  |  116 +
+ SFML-3.1.0/doc/structsf_1_1Listener_1_1Cone.html   |  191 +
+ .../doc/structsf_1_1Music_1_1Span-members.html     |  115 +
+ SFML-3.1.0/doc/structsf_1_1Music_1_1Span.html      |  175 +
+ .../doc/structsf_1_1RenderStates-members.html      |  127 +
+ SFML-3.1.0/doc/structsf_1_1RenderStates.html       |  530 ++
+ .../structsf_1_1Sftp_1_1Attributes-members.html    |  121 +
+ SFML-3.1.0/doc/structsf_1_1Sftp_1_1Attributes.html |  290 +
+ .../structsf_1_1Sftp_1_1SessionInfo-members.html   |  122 +
+ .../doc/structsf_1_1Sftp_1_1SessionInfo.html       |  316 ++
+ ..._1_1Sftp_1_1SessionInfo_1_1HostKey-members.html |  118 +
+ ...structsf_1_1Sftp_1_1SessionInfo_1_1HostKey.html |  266 +
+ .../structsf_1_1Shader_1_1CurrentTextureType.html  |  123 +
+ ...tructsf_1_1SoundFileReader_1_1Info-members.html |  117 +
+ .../doc/structsf_1_1SoundFileReader_1_1Info.html   |  210 +
+ .../structsf_1_1SoundSource_1_1Cone-members.html   |  116 +
+ .../doc/structsf_1_1SoundSource_1_1Cone.html       |  191 +
+ .../structsf_1_1SoundStream_1_1Chunk-members.html  |  115 +
+ .../doc/structsf_1_1SoundStream_1_1Chunk.html      |  170 +
+ .../doc/structsf_1_1StencilMode-members.html       |  120 +
+ SFML-3.1.0/doc/structsf_1_1StencilMode.html        |  388 ++
+ .../doc/structsf_1_1StencilValue-members.html      |  117 +
+ SFML-3.1.0/doc/structsf_1_1StencilValue.html       |  241 +
+ .../doc/structsf_1_1SuspendAwareClock-members.html |  119 +
+ SFML-3.1.0/doc/structsf_1_1SuspendAwareClock.html  |  266 +
+ .../structsf_1_1Text_1_1ShapedGlyph-members.html   |  120 +
+ .../doc/structsf_1_1Text_1_1ShapedGlyph.html       |  267 +
+ .../structsf_1_1U8StringCharTraits-members.html    |  132 +
+ SFML-3.1.0/doc/structsf_1_1U8StringCharTraits.html |  645 +++
+ SFML-3.1.0/doc/structsf_1_1Version-members.html    |  118 +
+ SFML-3.1.0/doc/structsf_1_1Version.html            |  226 +
+ SFML-3.1.0/doc/structsf_1_1Vertex-members.html     |  116 +
+ SFML-3.1.0/doc/structsf_1_1Vertex.html             |  225 +
+ SFML-3.1.0/doc/tabs.css                            |   81 +
+ SFML-3.1.0/doc/topics.html                         |  107 +
+ SFML-3.1.0/examples/asset_licenses.md              |   38 +
+ SFML-3.1.0/examples/assets/LaunchScreen.storyboard |   38 +
+ SFML-3.1.0/examples/assets/icon.icns               |  Bin 0 -> 38947 bytes
+ SFML-3.1.0/examples/assets/info.plist              |   36 +
+ SFML-3.1.0/examples/assets/logo.png                |  Bin 0 -> 30801 bytes
+ .../examples/event_handling/EventHandling.cpp      |  415 ++
+ .../examples/event_handling/event_handling.exe     |  Bin 0 -> 5505108 bytes
+ .../examples/event_handling/resources/tuffy.ttf    |  Bin 0 -> 18444 bytes
+ SFML-3.1.0/examples/ftp/Ftp.cpp                    |  214 +
+ SFML-3.1.0/examples/ftp/ftp.exe                    |  Bin 0 -> 2605489 bytes
+ SFML-3.1.0/examples/http/Http.cpp                  |  103 +
+ SFML-3.1.0/examples/http/http.exe                  |  Bin 0 -> 2550631 bytes
+ SFML-3.1.0/examples/island/Island.cpp              |  614 +++
+ SFML-3.1.0/examples/island/island.exe              |  Bin 0 -> 5024920 bytes
+ SFML-3.1.0/examples/island/resources/terrain.frag  |   11 +
+ SFML-3.1.0/examples/island/resources/terrain.vert  |    8 +
+ SFML-3.1.0/examples/island/resources/tuffy.ttf     |  Bin 0 -> 18444 bytes
+ SFML-3.1.0/examples/joystick/Joystick.cpp          |  308 ++
+ SFML-3.1.0/examples/joystick/joystick.exe          |  Bin 0 -> 5050270 bytes
+ SFML-3.1.0/examples/joystick/resources/tuffy.ttf   |  Bin 0 -> 18444 bytes
+ SFML-3.1.0/examples/keyboard/Keyboard.cpp          |  865 +++
+ SFML-3.1.0/examples/keyboard/keyboard.exe          |  Bin 0 -> 7238601 bytes
+ SFML-3.1.0/examples/keyboard/resources/Tuffy.ttf   |  Bin 0 -> 172324 bytes
+ .../examples/keyboard/resources/error_005.ogg      |  Bin 0 -> 7266 bytes
+ .../examples/keyboard/resources/mouseclick1.ogg    |  Bin 0 -> 4686 bytes
+ .../examples/keyboard/resources/mouserelease1.ogg  |  Bin 0 -> 4775 bytes
+ SFML-3.1.0/examples/opengl/OpenGL.cpp              |  338 ++
+ SFML-3.1.0/examples/opengl/opengl.exe              |  Bin 0 -> 5139641 bytes
+ .../examples/opengl/resources/background.jpg       |  Bin 0 -> 107190 bytes
+ SFML-3.1.0/examples/opengl/resources/logo.png      |  Bin 0 -> 33601 bytes
+ SFML-3.1.0/examples/opengl/resources/tuffy.ttf     |  Bin 0 -> 18444 bytes
+ SFML-3.1.0/examples/raw_input/RawInput.cpp         |   72 +
+ SFML-3.1.0/examples/raw_input/raw_input.exe        |  Bin 0 -> 5009236 bytes
+ SFML-3.1.0/examples/raw_input/resources/tuffy.ttf  |  Bin 0 -> 18444 bytes
+ SFML-3.1.0/examples/sftp/Sftp.cpp                  |  461 ++
+ SFML-3.1.0/examples/sftp/sftp.exe                  |  Bin 0 -> 2876956 bytes
+ SFML-3.1.0/examples/shader/Shader.cpp              |  519 ++
+ .../examples/shader/resources/background.jpg       |  Bin 0 -> 66931 bytes
+ .../examples/shader/resources/billboard.frag       |   11 +
+ .../examples/shader/resources/billboard.geom       |   56 +
+ .../examples/shader/resources/billboard.vert       |    5 +
+ SFML-3.1.0/examples/shader/resources/blink.frag    |    9 +
+ SFML-3.1.0/examples/shader/resources/blur.frag     |   20 +
+ SFML-3.1.0/examples/shader/resources/devices.png   |  Bin 0 -> 7173 bytes
+ SFML-3.1.0/examples/shader/resources/edge.frag     |   32 +
+ SFML-3.1.0/examples/shader/resources/logo.png      |  Bin 0 -> 8849 bytes
+ SFML-3.1.0/examples/shader/resources/pixelate.frag |    9 +
+ SFML-3.1.0/examples/shader/resources/sfml.png      |  Bin 0 -> 25973 bytes
+ SFML-3.1.0/examples/shader/resources/storm.vert    |   19 +
+ .../examples/shader/resources/text-background.png  |  Bin 0 -> 745 bytes
+ SFML-3.1.0/examples/shader/resources/tuffy.ttf     |  Bin 0 -> 18444 bytes
+ SFML-3.1.0/examples/shader/resources/wave.vert     |   15 +
+ SFML-3.1.0/examples/shader/shader.exe              |  Bin 0 -> 5053413 bytes
+ SFML-3.1.0/examples/sockets/Sockets.cpp            |   57 +
+ SFML-3.1.0/examples/sockets/TCP.cpp                |  153 +
+ SFML-3.1.0/examples/sockets/TCP.hpp                |    4 +
+ SFML-3.1.0/examples/sockets/UDP.cpp                |   81 +
+ SFML-3.1.0/examples/sockets/UDP.hpp                |    4 +
+ SFML-3.1.0/examples/sockets/sockets.exe            |  Bin 0 -> 2560747 bytes
+ SFML-3.1.0/examples/sound/Sound.cpp                |  100 +
+ SFML-3.1.0/examples/sound/resources/ding.flac      |  Bin 0 -> 56364 bytes
+ SFML-3.1.0/examples/sound/resources/ding.mp3       |  Bin 0 -> 16527 bytes
+ SFML-3.1.0/examples/sound/resources/doodle_pop.ogg |  Bin 0 -> 116492 bytes
+ SFML-3.1.0/examples/sound/resources/killdeer.wav   |  Bin 0 -> 113156 bytes
+ SFML-3.1.0/examples/sound/sound.exe                |  Bin 0 -> 2404038 bytes
+ SFML-3.1.0/examples/sound_capture/SoundCapture.cpp |  130 +
+ .../examples/sound_capture/sound-capture.exe       |  Bin 0 -> 2404930 bytes
+ SFML-3.1.0/examples/sound_device/SoundDevice.cpp   |  248 +
+ .../examples/sound_device/resources/doodle_pop.ogg |  Bin 0 -> 116492 bytes
+ SFML-3.1.0/examples/sound_device/sound-device.exe  |  Bin 0 -> 2381014 bytes
+ SFML-3.1.0/examples/sound_effects/SoundEffects.cpp | 1242 +++++
+ .../sound_effects/resources/doodle_pop.ogg         |  Bin 0 -> 116492 bytes
+ .../sound_effects/resources/text-background.png    |  Bin 0 -> 745 bytes
+ .../examples/sound_effects/resources/tuffy.ttf     |  Bin 0 -> 18444 bytes
+ .../examples/sound_effects/sound-effects.exe       |  Bin 0 -> 7335588 bytes
+ SFML-3.1.0/examples/stencil/Stencil.cpp            |  143 +
+ SFML-3.1.0/examples/stencil/stencil.exe            |  Bin 0 -> 2638039 bytes
+ SFML-3.1.0/examples/tennis/Tennis.cpp              |  284 +
+ SFML-3.1.0/examples/tennis/resources/ball.wav      |  Bin 0 -> 4892 bytes
+ SFML-3.1.0/examples/tennis/resources/sfml_logo.png |  Bin 0 -> 13419 bytes
+ SFML-3.1.0/examples/tennis/resources/tuffy.ttf     |  Bin 0 -> 18444 bytes
+ SFML-3.1.0/examples/tennis/tennis.exe              |  Bin 0 -> 7228224 bytes
+ SFML-3.1.0/examples/text/Text.cpp                  |  844 +++
+ .../text/resources/NotoNaskhArabic-Regular.ttf     |  Bin 0 -> 217140 bytes
+ .../examples/text/resources/NotoSerif-Regular.ttf  |  Bin 0 -> 504932 bytes
+ .../text/resources/NotoSerifArmenian-Regular.ttf   |  Bin 0 -> 55440 bytes
+ .../text/resources/NotoSerifDevanagari-Regular.ttf |  Bin 0 -> 234000 bytes
+ .../text/resources/NotoSerifEthiopic-Regular.ttf   |  Bin 0 -> 304676 bytes
+ .../text/resources/NotoSerifGeorgian-Regular.ttf   |  Bin 0 -> 79192 bytes
+ .../text/resources/NotoSerifHebrew-Regular.ttf     |  Bin 0 -> 56176 bytes
+ .../text/resources/NotoSerifJP-Regular.subset.ttf  |  Bin 0 -> 34896 bytes
+ .../text/resources/NotoSerifKR-Regular.subset.ttf  |  Bin 0 -> 44572 bytes
+ .../text/resources/NotoSerifKhmer-Regular.ttf      |  Bin 0 -> 141548 bytes
+ .../text/resources/NotoSerifMyanmar-Regular.ttf    |  Bin 0 -> 259512 bytes
+ .../text/resources/NotoSerifTC-Regular.subset.ttf  |  Bin 0 -> 35116 bytes
+ .../text/resources/NotoSerifTamil-Regular.ttf      |  Bin 0 -> 90028 bytes
+ .../text/resources/NotoSerifThai-Regular.ttf       |  Bin 0 -> 61428 bytes
+ .../text/resources/NotoSerifTibetan-Regular.ttf    |  Bin 0 -> 736448 bytes
+ SFML-3.1.0/examples/text/resources/readme.md       |   33 +
+ SFML-3.1.0/examples/text/resources/tuffy.ttf       |  Bin 0 -> 18444 bytes
+ SFML-3.1.0/examples/text/text.exe                  |  Bin 0 -> 5111223 bytes
+ SFML-3.1.0/examples/voip/Client.cpp                |  153 +
+ SFML-3.1.0/examples/voip/Client.hpp                |    3 +
+ SFML-3.1.0/examples/voip/Server.cpp                |  205 +
+ SFML-3.1.0/examples/voip/Server.hpp                |    3 +
+ SFML-3.1.0/examples/voip/VoIP.cpp                  |   40 +
+ SFML-3.1.0/examples/voip/voip.exe                  |  Bin 0 -> 3226970 bytes
+ SFML-3.1.0/examples/vulkan/Vulkan.cpp              | 2632 +++++++++
+ SFML-3.1.0/examples/vulkan/resources/logo.png      |  Bin 0 -> 21279 bytes
+ SFML-3.1.0/examples/vulkan/resources/shader.frag   |   16 +
+ .../examples/vulkan/resources/shader.frag.spv      |  Bin 0 -> 888 bytes
+ SFML-3.1.0/examples/vulkan/resources/shader.vert   |   25 +
+ .../examples/vulkan/resources/shader.vert.spv      |  Bin 0 -> 1600 bytes
+ SFML-3.1.0/examples/vulkan/vulkan.exe              |  Bin 0 -> 1946127 bytes
+ SFML-3.1.0/examples/win32/Win32.cpp                |  168 +
+ SFML-3.1.0/examples/win32/resources/image1.jpg     |  Bin 0 -> 14273 bytes
+ SFML-3.1.0/examples/win32/resources/image2.jpg     |  Bin 0 -> 14866 bytes
+ SFML-3.1.0/examples/win32/win32.exe                |  Bin 0 -> 2624986 bytes
+ SFML-3.1.0/examples/window/Window.cpp              |  189 +
+ SFML-3.1.0/examples/window/window.exe              |  Bin 0 -> 1798666 bytes
+ SFML-3.1.0/include/SFML/Audio.hpp                  |   55 +
+ SFML-3.1.0/include/SFML/Audio/AudioResource.hpp    |   93 +
+ SFML-3.1.0/include/SFML/Audio/Export.hpp           |   44 +
+ SFML-3.1.0/include/SFML/Audio/InputSoundFile.hpp   |  326 ++
+ SFML-3.1.0/include/SFML/Audio/Listener.hpp         |  234 +
+ SFML-3.1.0/include/SFML/Audio/Music.hpp            |  377 ++
+ SFML-3.1.0/include/SFML/Audio/OutputSoundFile.hpp  |  147 +
+ SFML-3.1.0/include/SFML/Audio/PlaybackDevice.hpp   |  239 +
+ SFML-3.1.0/include/SFML/Audio/Sound.hpp            |  284 +
+ SFML-3.1.0/include/SFML/Audio/SoundBuffer.hpp      |  451 ++
+ .../include/SFML/Audio/SoundBufferRecorder.hpp     |  149 +
+ SFML-3.1.0/include/SFML/Audio/SoundChannel.hpp     |   65 +
+ SFML-3.1.0/include/SFML/Audio/SoundFileFactory.hpp |  200 +
+ SFML-3.1.0/include/SFML/Audio/SoundFileFactory.inl |   96 +
+ SFML-3.1.0/include/SFML/Audio/SoundFileReader.hpp  |  167 +
+ SFML-3.1.0/include/SFML/Audio/SoundFileWriter.hpp  |  130 +
+ SFML-3.1.0/include/SFML/Audio/SoundRecorder.hpp    |  362 ++
+ SFML-3.1.0/include/SFML/Audio/SoundSource.hpp      |  692 +++
+ SFML-3.1.0/include/SFML/Audio/SoundStream.hpp      |  385 ++
+ SFML-3.1.0/include/SFML/Config.hpp                 |  164 +
+ SFML-3.1.0/include/SFML/GpuPreference.hpp          |   70 +
+ SFML-3.1.0/include/SFML/Graphics.hpp               |   67 +
+ SFML-3.1.0/include/SFML/Graphics/BlendMode.hpp     |  220 +
+ SFML-3.1.0/include/SFML/Graphics/CircleShape.hpp   |  165 +
+ SFML-3.1.0/include/SFML/Graphics/Color.hpp         |  274 +
+ SFML-3.1.0/include/SFML/Graphics/Color.inl         |  156 +
+ SFML-3.1.0/include/SFML/Graphics/ConvexShape.hpp   |  155 +
+ .../include/SFML/Graphics/CoordinateType.hpp       |   43 +
+ SFML-3.1.0/include/SFML/Graphics/Drawable.hpp      |  120 +
+ SFML-3.1.0/include/SFML/Graphics/Export.hpp        |   44 +
+ SFML-3.1.0/include/SFML/Graphics/Font.hpp          |  639 +++
+ SFML-3.1.0/include/SFML/Graphics/Glsl.hpp          |  224 +
+ SFML-3.1.0/include/SFML/Graphics/Glsl.inl          |  177 +
+ SFML-3.1.0/include/SFML/Graphics/Glyph.hpp         |   67 +
+ SFML-3.1.0/include/SFML/Graphics/Image.hpp         |  417 ++
+ SFML-3.1.0/include/SFML/Graphics/PrimitiveType.hpp |   48 +
+ SFML-3.1.0/include/SFML/Graphics/Rect.hpp          |  203 +
+ SFML-3.1.0/include/SFML/Graphics/Rect.inl          |  130 +
+ .../include/SFML/Graphics/RectangleShape.hpp       |  143 +
+ SFML-3.1.0/include/SFML/Graphics/RenderStates.hpp  |  191 +
+ SFML-3.1.0/include/SFML/Graphics/RenderTarget.hpp  |  606 ++
+ SFML-3.1.0/include/SFML/Graphics/RenderTexture.hpp |  342 ++
+ SFML-3.1.0/include/SFML/Graphics/RenderWindow.hpp  |  308 ++
+ SFML-3.1.0/include/SFML/Graphics/Shader.hpp        | 1023 ++++
+ SFML-3.1.0/include/SFML/Graphics/Shape.hpp         |  399 ++
+ SFML-3.1.0/include/SFML/Graphics/Sprite.hpp        |  278 +
+ SFML-3.1.0/include/SFML/Graphics/StencilMode.hpp   |  256 +
+ SFML-3.1.0/include/SFML/Graphics/Text.hpp          |  873 +++
+ SFML-3.1.0/include/SFML/Graphics/Texture.hpp       |  874 +++
+ SFML-3.1.0/include/SFML/Graphics/Transform.hpp     |  393 ++
+ SFML-3.1.0/include/SFML/Graphics/Transform.inl     |  236 +
+ SFML-3.1.0/include/SFML/Graphics/Transformable.hpp |  356 ++
+ SFML-3.1.0/include/SFML/Graphics/Vertex.hpp        |  122 +
+ SFML-3.1.0/include/SFML/Graphics/VertexArray.hpp   |  269 +
+ SFML-3.1.0/include/SFML/Graphics/VertexBuffer.hpp  |  414 ++
+ SFML-3.1.0/include/SFML/Graphics/View.hpp          |  357 ++
+ SFML-3.1.0/include/SFML/Main.hpp                   |   39 +
+ SFML-3.1.0/include/SFML/Network.hpp                |   53 +
+ SFML-3.1.0/include/SFML/Network/Dns.hpp            |  214 +
+ SFML-3.1.0/include/SFML/Network/Export.hpp         |   44 +
+ SFML-3.1.0/include/SFML/Network/Ftp.hpp            |  642 +++
+ SFML-3.1.0/include/SFML/Network/Http.hpp           |  488 ++
+ SFML-3.1.0/include/SFML/Network/IpAddress.hpp      |  435 ++
+ SFML-3.1.0/include/SFML/Network/Packet.hpp         |  548 ++
+ SFML-3.1.0/include/SFML/Network/Sftp.hpp           |  987 ++++
+ SFML-3.1.0/include/SFML/Network/Socket.hpp         |  232 +
+ SFML-3.1.0/include/SFML/Network/SocketHandle.hpp   |   52 +
+ SFML-3.1.0/include/SFML/Network/SocketSelector.hpp |  431 ++
+ SFML-3.1.0/include/SFML/Network/TcpListener.hpp    |  166 +
+ SFML-3.1.0/include/SFML/Network/TcpSocket.hpp      |  698 +++
+ SFML-3.1.0/include/SFML/Network/UdpSocket.hpp      |  293 +
+ SFML-3.1.0/include/SFML/OpenGL.hpp                 |   78 +
+ SFML-3.1.0/include/SFML/System.hpp                 |   57 +
+ SFML-3.1.0/include/SFML/System/Angle.hpp           |  511 ++
+ SFML-3.1.0/include/SFML/System/Angle.inl           |  274 +
+ SFML-3.1.0/include/SFML/System/Clock.hpp           |  196 +
+ SFML-3.1.0/include/SFML/System/Err.hpp             |   77 +
+ SFML-3.1.0/include/SFML/System/Exception.hpp       |   46 +
+ SFML-3.1.0/include/SFML/System/Export.hpp          |   44 +
+ SFML-3.1.0/include/SFML/System/FileInputStream.hpp |  212 +
+ SFML-3.1.0/include/SFML/System/InputStream.hpp     |  166 +
+ .../include/SFML/System/MemoryInputStream.hpp      |  139 +
+ SFML-3.1.0/include/SFML/System/NativeActivity.hpp  |   58 +
+ SFML-3.1.0/include/SFML/System/Sleep.hpp           |   57 +
+ SFML-3.1.0/include/SFML/System/String.hpp          |  794 +++
+ SFML-3.1.0/include/SFML/System/String.inl          |   64 +
+ .../include/SFML/System/SuspendAwareClock.hpp      |   76 +
+ SFML-3.1.0/include/SFML/System/Time.hpp            |  500 ++
+ SFML-3.1.0/include/SFML/System/Time.inl            |  284 +
+ .../include/SFML/System/TimeoutWithPredicate.hpp   |  216 +
+ SFML-3.1.0/include/SFML/System/Utf.hpp             |  783 +++
+ SFML-3.1.0/include/SFML/System/Utf.inl             |  945 ++++
+ SFML-3.1.0/include/SFML/System/Vector2.hpp         |  438 ++
+ SFML-3.1.0/include/SFML/System/Vector2.inl         |  298 +
+ SFML-3.1.0/include/SFML/System/Vector3.hpp         |  359 ++
+ SFML-3.1.0/include/SFML/System/Vector3.inl         |  236 +
+ SFML-3.1.0/include/SFML/System/Version.hpp         |   71 +
+ SFML-3.1.0/include/SFML/Window.hpp                 |   55 +
+ SFML-3.1.0/include/SFML/Window/Clipboard.hpp       |  114 +
+ SFML-3.1.0/include/SFML/Window/Context.hpp         |  224 +
+ SFML-3.1.0/include/SFML/Window/ContextSettings.hpp |  125 +
+ SFML-3.1.0/include/SFML/Window/Cursor.hpp          |  303 +
+ SFML-3.1.0/include/SFML/Window/Event.hpp           |  468 ++
+ SFML-3.1.0/include/SFML/Window/Event.inl           |   96 +
+ SFML-3.1.0/include/SFML/Window/Export.hpp          |   44 +
+ SFML-3.1.0/include/SFML/Window/GlResource.hpp      |  120 +
+ SFML-3.1.0/include/SFML/Window/Joystick.hpp        |  213 +
+ SFML-3.1.0/include/SFML/Window/Keyboard.hpp        |  475 ++
+ SFML-3.1.0/include/SFML/Window/Mouse.hpp           |  183 +
+ SFML-3.1.0/include/SFML/Window/Sensor.hpp          |  139 +
+ SFML-3.1.0/include/SFML/Window/Touch.hpp           |  146 +
+ SFML-3.1.0/include/SFML/Window/VideoMode.hpp       |  224 +
+ SFML-3.1.0/include/SFML/Window/Vulkan.hpp          |  112 +
+ SFML-3.1.0/include/SFML/Window/Window.hpp          |  422 ++
+ SFML-3.1.0/include/SFML/Window/WindowBase.hpp      |  653 +++
+ SFML-3.1.0/include/SFML/Window/WindowBase.inl      |  112 +
+ SFML-3.1.0/include/SFML/Window/WindowEnums.hpp     |   65 +
+ SFML-3.1.0/include/SFML/Window/WindowHandle.hpp    |   98 +
+ SFML-3.1.0/include/libssh2.h                       | 1463 +++++
+ SFML-3.1.0/include/libssh2_publickey.h             |  128 +
+ SFML-3.1.0/include/libssh2_sftp.h                  |  382 ++
+ SFML-3.1.0/include/mbedtls/aes.h                   |  631 +++
+ SFML-3.1.0/include/mbedtls/aria.h                  |  343 ++
+ SFML-3.1.0/include/mbedtls/asn1.h                  |  642 +++
+ SFML-3.1.0/include/mbedtls/asn1write.h             |  390 ++
+ SFML-3.1.0/include/mbedtls/base64.h                |   82 +
+ SFML-3.1.0/include/mbedtls/bignum.h                | 1088 ++++
+ SFML-3.1.0/include/mbedtls/block_cipher.h          |   76 +
+ SFML-3.1.0/include/mbedtls/build_info.h            |  194 +
+ SFML-3.1.0/include/mbedtls/camellia.h              |  305 +
+ SFML-3.1.0/include/mbedtls/ccm.h                   |  526 ++
+ SFML-3.1.0/include/mbedtls/chacha20.h              |  202 +
+ SFML-3.1.0/include/mbedtls/chachapoly.h            |  342 ++
+ SFML-3.1.0/include/mbedtls/check_config.h          | 1149 ++++
+ SFML-3.1.0/include/mbedtls/cipher.h                | 1250 +++++
+ SFML-3.1.0/include/mbedtls/cmac.h                  |  246 +
+ SFML-3.1.0/include/mbedtls/compat-2.x.h            |   46 +
+ .../include/mbedtls/config_adjust_legacy_crypto.h  |  535 ++
+ .../mbedtls/config_adjust_legacy_from_psa.h        |  873 +++
+ .../mbedtls/config_adjust_psa_from_legacy.h        |  359 ++
+ .../mbedtls/config_adjust_psa_superset_legacy.h    |  145 +
+ SFML-3.1.0/include/mbedtls/config_adjust_ssl.h     |   91 +
+ SFML-3.1.0/include/mbedtls/config_adjust_x509.h    |   35 +
+ SFML-3.1.0/include/mbedtls/config_psa.h            |   61 +
+ SFML-3.1.0/include/mbedtls/constant_time.h         |   36 +
+ SFML-3.1.0/include/mbedtls/ctr_drbg.h              |  597 ++
+ SFML-3.1.0/include/mbedtls/debug.h                 |  156 +
+ SFML-3.1.0/include/mbedtls/des.h                   |  385 ++
+ SFML-3.1.0/include/mbedtls/dhm.h                   |  972 ++++
+ SFML-3.1.0/include/mbedtls/ecdh.h                  |  454 ++
+ SFML-3.1.0/include/mbedtls/ecdsa.h                 |  674 +++
+ SFML-3.1.0/include/mbedtls/ecjpake.h               |  298 +
+ SFML-3.1.0/include/mbedtls/ecp.h                   | 1528 +++++
+ SFML-3.1.0/include/mbedtls/entropy.h               |  274 +
+ SFML-3.1.0/include/mbedtls/error.h                 |  201 +
+ SFML-3.1.0/include/mbedtls/gcm.h                   |  387 ++
+ SFML-3.1.0/include/mbedtls/hkdf.h                  |  124 +
+ SFML-3.1.0/include/mbedtls/hmac_drbg.h             |  434 ++
+ SFML-3.1.0/include/mbedtls/lms.h                   |  440 ++
+ SFML-3.1.0/include/mbedtls/mbedtls_config.h        | 4392 +++++++++++++++
+ SFML-3.1.0/include/mbedtls/md.h                    |  526 ++
+ SFML-3.1.0/include/mbedtls/md5.h                   |  190 +
+ SFML-3.1.0/include/mbedtls/memory_buffer_alloc.h   |  142 +
+ SFML-3.1.0/include/mbedtls/net_sockets.h           |  299 +
+ SFML-3.1.0/include/mbedtls/nist_kw.h               |  166 +
+ SFML-3.1.0/include/mbedtls/oid.h                   |  727 +++
+ SFML-3.1.0/include/mbedtls/pem.h                   |  160 +
+ SFML-3.1.0/include/mbedtls/pk.h                    | 1296 +++++
+ SFML-3.1.0/include/mbedtls/pkcs12.h                |  186 +
+ SFML-3.1.0/include/mbedtls/pkcs5.h                 |  198 +
+ SFML-3.1.0/include/mbedtls/pkcs7.h                 |  240 +
+ SFML-3.1.0/include/mbedtls/platform.h              |  485 ++
+ SFML-3.1.0/include/mbedtls/platform_time.h         |   79 +
+ SFML-3.1.0/include/mbedtls/platform_util.h         |  247 +
+ SFML-3.1.0/include/mbedtls/poly1305.h              |  168 +
+ SFML-3.1.0/include/mbedtls/private_access.h        |   20 +
+ SFML-3.1.0/include/mbedtls/psa_util.h              |  207 +
+ SFML-3.1.0/include/mbedtls/ripemd160.h             |  136 +
+ SFML-3.1.0/include/mbedtls/rsa.h                   | 1164 ++++
+ SFML-3.1.0/include/mbedtls/sha1.h                  |  219 +
+ SFML-3.1.0/include/mbedtls/sha256.h                |  200 +
+ SFML-3.1.0/include/mbedtls/sha3.h                  |  172 +
+ SFML-3.1.0/include/mbedtls/sha512.h                |  208 +
+ SFML-3.1.0/include/mbedtls/ssl.h                   | 5821 ++++++++++++++++++++
+ SFML-3.1.0/include/mbedtls/ssl_cache.h             |  187 +
+ SFML-3.1.0/include/mbedtls/ssl_ciphersuites.h      |  482 ++
+ SFML-3.1.0/include/mbedtls/ssl_cookie.h            |  106 +
+ SFML-3.1.0/include/mbedtls/ssl_ticket.h            |  199 +
+ SFML-3.1.0/include/mbedtls/threading.h             |  167 +
+ SFML-3.1.0/include/mbedtls/threading_alt.h         |    1 +
+ SFML-3.1.0/include/mbedtls/timing.h                |   94 +
+ SFML-3.1.0/include/mbedtls/version.h               |   78 +
+ SFML-3.1.0/include/mbedtls/x509.h                  |  500 ++
+ SFML-3.1.0/include/mbedtls/x509_crl.h              |  184 +
+ SFML-3.1.0/include/mbedtls/x509_crt.h              | 1208 ++++
+ SFML-3.1.0/include/mbedtls/x509_csr.h              |  382 ++
+ SFML-3.1.0/include/psa/build_info.h                |   20 +
+ SFML-3.1.0/include/psa/crypto.h                    | 4977 +++++++++++++++++
+ .../include/psa/crypto_adjust_auto_enabled.h       |   31 +
+ .../psa/crypto_adjust_config_dependencies.h        |   51 +
+ .../psa/crypto_adjust_config_key_pair_types.h      |  101 +
+ .../include/psa/crypto_adjust_config_synonyms.h    |   49 +
+ SFML-3.1.0/include/psa/crypto_builtin_composites.h |  214 +
+ .../include/psa/crypto_builtin_key_derivation.h    |  118 +
+ SFML-3.1.0/include/psa/crypto_builtin_primitives.h |  114 +
+ SFML-3.1.0/include/psa/crypto_compat.h             |  230 +
+ SFML-3.1.0/include/psa/crypto_config.h             |  145 +
+ SFML-3.1.0/include/psa/crypto_driver_common.h      |   44 +
+ .../psa/crypto_driver_contexts_composites.h        |  151 +
+ .../psa/crypto_driver_contexts_key_derivation.h    |   52 +
+ .../psa/crypto_driver_contexts_primitives.h        |  105 +
+ SFML-3.1.0/include/psa/crypto_extra.h              | 1977 +++++++
+ SFML-3.1.0/include/psa/crypto_legacy.h             |   88 +
+ SFML-3.1.0/include/psa/crypto_platform.h           |  102 +
+ SFML-3.1.0/include/psa/crypto_se_driver.h          | 1383 +++++
+ SFML-3.1.0/include/psa/crypto_sizes.h              | 1317 +++++
+ SFML-3.1.0/include/psa/crypto_struct.h             |  527 ++
+ SFML-3.1.0/include/psa/crypto_types.h              |  508 ++
+ SFML-3.1.0/include/psa/crypto_values.h             | 2783 ++++++++++
+ .../lib/cmake/FLAC/flac-config-version.cmake       |   43 +
+ SFML-3.1.0/lib/cmake/FLAC/flac-config.cmake        |   41 +
+ SFML-3.1.0/lib/cmake/FLAC/targets-debug.cmake      |   19 +
+ SFML-3.1.0/lib/cmake/FLAC/targets-release.cmake    |   19 +
+ SFML-3.1.0/lib/cmake/FLAC/targets.cmake            |  124 +
+ SFML-3.1.0/lib/cmake/MbedTLS/MbedTLSConfig.cmake   |   27 +
+ .../lib/cmake/MbedTLS/MbedTLSConfigVersion.cmake   |   65 +
+ .../lib/cmake/MbedTLS/MbedTLSTargets-debug.cmake   |   39 +
+ .../lib/cmake/MbedTLS/MbedTLSTargets-release.cmake |   39 +
+ SFML-3.1.0/lib/cmake/MbedTLS/MbedTLSTargets.cmake  |  123 +
+ SFML-3.1.0/lib/cmake/Ogg/OggConfig.cmake           |   40 +
+ SFML-3.1.0/lib/cmake/Ogg/OggConfigVersion.cmake    |   65 +
+ SFML-3.1.0/lib/cmake/Ogg/OggTargets-debug.cmake    |   19 +
+ SFML-3.1.0/lib/cmake/Ogg/OggTargets-release.cmake  |   19 +
+ SFML-3.1.0/lib/cmake/Ogg/OggTargets.cmake          |  106 +
+ SFML-3.1.0/lib/cmake/SFML/FindDRM.cmake            |   23 +
+ SFML-3.1.0/lib/cmake/SFML/FindEGL.cmake            |   19 +
+ SFML-3.1.0/lib/cmake/SFML/FindFLAC.cmake           |   26 +
+ SFML-3.1.0/lib/cmake/SFML/FindFreetype.cmake       |  163 +
+ SFML-3.1.0/lib/cmake/SFML/FindGBM.cmake            |   23 +
+ SFML-3.1.0/lib/cmake/SFML/FindGLES.cmake           |   19 +
+ SFML-3.1.0/lib/cmake/SFML/FindHarfBuzz.cmake       |  193 +
+ SFML-3.1.0/lib/cmake/SFML/FindLibssh2.cmake        |  107 +
+ SFML-3.1.0/lib/cmake/SFML/FindMbedTLS.cmake        |  140 +
+ SFML-3.1.0/lib/cmake/SFML/FindUDev.cmake           |   63 +
+ SFML-3.1.0/lib/cmake/SFML/FindVorbis.cmake         |   69 +
+ .../lib/cmake/SFML/SFMLAudioDependencies.cmake     |   46 +
+ .../cmake/SFML/SFMLAudioSharedTargets-debug.cmake  |   19 +
+ .../SFML/SFMLAudioSharedTargets-release.cmake      |   19 +
+ .../lib/cmake/SFML/SFMLAudioSharedTargets.cmake    |  124 +
+ .../cmake/SFML/SFMLAudioStaticTargets-debug.cmake  |   19 +
+ .../SFML/SFMLAudioStaticTargets-release.cmake      |   19 +
+ .../lib/cmake/SFML/SFMLAudioStaticTargets.cmake    |  125 +
+ SFML-3.1.0/lib/cmake/SFML/SFMLConfig.cmake         |  194 +
+ SFML-3.1.0/lib/cmake/SFML/SFMLConfigVersion.cmake  |   65 +
+ .../lib/cmake/SFML/SFMLGraphicsDependencies.cmake  |   28 +
+ .../SFML/SFMLGraphicsSharedTargets-debug.cmake     |   19 +
+ .../SFML/SFMLGraphicsSharedTargets-release.cmake   |   19 +
+ .../lib/cmake/SFML/SFMLGraphicsSharedTargets.cmake |  124 +
+ .../SFML/SFMLGraphicsStaticTargets-debug.cmake     |   19 +
+ .../SFML/SFMLGraphicsStaticTargets-release.cmake   |   19 +
+ .../lib/cmake/SFML/SFMLGraphicsStaticTargets.cmake |  125 +
+ .../cmake/SFML/SFMLMainSharedTargets-debug.cmake   |   19 +
+ .../cmake/SFML/SFMLMainSharedTargets-release.cmake |   19 +
+ .../lib/cmake/SFML/SFMLMainSharedTargets.cmake     |  107 +
+ .../cmake/SFML/SFMLMainStaticTargets-debug.cmake   |   19 +
+ .../cmake/SFML/SFMLMainStaticTargets-release.cmake |   19 +
+ .../lib/cmake/SFML/SFMLMainStaticTargets.cmake     |  108 +
+ .../lib/cmake/SFML/SFMLNetworkDependencies.cmake   |   24 +
+ .../SFML/SFMLNetworkSharedTargets-debug.cmake      |   19 +
+ .../SFML/SFMLNetworkSharedTargets-release.cmake    |   19 +
+ .../lib/cmake/SFML/SFMLNetworkSharedTargets.cmake  |  124 +
+ .../SFML/SFMLNetworkStaticTargets-debug.cmake      |   19 +
+ .../SFML/SFMLNetworkStaticTargets-release.cmake    |   19 +
+ .../lib/cmake/SFML/SFMLNetworkStaticTargets.cmake  |  125 +
+ .../lib/cmake/SFML/SFMLSystemDependencies.cmake    |   13 +
+ .../cmake/SFML/SFMLSystemSharedTargets-debug.cmake |   19 +
+ .../SFML/SFMLSystemSharedTargets-release.cmake     |   19 +
+ .../lib/cmake/SFML/SFMLSystemSharedTargets.cmake   |  107 +
+ .../cmake/SFML/SFMLSystemStaticTargets-debug.cmake |   19 +
+ .../SFML/SFMLSystemStaticTargets-release.cmake     |   19 +
+ .../lib/cmake/SFML/SFMLSystemStaticTargets.cmake   |  109 +
+ .../lib/cmake/SFML/SFMLWindowDependencies.cmake    |   50 +
+ .../cmake/SFML/SFMLWindowSharedTargets-debug.cmake |   19 +
+ .../SFML/SFMLWindowSharedTargets-release.cmake     |   19 +
+ .../lib/cmake/SFML/SFMLWindowSharedTargets.cmake   |  124 +
+ .../cmake/SFML/SFMLWindowStaticTargets-debug.cmake |   19 +
+ .../SFML/SFMLWindowStaticTargets-release.cmake     |   19 +
+ .../lib/cmake/SFML/SFMLWindowStaticTargets.cmake   |  125 +
+ SFML-3.1.0/lib/cmake/Vorbis/VorbisConfig.cmake     |   43 +
+ .../lib/cmake/Vorbis/VorbisConfigVersion.cmake     |   65 +
+ .../lib/cmake/Vorbis/VorbisTargets-debug.cmake     |   39 +
+ .../lib/cmake/Vorbis/VorbisTargets-release.cmake   |   39 +
+ SFML-3.1.0/lib/cmake/Vorbis/VorbisTargets.cmake    |  139 +
+ .../lib/cmake/freetype/freetype-config-debug.cmake |   19 +
+ .../cmake/freetype/freetype-config-release.cmake   |   19 +
+ .../cmake/freetype/freetype-config-version.cmake   |   65 +
+ .../lib/cmake/freetype/freetype-config.cmake       |  113 +
+ .../lib/cmake/harfbuzz/harfbuzzConfig-debug.cmake  |   19 +
+ .../cmake/harfbuzz/harfbuzzConfig-release.cmake    |   19 +
+ SFML-3.1.0/lib/cmake/harfbuzz/harfbuzzConfig.cmake |  123 +
+ SFML-3.1.0/lib/cmake/libssh2/FindLibgcrypt.cmake   |   77 +
+ SFML-3.1.0/lib/cmake/libssh2/FindMbedTLS.cmake     |  140 +
+ SFML-3.1.0/lib/cmake/libssh2/FindWolfSSL.cmake     |  101 +
+ .../lib/cmake/libssh2/libssh2-config-version.cmake |   65 +
+ SFML-3.1.0/lib/cmake/libssh2/libssh2-config.cmake  |   72 +
+ .../lib/cmake/libssh2/libssh2-targets-debug.cmake  |   19 +
+ .../cmake/libssh2/libssh2-targets-release.cmake    |   19 +
+ SFML-3.1.0/lib/cmake/libssh2/libssh2-targets.cmake |  108 +
+ SFML-3.1.0/lib/libFLAC.a                           |  Bin 0 -> 542764 bytes
+ SFML-3.1.0/lib/libFLACd.a                          |  Bin 0 -> 1038872 bytes
+ SFML-3.1.0/lib/libfreetype.a                       |  Bin 0 -> 1078276 bytes
+ SFML-3.1.0/lib/libfreetyped.a                      |  Bin 0 -> 2301248 bytes
+ SFML-3.1.0/lib/libharfbuzz.a                       |  Bin 0 -> 1579698 bytes
+ SFML-3.1.0/lib/libharfbuzzd.a                      |  Bin 0 -> 30236652 bytes
+ SFML-3.1.0/lib/libmbedcrypto.a                     |  Bin 0 -> 797736 bytes
+ SFML-3.1.0/lib/libmbedcryptod.a                    |  Bin 0 -> 13978118 bytes
+ SFML-3.1.0/lib/libmbedtls.a                        |  Bin 0 -> 412012 bytes
+ SFML-3.1.0/lib/libmbedtlsd.a                       |  Bin 0 -> 5472450 bytes
+ SFML-3.1.0/lib/libmbedx509.a                       |  Bin 0 -> 89014 bytes
+ SFML-3.1.0/lib/libmbedx509d.a                      |  Bin 0 -> 3770738 bytes
+ SFML-3.1.0/lib/libogg.a                            |  Bin 0 -> 33256 bytes
+ SFML-3.1.0/lib/liboggd.a                           |  Bin 0 -> 57702 bytes
+ SFML-3.1.0/lib/libsfml-audio-d.a                   |  Bin 0 -> 176834 bytes
+ SFML-3.1.0/lib/libsfml-audio-s-d.a                 |  Bin 0 -> 14873668 bytes
+ SFML-3.1.0/lib/libsfml-audio-s.a                   |  Bin 0 -> 1223844 bytes
+ SFML-3.1.0/lib/libsfml-audio.a                     |  Bin 0 -> 175904 bytes
+ SFML-3.1.0/lib/libsfml-graphics-d.a                |  Bin 0 -> 378990 bytes
+ SFML-3.1.0/lib/libsfml-graphics-s-d.a              |  Bin 0 -> 12343132 bytes
+ SFML-3.1.0/lib/libsfml-graphics-s.a                |  Bin 0 -> 1750030 bytes
+ SFML-3.1.0/lib/libsfml-graphics.a                  |  Bin 0 -> 377048 bytes
+ SFML-3.1.0/lib/libsfml-main-d.a                    |  Bin 0 -> 5916 bytes
+ SFML-3.1.0/lib/libsfml-main.a                      |  Bin 0 -> 1094 bytes
+ SFML-3.1.0/lib/libsfml-network-d.a                 |  Bin 0 -> 194926 bytes
+ SFML-3.1.0/lib/libsfml-network-s-d.a               |  Bin 0 -> 8053732 bytes
+ SFML-3.1.0/lib/libsfml-network-s.a                 |  Bin 0 -> 537832 bytes
+ SFML-3.1.0/lib/libsfml-network.a                   |  Bin 0 -> 193932 bytes
+ SFML-3.1.0/lib/libsfml-system-d.a                  |  Bin 0 -> 91480 bytes
+ SFML-3.1.0/lib/libsfml-system-s-d.a                |  Bin 0 -> 8651020 bytes
+ SFML-3.1.0/lib/libsfml-system-s.a                  |  Bin 0 -> 1414144 bytes
+ SFML-3.1.0/lib/libsfml-system.a                    |  Bin 0 -> 90990 bytes
+ SFML-3.1.0/lib/libsfml-window-d.a                  |  Bin 0 -> 116236 bytes
+ SFML-3.1.0/lib/libsfml-window-s-d.a                |  Bin 0 -> 10269942 bytes
+ SFML-3.1.0/lib/libsfml-window-s.a                  |  Bin 0 -> 416678 bytes
+ SFML-3.1.0/lib/libsfml-window.a                    |  Bin 0 -> 115618 bytes
+ SFML-3.1.0/lib/libssh2.a                           |  Bin 0 -> 350808 bytes
+ SFML-3.1.0/lib/libvorbis.a                         |  Bin 0 -> 969080 bytes
+ SFML-3.1.0/lib/libvorbisd.a                        |  Bin 0 -> 1231974 bytes
+ SFML-3.1.0/lib/libvorbisenc.a                      |  Bin 0 -> 698708 bytes
+ SFML-3.1.0/lib/libvorbisencd.a                     |  Bin 0 -> 857336 bytes
+ SFML-3.1.0/lib/libvorbisfile.a                     |  Bin 0 -> 35764 bytes
+ SFML-3.1.0/lib/libvorbisfiled.a                    |  Bin 0 -> 69428 bytes
+ SFML-3.1.0/lib/pkgconfig/harfbuzz.pc               |   13 +
+ SFML-3.1.0/lib/pkgconfig/libssh2.pc                |   21 +
+ SFML-3.1.0/lib/pkgconfig/mbedcrypto.pc             |   10 +
+ SFML-3.1.0/lib/pkgconfig/mbedtls.pc                |   11 +
+ SFML-3.1.0/lib/pkgconfig/mbedx509.pc               |   11 +
+ SFML-3.1.0/license.md                              |    9 +
+ SFML-3.1.0/readme.md                               |   84 +
+ Tetris.zpr                                         |  164 +
+ main.cpp                                           |   26 +
+ sfml.png                                           |  Bin 0 -> 65722 bytes
+ 1297 files changed, 270044 insertions(+)
